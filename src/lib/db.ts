@@ -38,9 +38,16 @@ export interface Order {
 }
 
 export async function getProducts(db: Firestore): Promise<Product[]> {
-  const q = query(collection(db, 'products'), orderBy('createdAt', 'desc'));
-  const querySnapshot = await getDocs(q);
-  return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Product));
+  try {
+    // Attempt to order by createdAt, but fallback if the index isn't ready or field is missing
+    const q = query(collection(db, 'products'), orderBy('createdAt', 'desc'));
+    const querySnapshot = await getDocs(q);
+    return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Product));
+  } catch (e) {
+    // Fallback simple fetch
+    const querySnapshot = await getDocs(collection(db, 'products'));
+    return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Product));
+  }
 }
 
 export async function getProduct(db: Firestore, productId: string): Promise<Product | null> {
