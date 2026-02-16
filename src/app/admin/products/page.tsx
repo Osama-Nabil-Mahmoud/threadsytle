@@ -2,10 +2,9 @@
 "use client"
 
 import { useEffect, useState } from 'react';
-import { useFirestore, useUser, useStorage } from '@/firebase';
-import { getProducts, saveProduct, deleteProduct, checkAdminStatus, Product } from '@/lib/db';
+import { useFirestore, useStorage } from '@/firebase';
+import { getProducts, saveProduct, deleteProduct, Product } from '@/lib/db';
 import { uploadProductImage } from '@/lib/storage';
-import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -32,10 +31,8 @@ import { Plus, Edit, Trash2, Loader2, Upload, Database } from 'lucide-react';
 export default function AdminProductsPage() {
   const db = useFirestore();
   const storage = useStorage();
-  const { user, loading: authLoading } = useUser();
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
-  const [isAdmin, setIsAdmin] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
   const [uploading, setUploading] = useState(false);
@@ -49,42 +46,26 @@ export default function AdminProductsPage() {
     colors: '#000000,#ffffff',
   });
 
-  const router = useRouter();
   const { toast } = useToast();
 
   useEffect(() => {
-    if (authLoading) return;
-    
-    async function check() {
-      if (user) {
-        const admin = await checkAdminStatus(db, user.uid);
-        if (admin) {
-          setIsAdmin(true);
-          fetchProducts();
-        } else {
-          toast({
-            variant: "destructive",
-            title: "وصول مرفوض",
-            description: "يجب أن تكون مديراً للوصول لهذه الصفحة. يرجى إضافة الـ UID الخاص بك في مجموعة admins في Firestore.",
-          });
-          router.push('/');
-        }
-      } else {
-        router.push('/login');
-      }
-    }
-    check();
-  }, [user, authLoading, db, router, toast]);
+    fetchProducts();
+  }, [db]);
 
   async function fetchProducts() {
     setLoading(true);
-    const data = await getProducts(db);
-    setProducts(data);
-    setLoading(false);
+    try {
+      const data = await getProducts(db);
+      setProducts(data);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
   }
 
   const seedProducts = async () => {
-    if (!confirm('هل تريد إضافة 4 منتجات تجريبية؟')) return;
+    if (!confirm('هل تريد إضافة منتجات تجريبية لتجربة شكل الموقع؟')) return;
     setLoading(true);
     const sampleProducts = [
       { name: 'قميص عصري أزرق', price: 450, description: 'قميص قطني مريح عالي الجودة يناسب جميع المناسبات.', imageURL: 'https://picsum.photos/seed/p1/600/800', colors: ['#0000FF', '#FFFFFF'], sizes: ['M', 'L', 'XL'], badges: ['New'], rating: 4.8 },
@@ -97,7 +78,7 @@ export default function AdminProductsPage() {
       for (const p of sampleProducts) {
         await saveProduct(db, p as any);
       }
-      toast({ title: "تم إضافة المنتجات التجريبية بنجاح" });
+      toast({ title: "تم إضافة المنتجات بنجاح" });
       fetchProducts();
     } catch (error) {
       toast({ variant: "destructive", title: "فشل إضافة البيانات" });
@@ -183,19 +164,13 @@ export default function AdminProductsPage() {
     });
   };
 
-  if (authLoading || !isAdmin) return (
-    <div className="flex items-center justify-center min-h-[60vh]">
-      <Loader2 className="w-10 h-10 animate-spin text-primary" />
-    </div>
-  );
-
   return (
     <div className="container mx-auto px-4 py-12">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
         <div className="flex gap-3">
           <Button variant="outline" onClick={seedProducts} className="rounded-xl gap-2 h-12">
             <Database className="w-5 h-5" />
-            إضافة بيانات تجريبية
+            إضافة منتجات تجريبية
           </Button>
           <Dialog open={isDialogOpen} onOpenChange={(open) => {
             setIsDialogOpen(open);
@@ -299,7 +274,7 @@ export default function AdminProductsPage() {
             </DialogContent>
           </Dialog>
         </div>
-        <h1 className="text-4xl font-bold font-headline">إدارة المنتجات</h1>
+        <h1 className="text-4xl font-bold font-headline">إدارة منتجاتك</h1>
       </div>
 
       <div className="bg-card rounded-3xl shadow-lg border overflow-hidden">
@@ -352,7 +327,7 @@ export default function AdminProductsPage() {
             ) : (
               <TableRow>
                 <TableCell colSpan={4} className="text-center py-20 text-muted-foreground">
-                  لا توجد منتجات مضافة بعد. اضغط على "إضافة بيانات تجريبية" للبدء بسرعة.
+                  لا توجد منتجات حالياً. اضغط على "إضافة منتج جديد" للبدء.
                 </TableCell>
               </TableRow>
             )}
