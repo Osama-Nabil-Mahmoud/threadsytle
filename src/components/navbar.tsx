@@ -1,9 +1,9 @@
-
 "use client"
 
 import Link from 'next/link';
-import { ShoppingBag, Settings } from 'lucide-react';
+import { Settings } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { CartDrawer } from './cart-drawer';
 
 export function Navbar() {
   return (
@@ -25,15 +25,12 @@ export function Navbar() {
 
         <div className="flex items-center gap-3">
           <Link href="/admin/products">
-            <Button variant="outline" size="sm" className="rounded-full gap-2 border-primary text-primary hover:bg-primary hover:text-white transition-all">
+            <Button variant="outline" size="sm" className="rounded-full gap-2 border-primary text-primary hover:bg-primary hover:text-white transition-all hidden sm:flex">
               <Settings className="w-4 h-4" />
-              إدارة المنتجات
+              إدارة
             </Button>
           </Link>
-          <Button variant="ghost" size="icon" className="relative h-12 w-12 rounded-full bg-muted/50">
-            <ShoppingBag className="w-6 h-6" />
-            <span className="absolute top-2 right-2 bg-accent text-white text-[10px] w-5 h-5 rounded-full flex items-center justify-center font-bold">0</span>
-          </Button>
+          <CartDrawer />
         </div>
       </div>
     </nav>
