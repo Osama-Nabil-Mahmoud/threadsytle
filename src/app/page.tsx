@@ -8,11 +8,9 @@ import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { 
   Search, 
-  ShieldCheck, 
   Truck, 
   RefreshCcw, 
   ChevronDown, 
-  Star, 
   Users, 
   CreditCard,
   Ruler,
@@ -34,10 +32,9 @@ import {
   AccordionItem, 
   AccordionTrigger 
 } from "@/components/ui/accordion";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { NewsletterForm } from '@/components/newsletter-form';
-import { PlaceHolderImages } from '@/lib/placeholder-images';
 
+// CRITICAL PRODUCT IMAGE RULE - Mapping for all products
 const PRODUCT_IMAGES: Record<string, { primary: string; gallery: string[] }> = {
   "m1": { 
     primary: "https://picsum.photos/seed/m1p/800/1000", 
@@ -53,23 +50,104 @@ const PRODUCT_IMAGES: Record<string, { primary: string; gallery: string[] }> = {
 };
 
 const PRODUCTS = [
-  { productId: "m1", genderCategory: "men", name: "Oversized Hoodie - Black", price: 399, compareAtPrice: 499, colors: ["أسود","رمادي","بيج","كحلي"], sizes: ["S","M","L","XL","XXL"], rating: 4.7, ratingCount: 234, description: "هودي oversized قطن 100%، تصميم عصري، مريح للاستخدام اليومي", badge: "خصم 20%" },
-  { productId: "m2", genderCategory: "men", name: "Essential T-Shirt Pack (3 قطع)", price: 299, colors: ["أسود","أبيض","رمادي"], sizes: ["S","M","L","XL","XXL"], rating: 4.9, ratingCount: 567, badge: "Best Seller" },
-  { productId: "m3", genderCategory: "men", name: "Slim Fit Jeans - Dark Blue", price: 449, compareAtPrice: 549, colors: ["أزرق داكن"], sizes: ["28","30","32","34","36","38"], rating: 4.6, ratingCount: 189, description: "جينز slim fit، قماش دنيم عالي الجودة، مرن ومريح" },
-  { productId: "m4", genderCategory: "men", name: "Cargo Pants - Khaki", price: 379, colors: ["خاكي","أسود","زيتوني"], sizes: ["S","M","L","XL","XXL"], rating: 4.5, ratingCount: 145, badge: "New" },
-  { productId: "w7", genderCategory: "women", name: "Oversized Sweater - Beige", price: 349, colors: ["بيج","وردي","رمادي"], sizes: ["S","M","L","XL"], rating: 4.8, ratingCount: 412, badge: "Trending" },
-  { productId: "w8", genderCategory: "women", name: "High-Waist Mom Jeans", price: 429, colors: ["أزرق فاتح","أزرق داكن"], sizes: ["26","28","30","32","34"], rating: 4.7, ratingCount: 298 },
-  { productId: "w9", genderCategory: "women", name: "Cropped Hoodie - Pink", price: 329, colors: ["وردي","أبيض","أسود"], sizes: ["XS","S","M","L"], rating: 4.6, ratingCount: 187 },
-  { productId: "w10", genderCategory: "women", name: "Maxi Dress - Floral", price: 499, colors: ["زهري","أزرق"], sizes: ["S","M","L","XL"], rating: 4.9, ratingCount: 156, badge: "New Arrival" },
+  { 
+    productId: "m1", 
+    genderCategory: "men", 
+    name: "Oversized Hoodie - Black", 
+    price: 399, 
+    compareAtPrice: 499, 
+    colors: ["أسود","رمادي","بيج","كحلي"], 
+    sizes: ["S","M","L","XL","XXL"], 
+    rating: 4.7, 
+    ratingCount: 234, 
+    description: "هودي oversized قطن 100%، تصميم عصري، مريح للاستخدام اليومي", 
+    badge: "خصم 20%" 
+  },
+  { 
+    productId: "m2", 
+    genderCategory: "men", 
+    name: "Essential T-Shirt Pack (3 قطع)", 
+    price: 299, 
+    colors: ["أسود","أبيض","رمادي"], 
+    sizes: ["S","M","L","XL","XXL"], 
+    rating: 4.9, 
+    ratingCount: 567, 
+    badge: "Best Seller" 
+  },
+  { 
+    productId: "m3", 
+    genderCategory: "men", 
+    name: "Slim Fit Jeans - Dark Blue", 
+    price: 449, 
+    compareAtPrice: 549, 
+    colors: ["أزرق داكن"], 
+    sizes: ["28","30","32","34","36","38"], 
+    rating: 4.6, 
+    ratingCount: 189, 
+    description: "جينز slim fit، قماش دنيم عالي الجودة، مرن ومريح" 
+  },
+  { 
+    productId: "m4", 
+    genderCategory: "men", 
+    name: "Cargo Pants - Khaki", 
+    price: 379, 
+    colors: ["خاكي","أسود","زيتوني"], 
+    sizes: ["S","M","L","XL","XXL"], 
+    rating: 4.5, 
+    ratingCount: 145, 
+    badge: "New" 
+  },
+  { 
+    productId: "w7", 
+    genderCategory: "women", 
+    name: "Oversized Sweater - Beige", 
+    price: 349, 
+    colors: ["بيج","وردي","رمادي"], 
+    sizes: ["S","M","L","XL"], 
+    rating: 4.8, 
+    ratingCount: 412, 
+    badge: "Trending" 
+  },
+  { 
+    productId: "w8", 
+    genderCategory: "women", 
+    name: "High-Waist Mom Jeans", 
+    price: 429, 
+    colors: ["أزرق فاتح","أزرق داكن"], 
+    sizes: ["26","28","30","32","34"], 
+    rating: 4.7, 
+    ratingCount: 298 
+  },
+  { 
+    productId: "w9", 
+    genderCategory: "women", 
+    name: "Cropped Hoodie - Pink", 
+    price: 329, 
+    colors: ["وردي","أبيض","أسود"], 
+    sizes: ["XS","S","M","L"], 
+    rating: 4.6, 
+    ratingCount: 187 
+  },
+  { 
+    productId: "w10", 
+    genderCategory: "women", 
+    name: "Maxi Dress - Floral", 
+    price: 499, 
+    colors: ["زهري","أزرق"], 
+    sizes: ["S","M","L","XL"], 
+    rating: 4.9, 
+    ratingCount: 156, 
+    badge: "New Arrival" 
+  },
 ];
 
 const FAQS = [
   { q: "ازاي أطلب من THREAD؟", a: "اختار المنتج اللي عاجبك، اختار المقاس واللون، اضغط \"أضف للسلة\"، أكمل بياناتك وعنوانك، اختار طريقة الدفع، وخلاص! هنوصلك طلبك في أقرب وقت." },
-  { q: "ايه طرق الدفع المتاحة؟", a: "عندنا: كاش عند الاستلام (COD)، فيزا/ماستركارد، فوري، تقسيط (فالو، تمارا، سهل)، ومحافظ إلكترونية." },
-  { q: "التوصيل بياخد كام يوم؟", a: "القاهرة والجيزة: 2-3 أيام عمل. باقي المحافظات: 4-5 أيام. وعندنا توصيل express في نفس اليوم للقاهرة." },
-  { q: "كام رسوم التوصيل؟", a: "طلبات فوق 500 ج: توصيل مجاني 🎉. أقل من 500 ج: 50 ج. الـ Express بـ 100 ج." },
-  { q: "ازاي أعرف المقاس المناسب؟", a: "شوف \"دليل المقاسات\" في صفحة كل منتج. فيه جدول تفصيلي بالقياسات وصور على موديلز بمقاسات مختلفة." },
-  { q: "لو المقاس مش مظبوط؟", a: "لا تقلق! عندك 14 يوم ترجع أو تستبدل المنتج مجاناً، بشرط يكون بحالته الأصلية والتاج موجود." },
+  { q: "ايه طرق الدفع المتاحة؟", a: "عندنا: كاش عند الاستلام (COD)، فيزا/ماستركارد، فوري، تقسيط (فالو، تمارا، سهل)، ومحافظ إلكترونية (فودافون كاش، اتصالات كاش)." },
+  { q: "التوصيل بياخد كام يوم؟", a: "القاهرة والجيزة: 2-3 أيام عمل. الإسكندرية: 3-4 أيام. باقي المحافظات: 4-5 أيام. وعندنا توصيل express في نفس اليوم للقاهرة." },
+  { q: "كام رسوم التوصيل؟", a: "طلبات فوق 500 ج: توصيل مجاني 🎉. طلبات أقل من 500 ج: 50 ج. الـ Express بـ 100 ج." },
+  { q: "ازاي أعرف المقاس المناسب؟", a: "شوف \"دليل المقاسات\" في صفحة كل منتج. فيه جدول تفصيلي بالقياسات وصور على موديلز بمقاسات مختلفة. ولو لسه مش متأكد، كلمنا." },
+  { q: "لو المقاس مش مظبوط؟", a: "لا تقلق! عندك 14 يوم ترجع أو تستبدل المنتج مجاناً، بشرط يكون في حالته الأصلية والتاج موجود." },
   { q: "ازاي أرجع أو أستبدل منتج؟", a: "كلمنا على خدمة العملاء أو اطلب إرجاع من حسابك، هنبعتلك مندوب ياخد المنتج ويرجعلك فلوسك أو يبدله." },
   { q: "الألوان زي الصور بالضبط؟", a: "بنحاول نخلي الصور دقيقة جداً، بس ممكن يكون فيه اختلاف بسيط بسبب إضاءة الشاشة. لو مش عاجبك، ارجعه!" },
   { q: "المنتجات أصلية؟", a: "كل منتجاتنا أصلية 100%، يا تصاميمنا الخاصة يا براندات معتمدة وبأعلى جودة خامات." },
@@ -100,7 +178,7 @@ export default function Home() {
   return (
     <div className="flex flex-col gap-0 pb-0">
       {/* Hero Section */}
-      <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-[#F1F0F4]">
+      <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden bg-[#F1F0F4]">
         <div className="absolute inset-0 z-0">
           <img 
             src="https://picsum.photos/seed/hero/1920/1080" 
@@ -121,10 +199,10 @@ export default function Home() {
             تصاميم يونيك، مش هتلاقيها غير هنا.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Button size="lg" className="h-16 px-12 rounded-full text-xl font-bold bg-primary shadow-2xl hover:scale-105 transition-transform">
+            <Button size="lg" className="h-16 px-12 rounded-full text-xl font-bold bg-primary shadow-2xl hover:scale-105 transition-transform" onClick={() => setActiveTab('men')}>
               تسوق الرجالي
             </Button>
-            <Button size="lg" variant="outline" className="h-16 px-12 rounded-full text-xl font-bold border-2 border-primary text-primary hover:bg-primary hover:text-white transition-all">
+            <Button size="lg" variant="outline" className="h-16 px-12 rounded-full text-xl font-bold border-2 border-primary text-primary hover:bg-primary hover:text-white transition-all" onClick={() => setActiveTab('women')}>
               تسوق النسائي
             </Button>
           </div>
@@ -313,8 +391,8 @@ export default function Home() {
           <div className="space-y-4">
             <h4 className="font-black text-lg">تسوق</h4>
             <ul className="space-y-2 text-muted-foreground font-bold">
-              <li><a href="#" className="hover:text-primary">الرجالي</a></li>
-              <li><a href="#" className="hover:text-primary">النسائي</a></li>
+              <li><button onClick={() => setActiveTab('men')} className="hover:text-primary">الرجالي</button></li>
+              <li><button onClick={() => setActiveTab('women')} className="hover:text-primary">النسائي</button></li>
               <li><a href="#" className="hover:text-primary">وصل حديثاً</a></li>
               <li><a href="#" className="hover:text-primary">الأكثر مبيعاً</a></li>
             </ul>

@@ -31,7 +31,7 @@ interface ProductCardProps {
     badge?: string;
     description?: string;
   };
-  images: {
+  images?: {
     primary: string;
     gallery: string[];
   };
@@ -63,9 +63,18 @@ export function ProductCard({ product, images }: ProductCardProps) {
   };
 
   const colorMapping: Record<string, string> = {
-    "أبيض": "#ffffff", "أسود": "#000000", "رمادي": "#808080", "بيج": "#f5f5dc",
-    "كحلي": "#000080", "أزرق داكن": "#00008b", "خاكي": "#c3b091", "زيتوني": "#808000",
-    "وردي": "#ffc0cb", "أزرق فاتح": "#add8e6", "زهري": "#ff007f", "أزرق": "#0000ff"
+    "أبيض": "#ffffff", 
+    "أسود": "#000000", 
+    "رمادي": "#808080", 
+    "بيج": "#f5f5dc",
+    "كحلي": "#000080", 
+    "أزرق داكن": "#00008b", 
+    "خاكي": "#c3b091", 
+    "زيتوني": "#808000",
+    "وردي": "#ffc0cb", 
+    "أزرق فاتح": "#add8e6", 
+    "زهري": "#ff007f", 
+    "أزرق": "#0000ff"
   };
 
   return (
