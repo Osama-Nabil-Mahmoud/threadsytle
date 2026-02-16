@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Menu } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { CartDrawer } from './cart-drawer';
+import { ThemeToggle } from './theme-toggle';
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 export function Navbar() {
@@ -34,6 +35,7 @@ export function Navbar() {
         </div>
 
         <div className="flex items-center gap-3">
+          <ThemeToggle />
           <CartDrawer />
           <Sheet>
             <SheetTrigger asChild>
