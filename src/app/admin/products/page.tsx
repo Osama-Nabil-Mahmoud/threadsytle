@@ -26,7 +26,8 @@ import {
   DialogTrigger
 } from '@/components/ui/dialog';
 import { useToast } from '@/hooks/use-toast';
-import { Plus, Edit, Trash2, Loader2, Upload, Database } from 'lucide-react';
+import { Plus, Edit, Trash2, Loader2, Upload, Database, Info } from 'lucide-react';
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 export default function AdminProductsPage() {
   const db = useFirestore();
@@ -68,10 +69,9 @@ export default function AdminProductsPage() {
     if (!confirm('هل تريد إضافة منتجات تجريبية لتجربة شكل الموقع؟')) return;
     setLoading(true);
     const sampleProducts = [
-      { name: 'قميص عصري أزرق', price: 450, description: 'قميص قطني مريح عالي الجودة يناسب جميع المناسبات.', imageURL: 'https://picsum.photos/seed/p1/600/800', colors: ['#0000FF', '#FFFFFF'], sizes: ['M', 'L', 'XL'], badges: ['New'], rating: 4.8 },
-      { name: 'ساعة ذكية برو', price: 1200, description: 'ساعة ذكية متطورة لمتابعة نشاطك الرياضي وصحتك.', imageURL: 'https://picsum.photos/seed/p2/600/800', colors: ['#000000'], sizes: ['OS'], badges: ['Hot'], rating: 4.9 },
-      { name: 'حذاء رياضي الترا', price: 850, description: 'حذاء رياضي خفيف الوزن يوفر أقصى درجات الراحة أثناء الجري.', imageURL: 'https://picsum.photos/seed/p3/600/800', colors: ['#FF0000', '#000000'], sizes: ['42', '43', '44'], badges: ['Top Rated'], rating: 4.7 },
-      { name: 'نظارة شمسية كلاسيك', price: 300, description: 'نظارة شمسية أنيقة توفر حماية كاملة من الأشعة فوق البنفسجية.', imageURL: 'https://picsum.photos/seed/p4/600/800', colors: ['#8B4513'], sizes: ['OS'], badges: ['Sale'], rating: 4.5 },
+      { name: 'تيشيرت قطن مميز', price: 350, description: 'تيشيرت عالي الجودة مصنوع من القطن المصري 100%.', imageURL: 'https://picsum.photos/seed/p1/600/800', colors: ['#0000FF', '#FFFFFF'], sizes: ['M', 'L', 'XL'], badges: ['جديد'], rating: 4.8 },
+      { name: 'ساعة يد كلاسيك', price: 1200, description: 'ساعة يد أنيقة تناسب جميع الأوقات والمناسبات الرسمية.', imageURL: 'https://picsum.photos/seed/p2/600/800', colors: ['#000000'], sizes: ['OS'], badges: ['الأكثر مبيعاً'], rating: 4.9 },
+      { name: 'حذاء رياضي مريح', price: 850, description: 'حذاء خفيف الوزن مصمم للمشي لمسافات طويلة.', imageURL: 'https://picsum.photos/seed/p3/600/800', colors: ['#FF0000', '#000000'], sizes: ['42', '43', '44'], badges: ['تخفيض'], rating: 4.7 },
     ];
 
     try {
@@ -165,10 +165,18 @@ export default function AdminProductsPage() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-12">
+    <div className="container mx-auto px-4 py-12 text-right">
+      <Alert className="mb-10 bg-blue-50 border-blue-200 rounded-3xl p-6">
+        <Info className="w-6 h-6 text-blue-600" />
+        <AlertTitle className="text-xl font-bold text-blue-800 mb-2">كيف تضيف منتجاتك؟</AlertTitle>
+        <AlertDescription className="text-blue-700 text-lg">
+          يمكنك الضغط على زر <strong className="text-blue-900">"إضافة منتج جديد"</strong> لإدخال بيانات منتجك يدوياً، أو الضغط على <strong className="text-blue-900">"إضافة منتجات تجريبية"</strong> لملء المتجر فوراً بمنتجات من عندنا لتجربة شكل الموقع.
+        </AlertDescription>
+      </Alert>
+
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
         <div className="flex gap-3">
-          <Button variant="outline" onClick={seedProducts} className="rounded-xl gap-2 h-12">
+          <Button variant="outline" onClick={seedProducts} className="rounded-xl gap-2 h-14 px-6 border-2">
             <Database className="w-5 h-5" />
             إضافة منتجات تجريبية
           </Button>
@@ -177,8 +185,8 @@ export default function AdminProductsPage() {
             if (!open) resetForm();
           }}>
             <DialogTrigger asChild>
-              <Button className="bg-accent hover:bg-accent/90 rounded-xl gap-2 h-12">
-                <Plus className="w-5 h-5" />
+              <Button className="bg-primary hover:bg-primary/90 text-white rounded-xl gap-2 h-14 px-8 text-lg font-bold">
+                <Plus className="w-6 h-6" />
                 إضافة منتج جديد
               </Button>
             </DialogTrigger>
@@ -196,7 +204,7 @@ export default function AdminProductsPage() {
                       required 
                       value={formData.name}
                       onChange={e => setFormData({...formData, name: e.target.value})}
-                      className="text-right"
+                      className="text-right h-12 rounded-xl"
                     />
                   </div>
                   <div className="space-y-2">
@@ -206,7 +214,7 @@ export default function AdminProductsPage() {
                       required 
                       value={formData.price}
                       onChange={e => setFormData({...formData, price: e.target.value})}
-                      className="text-right"
+                      className="text-right h-12 rounded-xl"
                     />
                   </div>
                 </div>
@@ -217,7 +225,7 @@ export default function AdminProductsPage() {
                     required 
                     value={formData.description}
                     onChange={e => setFormData({...formData, description: e.target.value})}
-                    className="text-right min-h-[100px]"
+                    className="text-right min-h-[100px] rounded-xl"
                   />
                 </div>
 
@@ -228,7 +236,7 @@ export default function AdminProductsPage() {
                       placeholder="https://..." 
                       value={formData.imageURL}
                       onChange={e => setFormData({...formData, imageURL: e.target.value})}
-                      className="text-right"
+                      className="text-right h-12 rounded-xl"
                     />
                     <div className="flex items-center gap-3">
                       <Label className="bg-muted px-4 py-3 rounded-xl cursor-pointer hover:bg-muted/80 flex items-center gap-2 border">
@@ -241,32 +249,11 @@ export default function AdminProductsPage() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <Label>الشارات (مفصولة بفاصلة)</Label>
-                    <Input 
-                      placeholder="New, Hot, Limited" 
-                      value={formData.badges}
-                      onChange={e => setFormData({...formData, badges: e.target.value})}
-                      className="text-right"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label>الألوان (HEX مفصولة بفاصلة)</Label>
-                    <Input 
-                      placeholder="#ff0000, #000000" 
-                      value={formData.colors}
-                      onChange={e => setFormData({...formData, colors: e.target.value})}
-                      className="text-right"
-                    />
-                  </div>
-                </div>
-
                 <DialogFooter className="flex-row-reverse gap-3">
-                  <Button type="submit" className="bg-primary hover:bg-primary/90 rounded-xl px-10">
+                  <Button type="submit" className="bg-primary hover:bg-primary/90 text-white rounded-xl px-10 h-12">
                     {editingProduct ? 'تحديث' : 'حفظ المنتج'}
                   </Button>
-                  <Button type="button" variant="outline" onClick={() => setIsDialogOpen(false)} className="rounded-xl">
+                  <Button type="button" variant="outline" onClick={() => setIsDialogOpen(false)} className="rounded-xl h-12">
                     إلغاء
                   </Button>
                 </DialogFooter>
@@ -277,7 +264,7 @@ export default function AdminProductsPage() {
         <h1 className="text-4xl font-bold font-headline">إدارة منتجاتك</h1>
       </div>
 
-      <div className="bg-card rounded-3xl shadow-lg border overflow-hidden">
+      <div className="bg-card rounded-3xl shadow-xl border-none overflow-hidden">
         <Table>
           <TableHeader className="bg-muted/50">
             <TableRow>
@@ -299,22 +286,22 @@ export default function AdminProductsPage() {
                 <TableRow key={product.id}>
                   <TableCell className="text-right">
                     <div className="flex items-center gap-2 justify-end">
-                      <Button variant="ghost" size="icon" onClick={() => handleEdit(product)}>
-                        <Edit className="w-4 h-4 text-blue-600" />
+                      <Button variant="ghost" size="icon" onClick={() => handleEdit(product)} className="h-10 w-10">
+                        <Edit className="w-5 h-5 text-blue-600" />
                       </Button>
-                      <Button variant="ghost" size="icon" onClick={() => handleDelete(product.id!)}>
-                        <Trash2 className="w-4 h-4 text-destructive" />
+                      <Button variant="ghost" size="icon" onClick={() => handleDelete(product.id!)} className="h-10 w-10">
+                        <Trash2 className="w-5 h-5 text-destructive" />
                       </Button>
                     </div>
                   </TableCell>
-                  <TableCell className="text-right font-bold text-primary">
+                  <TableCell className="text-right font-bold text-primary text-lg">
                     {product.price} ج.م
                   </TableCell>
-                  <TableCell className="text-right font-medium">
+                  <TableCell className="text-right font-medium text-lg">
                     {product.name}
                   </TableCell>
                   <TableCell className="text-right">
-                    <div className="w-12 h-12 rounded-lg bg-muted overflow-hidden border">
+                    <div className="w-16 h-16 rounded-xl bg-muted overflow-hidden border-2 border-white shadow-md">
                       {product.imageURL ? (
                         <img src={product.imageURL} className="w-full h-full object-cover" />
                       ) : (
