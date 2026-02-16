@@ -1,7 +1,8 @@
 
 "use client"
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { ProductCard } from '@/components/product-card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -70,23 +71,44 @@ const FAQS = [
 ];
 
 export default function Home() {
+  const searchParams = useSearchParams();
   const [activeTab, setActiveTab] = useState('all');
+  const [activeFilter, setActiveFilter] = useState('all');
   const [sortBy, setSortBy] = useState('best-selling');
   const [searchQuery, setSearchQuery] = useState('');
 
+  useEffect(() => {
+    const cat = searchParams.get('cat');
+    const filter = searchParams.get('filter');
+    
+    if (cat === 'men') setActiveTab('men');
+    else if (cat === 'women') setActiveTab('women');
+    else setActiveTab('all');
+
+    if (filter === 'new') setActiveFilter('new');
+    else if (filter === 'sale') setActiveFilter('sale');
+    else setActiveFilter('all');
+  }, [searchParams]);
+
   const filteredProducts = useMemo(() => {
     let result = [...PRODUCTS];
-    if (activeTab !== 'all') {
-      result = result.filter(p => p.genderCategory === activeTab);
-    }
+    
+    if (activeTab === 'men') result = result.filter(p => p.genderCategory === 'men');
+    if (activeTab === 'women') result = result.filter(p => p.genderCategory === 'women');
+    
+    if (activeFilter === 'new') result = result.filter(p => p.badge === 'New' || p.badge === 'New Arrival');
+    if (activeFilter === 'sale') result = result.filter(p => p.compareAtPrice || (p.badge && p.badge.includes('خصم')));
+
     if (searchQuery) {
       result = result.filter(p => p.name.toLowerCase().includes(searchQuery.toLowerCase()));
     }
+
     if (sortBy === 'price-low') result.sort((a, b) => a.price - b.price);
     if (sortBy === 'rating-high') result.sort((a, b) => b.rating - a.rating);
     if (sortBy === 'best-selling') result.sort((a, b) => b.ratingCount - a.ratingCount);
+    
     return result;
-  }, [activeTab, sortBy, searchQuery]);
+  }, [activeTab, activeFilter, sortBy, searchQuery]);
 
   const scrollToShop = () => {
     document.getElementById('shop')?.scrollIntoView({ behavior: 'smooth' });
@@ -114,8 +136,8 @@ export default function Home() {
             THREAD بوصلك لأرقى خطوط الموضة المصرية بجودة عالمية.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Button size="lg" className="h-16 px-12 rounded-full text-xl font-bold bg-primary shadow-2xl hover:scale-105 transition-transform" onClick={() => { setActiveTab('men'); scrollToShop(); }}>تسوق الرجالي</Button>
-            <Button size="lg" variant="outline" className="h-16 px-12 rounded-full text-xl font-bold border-2 border-primary text-primary hover:bg-primary hover:text-white transition-all" onClick={() => { setActiveTab('women'); scrollToShop(); }}>تسوق النسائي</Button>
+            <Button size="lg" className="h-16 px-12 rounded-full text-xl font-bold bg-primary shadow-2xl hover:scale-105 transition-transform" onClick={() => { setActiveTab('men'); setActiveFilter('all'); scrollToShop(); }}>تسوق الرجالي</Button>
+            <Button size="lg" variant="outline" className="h-16 px-12 rounded-full text-xl font-bold border-2 border-primary text-primary hover:bg-primary hover:text-white transition-all" onClick={() => { setActiveTab('women'); setActiveFilter('all'); scrollToShop(); }}>تسوق النسائي</Button>
           </div>
         </div>
       </section>
@@ -177,10 +199,12 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="flex bg-muted/50 p-1.5 rounded-2xl w-full md:w-auto">
-              <Button variant={activeTab === 'all' ? 'default' : 'ghost'} className={`flex-1 md:px-8 h-11 rounded-xl font-bold ${activeTab === 'all' ? 'shadow-lg' : ''}`} onClick={() => setActiveTab('all')}>الكل</Button>
-              <Button variant={activeTab === 'men' ? 'default' : 'ghost'} className={`flex-1 md:px-8 h-11 rounded-xl font-bold ${activeTab === 'men' ? 'shadow-lg' : ''}`} onClick={() => setActiveTab('men')}>رجالي</Button>
-              <Button variant={activeTab === 'women' ? 'default' : 'ghost'} className={`flex-1 md:px-8 h-11 rounded-xl font-bold ${activeTab === 'women' ? 'shadow-lg' : ''}`} onClick={() => setActiveTab('women')}>نسائي</Button>
+            <div className="flex bg-muted/50 p-1.5 rounded-2xl w-full md:w-auto overflow-x-auto">
+              <Button variant={activeTab === 'all' && activeFilter === 'all' ? 'default' : 'ghost'} className={`px-6 h-11 rounded-xl font-bold transition-all`} onClick={() => { setActiveTab('all'); setActiveFilter('all'); }}>الكل</Button>
+              <Button variant={activeTab === 'men' ? 'default' : 'ghost'} className={`px-6 h-11 rounded-xl font-bold transition-all`} onClick={() => { setActiveTab('men'); setActiveFilter('all'); }}>رجالي</Button>
+              <Button variant={activeTab === 'women' ? 'default' : 'ghost'} className={`px-6 h-11 rounded-xl font-bold transition-all`} onClick={() => { setActiveTab('women'); setActiveFilter('all'); }}>نسائي</Button>
+              <Button variant={activeFilter === 'new' ? 'default' : 'ghost'} className={`px-6 h-11 rounded-xl font-bold transition-all`} onClick={() => { setActiveTab('all'); setActiveFilter('new'); }}>جديد</Button>
+              <Button variant={activeFilter === 'sale' ? 'default' : 'ghost'} className={`px-6 h-11 rounded-xl font-bold transition-all`} onClick={() => { setActiveTab('all'); setActiveFilter('sale'); }}>عروض</Button>
             </div>
           </div>
 
@@ -248,9 +272,9 @@ export default function Home() {
             <div className="space-y-4">
               <h4 className="font-black text-lg">تسوق</h4>
               <ul className="space-y-2 text-muted-foreground font-bold">
-                <li><button onClick={() => {setActiveTab('men'); scrollToShop();}} className="hover:text-primary">الرجالي</button></li>
-                <li><button onClick={() => {setActiveTab('women'); scrollToShop();}} className="hover:text-primary">النسائي</button></li>
-                <li><a href="#shop" className="hover:text-primary">وصل حديثاً</a></li>
+                <li><button onClick={() => {setActiveTab('men'); setActiveFilter('all'); scrollToShop();}} className="hover:text-primary">الرجالي</button></li>
+                <li><button onClick={() => {setActiveTab('women'); setActiveFilter('all'); scrollToShop();}} className="hover:text-primary">النسائي</button></li>
+                <li><button onClick={() => {setActiveTab('all'); setActiveFilter('new'); scrollToShop();}} className="hover:text-primary">وصل حديثاً</button></li>
               </ul>
             </div>
             <div className="space-y-4">
@@ -258,7 +282,7 @@ export default function Home() {
               <ul className="space-y-2 text-muted-foreground font-bold">
                 <li><a href="#" className="hover:text-primary">تتبع طلبك</a></li>
                 <li><a href="#" className="hover:text-primary">سياسة الإرجاع</a></li>
-                <li><a href="#" className="hover:text-primary">دليل المقاسات</a></li>
+                <li><button onClick={() => document.querySelector('section.py-24.bg-card.border-y')?.scrollIntoView({ behavior: 'smooth' })} className="hover:text-primary">دليل المقاسات</button></li>
               </ul>
             </div>
             <div className="space-y-4">

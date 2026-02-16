@@ -9,10 +9,10 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 export function Navbar() {
   const MENU_ITEMS = [
-    { title: "رجالي", href: "/#shop" },
-    { title: "نسائي", href: "/#shop" },
-    { title: "جديد", href: "/#shop" },
-    { title: "عروض", href: "/#shop" }
+    { title: "رجالي", href: "/?cat=men#shop" },
+    { title: "نسائي", href: "/?cat=women#shop" },
+    { title: "جديد", href: "/?filter=new#shop" },
+    { title: "عروض", href: "/?filter=sale#shop" }
   ];
 
   return (
