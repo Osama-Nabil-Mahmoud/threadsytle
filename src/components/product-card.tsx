@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { ShoppingCart, Star, Plus, Minus, Maximize2, X } from 'lucide-react';
+import { ShoppingCart, Star, Plus, Minus, Maximize2 } from 'lucide-react';
 import { useCart } from '@/context/cart-context';
 import { useToast } from '@/hooks/use-toast';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
@@ -44,7 +44,7 @@ export function ProductCard({ product, images }: ProductCardProps) {
   const [selectedSize, setSelectedSize] = useState(product.sizes[0]);
   const [quantity, setQuantity] = useState(1);
 
-  const allImages = [images.primary, ...images.gallery].filter(img => !!img);
+  const allImages = [images?.primary, ...(images?.gallery || [])].filter(img => !!img);
 
   const handleAddToCart = () => {
     addToCart({
@@ -54,11 +54,11 @@ export function ProductCard({ product, images }: ProductCardProps) {
       color: selectedColor,
       size: selectedSize,
       quantity: quantity,
-      image: images.primary,
+      image: images?.primary || "",
     });
     toast({
-      title: "تمت الإضافة",
-      description: `تم إضافة ${product.name} إلى السلة بنجاح.`,
+      title: "تمت الإضافة للسلة! 🛒",
+      description: `تم إضافة ${product.name} بنجاح.`,
     });
   };
 
@@ -71,34 +71,32 @@ export function ProductCard({ product, images }: ProductCardProps) {
   return (
     <Card className="group overflow-hidden border-none shadow-lg hover:shadow-2xl transition-all duration-500 rounded-[2rem] bg-white flex flex-col h-full relative">
       {product.rating >= 4.8 && (
-        <div className="absolute top-0 left-0 z-20 bg-yellow-400 text-black text-[10px] font-bold px-3 py-1 rounded-br-xl shadow-md">
+        <div className="absolute top-0 left-0 z-20 bg-yellow-400 text-black text-[10px] font-black px-4 py-1.5 rounded-br-2xl shadow-md">
           الأكثر مبيعاً 🔥
         </div>
       )}
 
       {/* Image Section */}
       <div className="relative aspect-[4/5] overflow-hidden bg-muted/30">
-        {images.primary ? (
+        {images?.primary ? (
           <>
             <img 
               src={images.primary} 
               alt={product.name} 
               className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-              data-ai-hint={product.name.split('-')[0].trim()}
             />
-            {/* Gallery Trigger */}
             <Dialog>
               <DialogTrigger asChild>
-                <button className="absolute bottom-4 left-4 bg-white/80 backdrop-blur-sm p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity shadow-md hover:bg-white">
-                  <Maximize2 className="w-4 h-4 text-primary" />
+                <button className="absolute bottom-4 left-4 bg-white/80 backdrop-blur-sm p-3 rounded-full opacity-0 group-hover:opacity-100 transition-opacity shadow-xl hover:bg-white">
+                  <Maximize2 className="w-5 h-5 text-primary" />
                 </button>
               </DialogTrigger>
               <DialogContent className="max-w-4xl p-0 overflow-hidden bg-transparent border-none">
-                <Carousel className="w-full max-w-3xl mx-auto">
+                <Carousel className="w-full max-w-2xl mx-auto">
                   <CarouselContent>
                     {allImages.map((img, index) => (
                       <CarouselItem key={index}>
-                        <div className="relative aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl">
+                        <div className="relative aspect-[4/5] rounded-[3rem] overflow-hidden shadow-2xl">
                           <img src={img} alt={`${product.name} - view ${index + 1}`} className="w-full h-full object-cover" />
                         </div>
                       </CarouselItem>
@@ -122,7 +120,7 @@ export function ProductCard({ product, images }: ProductCardProps) {
         )}
         {product.badge && (
           <div className="absolute top-4 right-4 flex flex-col gap-2">
-            <Badge className="bg-accent text-white border-none shadow-lg px-3 py-1 text-xs">
+            <Badge className="bg-accent text-white border-none shadow-lg px-4 py-1.5 text-xs font-black">
               {product.badge}
             </Badge>
           </div>
@@ -131,35 +129,35 @@ export function ProductCard({ product, images }: ProductCardProps) {
 
       <CardContent className="p-6 text-right flex-1 flex flex-col">
         <div className="flex items-center justify-between mb-3">
-          <div className="flex items-center gap-1 text-yellow-500 bg-yellow-50 px-2 py-1 rounded-lg">
-            <span className="text-xs font-bold">{product.rating}</span>
+          <div className="flex items-center gap-1 text-yellow-500 bg-yellow-50 px-2.5 py-1 rounded-full">
+            <span className="text-xs font-black">{product.rating}</span>
             <Star className="w-3 h-3 fill-current" />
             <span className="text-[10px] text-muted-foreground mr-1">({product.ratingCount})</span>
           </div>
-          <h3 className="font-bold text-lg line-clamp-1">{product.name}</h3>
+          <h3 className="font-black text-xl line-clamp-1">{product.name}</h3>
         </div>
 
         <div className="mb-4">
           <div className="flex items-baseline justify-end gap-3">
             {product.compareAtPrice && (
-              <span className="text-sm text-muted-foreground line-through opacity-60">
+              <span className="text-sm text-muted-foreground line-through opacity-60 font-bold">
                 {product.compareAtPrice} ج.م
               </span>
             )}
-            <div className="font-headline text-2xl font-black text-primary">
+            <div className="font-headline text-3xl font-black text-primary">
               {product.price} <span className="text-sm">ج.م</span>
             </div>
           </div>
         </div>
 
-        <div className="space-y-2 mb-4">
-          <p className="text-[10px] font-bold opacity-60">اللون:</p>
-          <div className="flex flex-row-reverse gap-2">
+        <div className="space-y-3 mb-4">
+          <p className="text-[10px] font-black opacity-60">اللون المختار: {selectedColor}</p>
+          <div className="flex flex-row-reverse gap-3">
             {product.colors.map(color => (
               <button
                 key={color}
                 onClick={() => setSelectedColor(color)}
-                className={`w-6 h-6 rounded-full border-2 transition-all shadow-sm ${
+                className={`w-8 h-8 rounded-full border-4 transition-all shadow-sm ${
                   selectedColor === color ? 'border-primary scale-110' : 'border-transparent'
                 }`}
                 title={color}
@@ -169,15 +167,15 @@ export function ProductCard({ product, images }: ProductCardProps) {
           </div>
         </div>
 
-        <div className="space-y-2 mb-6">
-          <p className="text-[10px] font-bold opacity-60">المقاس:</p>
+        <div className="space-y-3 mb-6">
+          <p className="text-[10px] font-black opacity-60">المقاس:</p>
           <div className="flex flex-row-reverse flex-wrap gap-2">
             {product.sizes.map(size => (
               <button
                 key={size}
                 onClick={() => setSelectedSize(size)}
-                className={`h-8 min-w-[32px] px-2 rounded-lg text-xs font-bold border transition-all ${
-                  selectedSize === size ? 'bg-primary text-white border-primary' : 'bg-muted/30 border-transparent hover:border-accent'
+                className={`h-10 min-w-[40px] px-3 rounded-xl text-xs font-black border-2 transition-all ${
+                  selectedSize === size ? 'bg-primary text-white border-primary shadow-lg shadow-primary/20' : 'bg-muted/30 border-transparent hover:border-accent'
                 }`}
               >
                 {size}
@@ -186,22 +184,22 @@ export function ProductCard({ product, images }: ProductCardProps) {
           </div>
         </div>
 
-        <div className="mt-auto flex items-center justify-between gap-4">
-          <div className="flex items-center border rounded-xl bg-muted/20">
-            <Button variant="ghost" size="icon" className="h-10 w-8" onClick={() => setQuantity(q => q + 1)}>
-              <Plus className="w-3 h-3" />
+        <div className="mt-auto flex items-center justify-between gap-4 pt-4 border-t">
+          <div className="flex items-center border-2 rounded-2xl bg-muted/20">
+            <Button variant="ghost" size="icon" className="h-12 w-10" onClick={() => setQuantity(q => q + 1)}>
+              <Plus className="w-4 h-4" />
             </Button>
-            <span className="w-6 text-center font-bold text-sm">{quantity}</span>
-            <Button variant="ghost" size="icon" className="h-10 w-8" onClick={() => setQuantity(q => Math.max(1, q - 1))}>
-              <Minus className="w-3 h-3" />
+            <span className="w-8 text-center font-black text-lg">{quantity}</span>
+            <Button variant="ghost" size="icon" className="h-12 w-10" onClick={() => setQuantity(q => Math.max(1, q - 1))}>
+              <Minus className="w-4 h-4" />
             </Button>
           </div>
           <Button 
-            className="flex-1 gap-2 rounded-xl h-12 bg-primary hover:bg-primary/90 text-sm font-bold shadow-lg shadow-primary/20"
+            className="flex-1 gap-3 rounded-2xl h-14 bg-primary hover:bg-primary/90 text-md font-black shadow-xl shadow-primary/20 hover:scale-[1.02] transition-transform"
             onClick={handleAddToCart}
           >
             أضف للسلة
-            <ShoppingCart className="w-4 h-4" />
+            <ShoppingCart className="w-5 h-5" />
           </Button>
         </div>
       </CardContent>
