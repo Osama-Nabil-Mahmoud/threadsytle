@@ -93,6 +93,7 @@ export function ProductCard({ product, images }: ProductCardProps) {
               src={images.primary} 
               alt={product.name} 
               className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+              data-ai-hint="clothing apparel"
             />
             <Dialog>
               <DialogTrigger asChild>
@@ -106,7 +107,7 @@ export function ProductCard({ product, images }: ProductCardProps) {
                     {allImages.map((img, index) => (
                       <CarouselItem key={index}>
                         <div className="relative aspect-[4/5] rounded-[3rem] overflow-hidden shadow-2xl">
-                          <img src={img} alt={`${product.name} - view ${index + 1}`} className="w-full h-full object-cover" />
+                          <img src={img} alt={`${product.name} - view ${index + 1}`} className="w-full h-full object-cover" data-ai-hint="clothing fashion" />
                         </div>
                       </CarouselItem>
                     ))}
@@ -143,7 +144,7 @@ export function ProductCard({ product, images }: ProductCardProps) {
             <Star className="w-3 h-3 fill-current" />
             <span className="text-[10px] text-muted-foreground mr-1">({product.ratingCount})</span>
           </div>
-          <h3 className="font-black text-xl line-clamp-1">{product.name}</h3>
+          <h3 className="font-black text-lg line-clamp-2 leading-tight h-10 overflow-hidden">{product.name}</h3>
         </div>
 
         <div className="mb-4">
@@ -153,7 +154,7 @@ export function ProductCard({ product, images }: ProductCardProps) {
                 {product.compareAtPrice} ج.م
               </span>
             )}
-            <div className="font-headline text-3xl font-black text-primary">
+            <div className="font-headline text-2xl font-black text-primary">
               {product.price} <span className="text-sm">ج.م</span>
             </div>
           </div>
@@ -166,7 +167,7 @@ export function ProductCard({ product, images }: ProductCardProps) {
               <button
                 key={color}
                 onClick={() => setSelectedColor(color)}
-                className={`w-8 h-8 rounded-full border-4 transition-all shadow-sm ${
+                className={`w-7 h-7 rounded-full border-4 transition-all shadow-sm ${
                   selectedColor === color ? 'border-primary scale-110' : 'border-transparent'
                 }`}
                 title={color}
@@ -183,7 +184,7 @@ export function ProductCard({ product, images }: ProductCardProps) {
               <button
                 key={size}
                 onClick={() => setSelectedSize(size)}
-                className={`h-10 min-w-[40px] px-3 rounded-xl text-xs font-black border-2 transition-all ${
+                className={`h-9 min-w-[36px] px-2 rounded-xl text-[10px] font-black border-2 transition-all ${
                   selectedSize === size ? 'bg-primary text-white border-primary shadow-lg shadow-primary/20' : 'bg-muted/30 border-transparent hover:border-accent'
                 }`}
               >
@@ -195,20 +196,20 @@ export function ProductCard({ product, images }: ProductCardProps) {
 
         <div className="mt-auto flex items-center justify-between gap-4 pt-4 border-t">
           <div className="flex items-center border-2 rounded-2xl bg-muted/20">
-            <Button variant="ghost" size="icon" className="h-12 w-10" onClick={() => setQuantity(q => q + 1)}>
-              <Plus className="w-4 h-4" />
+            <Button variant="ghost" size="icon" className="h-10 w-8" onClick={() => setQuantity(q => q + 1)}>
+              <Plus className="w-3 h-3" />
             </Button>
-            <span className="w-8 text-center font-black text-lg">{quantity}</span>
-            <Button variant="ghost" size="icon" className="h-12 w-10" onClick={() => setQuantity(q => Math.max(1, q - 1))}>
-              <Minus className="w-4 h-4" />
+            <span className="w-6 text-center font-black text-md">{quantity}</span>
+            <Button variant="ghost" size="icon" className="h-10 w-8" onClick={() => setQuantity(q => Math.max(1, q - 1))}>
+              <Minus className="w-3 h-3" />
             </Button>
           </div>
           <Button 
-            className="flex-1 gap-3 rounded-2xl h-14 bg-primary hover:bg-primary/90 text-md font-black shadow-xl shadow-primary/20 hover:scale-[1.02] transition-transform"
+            className="flex-1 gap-2 rounded-2xl h-12 bg-primary hover:bg-primary/90 text-sm font-black shadow-xl shadow-primary/20 hover:scale-[1.02] transition-transform"
             onClick={handleAddToCart}
           >
             أضف للسلة
-            <ShoppingCart className="w-5 h-5" />
+            <ShoppingCart className="w-4 h-4" />
           </Button>
         </div>
       </CardContent>

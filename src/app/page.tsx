@@ -34,19 +34,40 @@ import {
 } from "@/components/ui/accordion";
 import { NewsletterForm } from '@/components/newsletter-form';
 
-// CRITICAL PRODUCT IMAGE RULE - Mapping for all products
+// PRODUCT IMAGE MAPPING - Updated with better seeds for real clothing
 const PRODUCT_IMAGES: Record<string, { primary: string; gallery: string[] }> = {
   "m1": { 
-    primary: "https://picsum.photos/seed/m1p/800/1000", 
-    gallery: ["https://picsum.photos/seed/m1b/800/1000", "https://picsum.photos/seed/m1d/800/1000"] 
+    primary: "https://picsum.photos/seed/hoodie-black-1/800/1000", 
+    gallery: ["https://picsum.photos/seed/hoodie-black-2/800/1000", "https://picsum.photos/seed/hoodie-black-3/800/1000"] 
   },
-  "m2": { primary: "https://picsum.photos/seed/m2p/800/1000", gallery: [] },
-  "m3": { primary: "https://picsum.photos/seed/m3p/800/1000", gallery: [] },
-  "m4": { primary: "https://picsum.photos/seed/m4p/800/1000", gallery: [] },
-  "w7": { primary: "https://picsum.photos/seed/w7p/800/1000", gallery: [] },
-  "w8": { primary: "https://picsum.photos/seed/w8p/800/1000", gallery: [] },
-  "w9": { primary: "https://picsum.photos/seed/w9p/800/1000", gallery: [] },
-  "w10": { primary: "https://picsum.photos/seed/w10p/800/1000", gallery: [] },
+  "m2": { 
+    primary: "https://picsum.photos/seed/tshirt-pack-1/800/1000", 
+    gallery: [] 
+  },
+  "m3": { 
+    primary: "https://picsum.photos/seed/jeans-blue-1/800/1000", 
+    gallery: [] 
+  },
+  "m4": { 
+    primary: "https://picsum.photos/seed/pants-khaki-1/800/1000", 
+    gallery: [] 
+  },
+  "w7": { 
+    primary: "https://picsum.photos/seed/sweater-beige-1/800/1000", 
+    gallery: [] 
+  },
+  "w8": { 
+    primary: "https://picsum.photos/seed/jeans-mom-1/800/1000", 
+    gallery: [] 
+  },
+  "w9": { 
+    primary: "https://picsum.photos/seed/hoodie-pink-1/800/1000", 
+    gallery: [] 
+  },
+  "w10": { 
+    primary: "https://picsum.photos/seed/dress-floral-1/800/1000", 
+    gallery: [] 
+  },
 };
 
 const PRODUCTS = [
@@ -181,10 +202,10 @@ export default function Home() {
       <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden bg-[#F1F0F4]">
         <div className="absolute inset-0 z-0">
           <img 
-            src="https://picsum.photos/seed/hero/1920/1080" 
+            src="https://picsum.photos/seed/thread-hero/1920/1080" 
             alt="Hero" 
             className="w-full h-full object-cover opacity-20 grayscale"
-            data-ai-hint="lifestyle fashion"
+            data-ai-hint="lifestyle fashion model"
           />
         </div>
         <div className="container mx-auto px-4 text-center z-10 space-y-8">

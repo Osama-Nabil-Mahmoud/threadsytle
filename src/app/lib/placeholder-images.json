@@ -1,15 +1,13 @@
 
 {
   "placeholderImages": [
-    { "id": "m1-p", "description": "Black Oversized Hoodie Front", "imageUrl": "https://picsum.photos/seed/m1p/800/1000", "imageHint": "black hoodie" },
-    { "id": "m1-g1", "description": "Black Oversized Hoodie Back", "imageUrl": "https://picsum.photos/seed/m1b/800/1000", "imageHint": "hoodie back" },
-    { "id": "m1-g2", "description": "Black Oversized Hoodie Detail", "imageUrl": "https://picsum.photos/seed/m1d/800/1000", "imageHint": "fabric texture" },
-    { "id": "m2-p", "description": "Essential T-Shirt Pack", "imageUrl": "https://picsum.photos/seed/m2p/800/1000", "imageHint": "tshirt pack" },
-    { "id": "m3-p", "description": "Slim Fit Jeans Front", "imageUrl": "https://picsum.photos/seed/m3p/800/1000", "imageHint": "blue jeans" },
-    { "id": "m4-p", "description": "Cargo Pants Khaki", "imageUrl": "https://picsum.photos/seed/m4p/800/1000", "imageHint": "cargo pants" },
-    { "id": "w7-p", "description": "Oversized Sweater Beige", "imageUrl": "https://picsum.photos/seed/w7p/800/1000", "imageHint": "beige sweater" },
-    { "id": "w8-p", "description": "High-Waist Mom Jeans", "imageUrl": "https://picsum.photos/seed/w8p/800/1000", "imageHint": "mom jeans" },
-    { "id": "w9-p", "description": "Cropped Hoodie Pink", "imageUrl": "https://picsum.photos/seed/w9p/800/1000", "imageHint": "pink hoodie" },
-    { "id": "w10-p", "description": "Maxi Dress Floral", "imageUrl": "https://picsum.photos/seed/w10p/800/1000", "imageHint": "floral dress" }
+    { "id": "m1-hoodie", "description": "Black Oversized Hoodie", "imageUrl": "https://picsum.photos/seed/hoodie-black-1/800/1000", "imageHint": "black hoodie" },
+    { "id": "m2-tshirt", "description": "Essential T-Shirt Pack", "imageUrl": "https://picsum.photos/seed/tshirt-pack-1/800/1000", "imageHint": "t-shirt pack" },
+    { "id": "m3-jeans", "description": "Slim Fit Blue Jeans", "imageUrl": "https://picsum.photos/seed/jeans-blue-1/800/1000", "imageHint": "blue jeans" },
+    { "id": "m4-cargo", "description": "Khaki Cargo Pants", "imageUrl": "https://picsum.photos/seed/pants-khaki-1/800/1000", "imageHint": "cargo pants" },
+    { "id": "w7-sweater", "description": "Beige Oversized Sweater", "imageUrl": "https://picsum.photos/seed/sweater-beige-1/800/1000", "imageHint": "beige sweater" },
+    { "id": "w8-momjeans", "description": "High-Waist Mom Jeans", "imageUrl": "https://picsum.photos/seed/jeans-mom-1/800/1000", "imageHint": "mom jeans" },
+    { "id": "w9-crophoodie", "description": "Pink Cropped Hoodie", "imageUrl": "https://picsum.photos/seed/hoodie-pink-1/800/1000", "imageHint": "pink hoodie" },
+    { "id": "w10-floral", "description": "Maxi Floral Dress", "imageUrl": "https://picsum.photos/seed/dress-floral-1/800/1000", "imageHint": "floral dress" }
   ]
 }
