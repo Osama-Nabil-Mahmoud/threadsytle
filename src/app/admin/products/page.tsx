@@ -2,7 +2,7 @@
 "use client"
 
 import { useEffect, useState } from 'react';
-import { useAuth, useFirestore, useUser, useStorage } from '@/firebase';
+import { useFirestore, useUser, useStorage } from '@/firebase';
 import { getProducts, saveProduct, deleteProduct, checkAdminStatus, Product } from '@/lib/db';
 import { uploadProductImage } from '@/lib/storage';
 import { useRouter } from 'next/navigation';
@@ -27,7 +27,7 @@ import {
   DialogTrigger
 } from '@/components/ui/dialog';
 import { useToast } from '@/hooks/use-toast';
-import { Plus, Edit, Trash2, Loader2, Upload } from 'lucide-react';
+import { Plus, Edit, Trash2, Loader2, Upload, Database } from 'lucide-react';
 
 export default function AdminProductsPage() {
   const db = useFirestore();
@@ -62,6 +62,11 @@ export default function AdminProductsPage() {
           setIsAdmin(true);
           fetchProducts();
         } else {
+          toast({
+            variant: "destructive",
+            title: "وصول مرفوض",
+            description: "يجب أن تكون مديراً للوصول لهذه الصفحة. يرجى إضافة الـ UID الخاص بك في مجموعة admins في Firestore.",
+          });
           router.push('/');
         }
       } else {
@@ -69,7 +74,7 @@ export default function AdminProductsPage() {
       }
     }
     check();
-  }, [user, authLoading, db, router]);
+  }, [user, authLoading, db, router, toast]);
 
   async function fetchProducts() {
     setLoading(true);
@@ -77,6 +82,29 @@ export default function AdminProductsPage() {
     setProducts(data);
     setLoading(false);
   }
+
+  const seedProducts = async () => {
+    if (!confirm('هل تريد إضافة 4 منتجات تجريبية؟')) return;
+    setLoading(true);
+    const sampleProducts = [
+      { name: 'قميص عصري أزرق', price: 450, description: 'قميص قطني مريح عالي الجودة يناسب جميع المناسبات.', imageURL: 'https://picsum.photos/seed/p1/600/800', colors: ['#0000FF', '#FFFFFF'], sizes: ['M', 'L', 'XL'], badges: ['New'], rating: 4.8 },
+      { name: 'ساعة ذكية برو', price: 1200, description: 'ساعة ذكية متطورة لمتابعة نشاطك الرياضي وصحتك.', imageURL: 'https://picsum.photos/seed/p2/600/800', colors: ['#000000'], sizes: ['OS'], badges: ['Hot'], rating: 4.9 },
+      { name: 'حذاء رياضي الترا', price: 850, description: 'حذاء رياضي خفيف الوزن يوفر أقصى درجات الراحة أثناء الجري.', imageURL: 'https://picsum.photos/seed/p3/600/800', colors: ['#FF0000', '#000000'], sizes: ['42', '43', '44'], badges: ['Top Rated'], rating: 4.7 },
+      { name: 'نظارة شمسية كلاسيك', price: 300, description: 'نظارة شمسية أنيقة توفر حماية كاملة من الأشعة فوق البنفسجية.', imageURL: 'https://picsum.photos/seed/p4/600/800', colors: ['#8B4513'], sizes: ['OS'], badges: ['Sale'], rating: 4.5 },
+    ];
+
+    try {
+      for (const p of sampleProducts) {
+        await saveProduct(db, p as any);
+      }
+      toast({ title: "تم إضافة المنتجات التجريبية بنجاح" });
+      fetchProducts();
+    } catch (error) {
+      toast({ variant: "destructive", title: "فشل إضافة البيانات" });
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -155,112 +183,122 @@ export default function AdminProductsPage() {
     });
   };
 
-  if (authLoading || !isAdmin) return null;
+  if (authLoading || !isAdmin) return (
+    <div className="flex items-center justify-center min-h-[60vh]">
+      <Loader2 className="w-10 h-10 animate-spin text-primary" />
+    </div>
+  );
 
   return (
     <div className="container mx-auto px-4 py-12">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
-        <Dialog open={isDialogOpen} onOpenChange={(open) => {
-          setIsDialogOpen(open);
-          if (!open) resetForm();
-        }}>
-          <DialogTrigger asChild>
-            <Button className="bg-accent hover:bg-accent/90 rounded-xl gap-2 h-12">
-              <Plus className="w-5 h-5" />
-              إضافة منتج جديد
-            </Button>
-          </DialogTrigger>
-          <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
-            <DialogHeader>
-              <DialogTitle className="text-2xl font-headline text-right">
-                {editingProduct ? 'تعديل منتج' : 'إضافة منتج جديد'}
-              </DialogTitle>
-            </DialogHeader>
-            <form onSubmit={handleSubmit} className="space-y-6 pt-4 text-right">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="space-y-2">
-                  <Label>اسم المنتج</Label>
-                  <Input 
-                    required 
-                    value={formData.name}
-                    onChange={e => setFormData({...formData, name: e.target.value})}
-                    className="text-right"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label>السعر (ج.م)</Label>
-                  <Input 
-                    type="number" 
-                    required 
-                    value={formData.price}
-                    onChange={e => setFormData({...formData, price: e.target.value})}
-                    className="text-right"
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <Label>الوصف</Label>
-                <Textarea 
-                  required 
-                  value={formData.description}
-                  onChange={e => setFormData({...formData, description: e.target.value})}
-                  className="text-right min-h-[100px]"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label>صورة المنتج (رابط مباشر أو رفع ملف)</Label>
-                <div className="flex flex-col gap-3">
-                  <Input 
-                    placeholder="https://..." 
-                    value={formData.imageURL}
-                    onChange={e => setFormData({...formData, imageURL: e.target.value})}
-                    className="text-right"
-                  />
-                  <div className="flex items-center gap-3">
-                    <Label className="bg-muted px-4 py-3 rounded-xl cursor-pointer hover:bg-muted/80 flex items-center gap-2 border">
-                      <Upload className="w-4 h-4" />
-                      {uploading ? "جاري الرفع..." : "رفع من الجهاز"}
-                      <input type="file" className="hidden" accept="image/*" onChange={handleFileUpload} disabled={uploading} />
-                    </Label>
-                    {formData.imageURL && <img src={formData.imageURL} className="w-12 h-12 object-cover rounded-md border" />}
+        <div className="flex gap-3">
+          <Button variant="outline" onClick={seedProducts} className="rounded-xl gap-2 h-12">
+            <Database className="w-5 h-5" />
+            إضافة بيانات تجريبية
+          </Button>
+          <Dialog open={isDialogOpen} onOpenChange={(open) => {
+            setIsDialogOpen(open);
+            if (!open) resetForm();
+          }}>
+            <DialogTrigger asChild>
+              <Button className="bg-accent hover:bg-accent/90 rounded-xl gap-2 h-12">
+                <Plus className="w-5 h-5" />
+                إضافة منتج جديد
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+              <DialogHeader>
+                <DialogTitle className="text-2xl font-headline text-right">
+                  {editingProduct ? 'تعديل منتج' : 'إضافة منتج جديد'}
+                </DialogTitle>
+              </DialogHeader>
+              <form onSubmit={handleSubmit} className="space-y-6 pt-4 text-right">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <Label>اسم المنتج</Label>
+                    <Input 
+                      required 
+                      value={formData.name}
+                      onChange={e => setFormData({...formData, name: e.target.value})}
+                      className="text-right"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label>السعر (ج.م)</Label>
+                    <Input 
+                      type="number" 
+                      required 
+                      value={formData.price}
+                      onChange={e => setFormData({...formData, price: e.target.value})}
+                      className="text-right"
+                    />
                   </div>
                 </div>
-              </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                  <Label>الشارات (مفصولة بفاصلة)</Label>
-                  <Input 
-                    placeholder="New, Hot, Limited" 
-                    value={formData.badges}
-                    onChange={e => setFormData({...formData, badges: e.target.value})}
-                    className="text-right"
+                  <Label>الوصف</Label>
+                  <Textarea 
+                    required 
+                    value={formData.description}
+                    onChange={e => setFormData({...formData, description: e.target.value})}
+                    className="text-right min-h-[100px]"
                   />
                 </div>
-                <div className="space-y-2">
-                  <Label>الألوان (HEX مفصولة بفاصلة)</Label>
-                  <Input 
-                    placeholder="#ff0000, #000000" 
-                    value={formData.colors}
-                    onChange={e => setFormData({...formData, colors: e.target.value})}
-                    className="text-right"
-                  />
-                </div>
-              </div>
 
-              <DialogFooter className="flex-row-reverse gap-3">
-                <Button type="submit" className="bg-primary hover:bg-primary/90 rounded-xl px-10">
-                  {editingProduct ? 'تحديث' : 'حفظ المنتج'}
-                </Button>
-                <Button type="button" variant="outline" onClick={() => setIsDialogOpen(false)} className="rounded-xl">
-                  إلغاء
-                </Button>
-              </DialogFooter>
-            </form>
-          </DialogContent>
-        </Dialog>
+                <div className="space-y-2">
+                  <Label>صورة المنتج (رابط مباشر أو رفع ملف)</Label>
+                  <div className="flex flex-col gap-3">
+                    <Input 
+                      placeholder="https://..." 
+                      value={formData.imageURL}
+                      onChange={e => setFormData({...formData, imageURL: e.target.value})}
+                      className="text-right"
+                    />
+                    <div className="flex items-center gap-3">
+                      <Label className="bg-muted px-4 py-3 rounded-xl cursor-pointer hover:bg-muted/80 flex items-center gap-2 border">
+                        <Upload className="w-4 h-4" />
+                        {uploading ? "جاري الرفع..." : "رفع من الجهاز"}
+                        <input type="file" className="hidden" accept="image/*" onChange={handleFileUpload} disabled={uploading} />
+                      </Label>
+                      {formData.imageURL && <img src={formData.imageURL} className="w-12 h-12 object-cover rounded-md border" />}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <Label>الشارات (مفصولة بفاصلة)</Label>
+                    <Input 
+                      placeholder="New, Hot, Limited" 
+                      value={formData.badges}
+                      onChange={e => setFormData({...formData, badges: e.target.value})}
+                      className="text-right"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label>الألوان (HEX مفصولة بفاصلة)</Label>
+                    <Input 
+                      placeholder="#ff0000, #000000" 
+                      value={formData.colors}
+                      onChange={e => setFormData({...formData, colors: e.target.value})}
+                      className="text-right"
+                    />
+                  </div>
+                </div>
+
+                <DialogFooter className="flex-row-reverse gap-3">
+                  <Button type="submit" className="bg-primary hover:bg-primary/90 rounded-xl px-10">
+                    {editingProduct ? 'تحديث' : 'حفظ المنتج'}
+                  </Button>
+                  <Button type="button" variant="outline" onClick={() => setIsDialogOpen(false)} className="rounded-xl">
+                    إلغاء
+                  </Button>
+                </DialogFooter>
+              </form>
+            </DialogContent>
+          </Dialog>
+        </div>
         <h1 className="text-4xl font-bold font-headline">إدارة المنتجات</h1>
       </div>
 
@@ -314,7 +352,7 @@ export default function AdminProductsPage() {
             ) : (
               <TableRow>
                 <TableCell colSpan={4} className="text-center py-20 text-muted-foreground">
-                  لا توجد منتجات مضافة بعد.
+                  لا توجد منتجات مضافة بعد. اضغط على "إضافة بيانات تجريبية" للبدء بسرعة.
                 </TableCell>
               </TableRow>
             )}
