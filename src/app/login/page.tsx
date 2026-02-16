@@ -51,7 +51,7 @@ export default function LoginPage() {
 
   return (
     <div className="container mx-auto px-4 py-20 flex justify-center items-center min-h-[80vh]">
-      <Card className="w-full max-w-md shadow-2xl rounded-3xl overflow-hidden border-none bg-white">
+      <Card className="w-full max-w-md shadow-2xl rounded-3xl overflow-hidden border-none bg-card">
         <CardHeader className="text-center pb-8 pt-10">
           <CardTitle className="text-3xl font-headline font-bold">تسجيل الدخول</CardTitle>
           <CardDescription className="text-lg">مرحباً بك مرة أخرى في THREAD</CardDescription>
@@ -101,7 +101,7 @@ export default function LoginPage() {
               <span className="w-full border-t" />
             </div>
             <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-white px-2 text-muted-foreground">أو الاستمرار بـ</span>
+              <span className="bg-card px-2 text-muted-foreground">أو الاستمرار بـ</span>
             </div>
           </div>
 

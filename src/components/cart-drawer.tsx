@@ -53,7 +53,7 @@ export function CartDrawer() {
                       <span className="bg-muted px-2 py-0.5 rounded-md">اللون: {item.color}</span>
                     </div>
                     <div className="flex items-center justify-end gap-4 mt-4">
-                      <div className="flex items-center border-2 rounded-xl bg-white">
+                      <div className="flex items-center border-2 rounded-xl bg-muted/20">
                         <Button
                           variant="ghost"
                           size="icon"
@@ -86,7 +86,7 @@ export function CartDrawer() {
                       </Button>
                     </div>
                   </div>
-                  <div className="w-24 h-32 bg-muted rounded-2xl flex-shrink-0 overflow-hidden shadow-md border-2 border-white">
+                  <div className="w-24 h-32 bg-muted rounded-2xl flex-shrink-0 overflow-hidden shadow-md border-2 border-white dark:border-zinc-800">
                     {item.image ? <img src={item.image} className="w-full h-full object-cover" /> : <div className="w-full h-full flex items-center justify-center">🖼️</div>}
                   </div>
                 </div>
@@ -103,8 +103,8 @@ export function CartDrawer() {
                   <span className="text-primary">{subtotal} ج.م</span>
                   <span>إجمالي المشتريات</span>
                 </div>
-                <div className="p-4 bg-green-50 rounded-2xl border-2 border-dashed border-green-200">
-                  <p className="text-sm font-black text-green-700 text-center">
+                <div className="p-4 bg-green-50 dark:bg-green-950/20 rounded-2xl border-2 border-dashed border-green-200 dark:border-green-900">
+                  <p className="text-sm font-black text-green-700 dark:text-green-400 text-center">
                     {subtotal >= 500 ? "🎉 مبروك! طلبك شحنه مجاني" : `باقي ${500 - subtotal} ج.م على الشحن المجاني`}
                   </p>
                 </div>

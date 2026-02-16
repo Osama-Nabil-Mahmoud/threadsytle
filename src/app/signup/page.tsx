@@ -43,7 +43,7 @@ export default function SignupPage() {
 
   return (
     <div className="container mx-auto px-4 py-20 flex justify-center items-center min-h-[80vh]">
-      <Card className="w-full max-w-md shadow-2xl rounded-3xl overflow-hidden border-none bg-white">
+      <Card className="w-full max-w-md shadow-2xl rounded-3xl overflow-hidden border-none bg-card">
         <CardHeader className="text-center pb-8 pt-10">
           <CardTitle className="text-3xl font-headline font-bold">إنشاء حساب</CardTitle>
           <CardDescription className="text-lg">انضم إلى مجتمع THREAD اليوم</CardDescription>
