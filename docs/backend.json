@@ -1,0 +1,65 @@
+
+{
+  "entities": {
+    "Product": {
+      "title": "Product",
+      "description": "A product available in the catalog",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "price": { "type": "number" },
+        "description": { "type": "string" },
+        "imageURL": { "type": "string" },
+        "colors": { "type": "array", "items": { "type": "string" } },
+        "sizes": { "type": "array", "items": { "type": "string" } },
+        "rating": { "type": "number" },
+        "badges": { "type": "array", "items": { "type": "string" } },
+        "createdAt": { "type": "object" }
+      },
+      "required": ["name", "price", "description", "imageURL"]
+    },
+    "Order": {
+      "title": "Order",
+      "description": "A customer order",
+      "type": "object",
+      "properties": {
+        "customerName": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "items": { "type": "array" },
+        "total": { "type": "number" },
+        "status": { "type": "string", "enum": ["pending", "processing", "shipped", "delivered"] },
+        "createdAt": { "type": "object" }
+      }
+    },
+    "NewsletterSubscription": {
+      "title": "Newsletter Subscription",
+      "description": "A newsletter subscriber entry",
+      "type": "object",
+      "properties": {
+        "email": { "type": "string", "format": "email" },
+        "subscribedAt": { "type": "object" }
+      }
+    }
+  },
+  "auth": {
+    "providers": ["password", "google.com"]
+  },
+  "firestore": {
+    "/products/{productId}": {
+      "schema": "Product",
+      "description": "Collection of products"
+    },
+    "/orders/{orderId}": {
+      "schema": "Order",
+      "description": "Collection of customer orders"
+    },
+    "/newsletter/{entryId}": {
+      "schema": "NewsletterSubscription",
+      "description": "Collection of newsletter subscriptions"
+    },
+    "/admins/{userId}": {
+      "schema": "object",
+      "description": "Admin roles"
+    }
+  }
+}
