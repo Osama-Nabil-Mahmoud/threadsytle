@@ -61,6 +61,12 @@ const FAQS = [
   { q: "كام رسوم التوصيل؟", a: "طلبات فوق 500 ج: توصيل مجاني 🎉. طلبات أقل من 500 ج: 50 ج." },
   { q: "ازاي أعرف المقاس المناسب؟", a: "شوف \"دليل المقاسات\" في صفحة كل منتج. فيه جدول تفصيلي بالقياسات وصور على موديلز بمقاسات مختلفة." },
   { q: "لو المقاس مش مظبوط؟", a: "لا تقلق! عندك 14 يوم ترجع أو تستبدل المنتج مجاناً، بشرط يكون في حالته الأصلية." },
+  { q: "ازاي أرجع أو أستبدل منتج؟", a: "كلمنا على خدمة العملاء أو اطلب إرجاع من حسابك، هنبعتلك مندوب ياخد المنتج ويرجعلك فلوسك أو يجيبلك المقاس/اللون الجديد." },
+  { q: "الألوان زي الصور بالضبط؟", a: "بنحاول نخلي الصور دقيقة قد ما نقدر، بس أحياناً ممكن يكون فيه اختلاف بسيط بسبب إضاءة شاشتك. لو مش عاجبك، ارجعه!" },
+  { q: "المنتجات أصلية؟", a: "كل منتجاتنا أصلية 100%، يا تصاميمنا الخاصة يا براندات معتمدة. ولو لقيت أي مشكلة في الجودة، هنستبدلها فوراً." },
+  { q: "في برنامج ولاء أو نقاط؟", a: "أيوة! كل ما تشتري تاخد نقاط، والنقاط دي تقدر تحولها لخصومات على طلباتك الجاية. كمان عندنا عروض حصرية للأعضاء." },
+  { q: "أقدر أتابع طلبي؟", a: "طبعاً! بعد ما تطلب هتوصلك رسالة فيها tracking number. تقدر تتابع الطلب من حسابك أو من رابط التتبع." },
+  { q: "خدمة العملاء متاحة امتى؟", a: "إحنا موجودين: WhatsApp 24/7، تليفون يومياً 10 ص - 10 م، Email بنرد خلال 24 ساعة." },
 ];
 
 export default function Home() {
@@ -234,9 +240,9 @@ export default function Home() {
               <h3 className="text-3xl font-black text-primary">THREAD</h3>
               <p className="text-muted-foreground font-medium">Your Style, Your Story.</p>
               <div className="flex justify-start md:justify-end gap-4">
-                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="p-3 bg-muted rounded-full hover:bg-primary hover:text-white transition-all"><Instagram className="w-5 h-5" /></a>
-                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="p-3 bg-muted rounded-full hover:bg-primary hover:text-white transition-all"><Facebook className="w-5 h-5" /></a>
-                <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="p-3 bg-muted rounded-full hover:bg-primary hover:text-white transition-all"><Twitter className="w-5 h-5" /></a>
+                <a href="https://instagram.com/thread" target="_blank" rel="noopener noreferrer" className="p-3 bg-muted rounded-full hover:bg-primary hover:text-white transition-all"><Instagram className="w-5 h-5" /></a>
+                <a href="https://facebook.com/thread" target="_blank" rel="noopener noreferrer" className="p-3 bg-muted rounded-full hover:bg-primary hover:text-white transition-all"><Facebook className="w-5 h-5" /></a>
+                <a href="https://twitter.com/thread" target="_blank" rel="noopener noreferrer" className="p-3 bg-muted rounded-full hover:bg-primary hover:text-white transition-all"><Twitter className="w-5 h-5" /></a>
               </div>
             </div>
             <div className="space-y-4">
@@ -259,8 +265,12 @@ export default function Home() {
               <h4 className="font-black text-lg">التطبيق</h4>
               <p className="text-sm text-muted-foreground">حمل تطبيق THREAD وخد خصومات حصرية!</p>
               <div className="flex flex-col gap-3">
-                <Button variant="outline" className="rounded-xl border-2 font-bold h-12">App Store 🍎</Button>
-                <Button variant="outline" className="rounded-xl border-2 font-bold h-12">Google Play 🤖</Button>
+                <Button variant="outline" className="rounded-xl border-2 font-bold h-12" asChild>
+                  <a href="https://apps.apple.com" target="_blank" rel="noopener noreferrer">App Store 🍎</a>
+                </Button>
+                <Button variant="outline" className="rounded-xl border-2 font-bold h-12" asChild>
+                  <a href="https://play.google.com" target="_blank" rel="noopener noreferrer">Google Play 🤖</a>
+                </Button>
               </div>
             </div>
           </div>
