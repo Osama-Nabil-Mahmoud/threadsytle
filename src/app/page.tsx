@@ -34,7 +34,7 @@ import {
 } from "@/components/ui/accordion";
 import { NewsletterForm } from '@/components/newsletter-form';
 
-// PRODUCT IMAGE MAPPING - Updated with better seeds for real clothing
+// PRODUCT IMAGE MAPPING
 const PRODUCT_IMAGES: Record<string, { primary: string; gallery: string[] }> = {
   "m1": { 
     primary: "https://picsum.photos/seed/hoodie-black-1/800/1000", 
@@ -42,7 +42,7 @@ const PRODUCT_IMAGES: Record<string, { primary: string; gallery: string[] }> = {
   },
   "m2": { 
     primary: "https://picsum.photos/seed/tshirt-pack-1/800/1000", 
-    gallery: [] 
+    gallery: ["https://picsum.photos/seed/tshirt-pack-2/800/1000"] 
   },
   "m3": { 
     primary: "https://picsum.photos/seed/jeans-blue-1/800/1000", 
@@ -196,16 +196,20 @@ export default function Home() {
     return result;
   }, [activeTab, sortBy, searchQuery]);
 
+  const scrollToShop = () => {
+    document.getElementById('shop')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <div className="flex flex-col gap-0 pb-0">
       {/* Hero Section */}
       <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden bg-[#F1F0F4]">
         <div className="absolute inset-0 z-0">
           <img 
-            src="https://picsum.photos/seed/thread-hero/1920/1080" 
+            src="https://picsum.photos/seed/thread-hero-lifestyle/1920/1080" 
             alt="Hero" 
             className="w-full h-full object-cover opacity-20 grayscale"
-            data-ai-hint="lifestyle fashion model"
+            data-ai-hint="lifestyle fashion"
           />
         </div>
         <div className="container mx-auto px-4 text-center z-10 space-y-8">
@@ -220,10 +224,19 @@ export default function Home() {
             تصاميم يونيك، مش هتلاقيها غير هنا.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Button size="lg" className="h-16 px-12 rounded-full text-xl font-bold bg-primary shadow-2xl hover:scale-105 transition-transform" onClick={() => setActiveTab('men')}>
+            <Button 
+              size="lg" 
+              className="h-16 px-12 rounded-full text-xl font-bold bg-primary shadow-2xl hover:scale-105 transition-transform" 
+              onClick={() => { setActiveTab('men'); scrollToShop(); }}
+            >
               تسوق الرجالي
             </Button>
-            <Button size="lg" variant="outline" className="h-16 px-12 rounded-full text-xl font-bold border-2 border-primary text-primary hover:bg-primary hover:text-white transition-all" onClick={() => setActiveTab('women')}>
+            <Button 
+              size="lg" 
+              variant="outline" 
+              className="h-16 px-12 rounded-full text-xl font-bold border-2 border-primary text-primary hover:bg-primary hover:text-white transition-all" 
+              onClick={() => { setActiveTab('women'); scrollToShop(); }}
+            >
               تسوق النسائي
             </Button>
           </div>
