@@ -1,3 +1,4 @@
+
 "use client"
 
 import { useState, useMemo } from 'react';
@@ -5,24 +6,30 @@ import { ProductCard } from '@/components/product-card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
-import { Search, ShieldCheck, Truck, RefreshCcw, Filter, ChevronDown } from 'lucide-react';
+import { Search, ShieldCheck, Truck, RefreshCcw, ChevronDown } from 'lucide-react';
 import { 
   DropdownMenu, 
   DropdownMenuContent, 
   DropdownMenuItem, 
   DropdownMenuTrigger 
 } from "@/components/ui/dropdown-menu";
+import { PlaceHolderImages } from '@/lib/placeholder-images';
 
-// CRITICAL PRODUCT IMAGE RULE
 const PRODUCT_IMAGES: Record<string, { primary: string; gallery: string[] }> = {
-  "m1": { primary: "", gallery: [] },
-  "m2": { primary: "", gallery: [] },
-  "m3": { primary: "", gallery: [] },
-  "m4": { primary: "", gallery: [] },
-  "w7": { primary: "", gallery: [] },
-  "w8": { primary: "", gallery: [] },
-  "w9": { primary: "", gallery: [] },
-  "w10": { primary: "", gallery: [] },
+  "m1": { 
+    primary: PlaceHolderImages.find(i => i.id === "m1-p")?.imageUrl || "", 
+    gallery: [
+      PlaceHolderImages.find(i => i.id === "m1-g1")?.imageUrl || "",
+      PlaceHolderImages.find(i => i.id === "m1-g2")?.imageUrl || ""
+    ] 
+  },
+  "m2": { primary: PlaceHolderImages.find(i => i.id === "m2-p")?.imageUrl || "", gallery: [] },
+  "m3": { primary: PlaceHolderImages.find(i => i.id === "m3-p")?.imageUrl || "", gallery: [] },
+  "m4": { primary: PlaceHolderImages.find(i => i.id === "m4-p")?.imageUrl || "", gallery: [] },
+  "w7": { primary: PlaceHolderImages.find(i => i.id === "w7-p")?.imageUrl || "", gallery: [] },
+  "w8": { primary: PlaceHolderImages.find(i => i.id === "w8-p")?.imageUrl || "", gallery: [] },
+  "w9": { primary: PlaceHolderImages.find(i => i.id === "w9-p")?.imageUrl || "", gallery: [] },
+  "w10": { primary: PlaceHolderImages.find(i => i.id === "w10-p")?.imageUrl || "", gallery: [] },
 };
 
 const PRODUCTS = [
@@ -102,7 +109,6 @@ export default function Home() {
       {/* Products Section */}
       <section className="container mx-auto px-4 space-y-12">
         <div className="flex flex-col md:flex-row items-center justify-between gap-8 border-b pb-8">
-          {/* Sorting */}
           <div className="flex items-center gap-4 w-full md:w-auto">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -128,7 +134,6 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Filters */}
           <div className="flex bg-muted/50 p-1.5 rounded-2xl w-full md:w-auto">
             <Button 
               variant={activeTab === 'women' ? 'default' : 'ghost'} 
@@ -159,7 +164,7 @@ export default function Home() {
             <ProductCard 
               key={product.productId} 
               product={product} 
-              imageURL={PRODUCT_IMAGES[product.productId].primary}
+              images={PRODUCT_IMAGES[product.productId]}
             />
           ))}
         </div>

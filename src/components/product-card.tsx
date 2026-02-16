@@ -1,12 +1,21 @@
+
 "use client"
 
 import { useState } from 'react';
-import { Card, CardContent, CardFooter } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { ShoppingCart, Star, Plus, Minus } from 'lucide-react';
+import { ShoppingCart, Star, Plus, Minus, Maximize2, X } from 'lucide-react';
 import { useCart } from '@/context/cart-context';
 import { useToast } from '@/hooks/use-toast';
+import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
+import { 
+  Carousel, 
+  CarouselContent, 
+  CarouselItem, 
+  CarouselNext, 
+  CarouselPrevious 
+} from "@/components/ui/carousel";
 
 interface ProductCardProps {
   product: {
@@ -22,15 +31,20 @@ interface ProductCardProps {
     badge?: string;
     description?: string;
   };
-  imageURL?: string;
+  images: {
+    primary: string;
+    gallery: string[];
+  };
 }
 
-export function ProductCard({ product, imageURL }: ProductCardProps) {
+export function ProductCard({ product, images }: ProductCardProps) {
   const { addToCart } = useCart();
   const { toast } = useToast();
   const [selectedColor, setSelectedColor] = useState(product.colors[0]);
   const [selectedSize, setSelectedSize] = useState(product.sizes[0]);
   const [quantity, setQuantity] = useState(1);
+
+  const allImages = [images.primary, ...images.gallery].filter(img => !!img);
 
   const handleAddToCart = () => {
     addToCart({
@@ -40,7 +54,7 @@ export function ProductCard({ product, imageURL }: ProductCardProps) {
       color: selectedColor,
       size: selectedSize,
       quantity: quantity,
-      image: imageURL || '',
+      image: images.primary,
     });
     toast({
       title: "تمت الإضافة",
@@ -48,9 +62,14 @@ export function ProductCard({ product, imageURL }: ProductCardProps) {
     });
   };
 
+  const colorMapping: Record<string, string> = {
+    "أبيض": "#ffffff", "أسود": "#000000", "رمادي": "#808080", "بيج": "#f5f5dc",
+    "كحلي": "#000080", "أزرق داكن": "#00008b", "خاكي": "#c3b091", "زيتوني": "#808000",
+    "وردي": "#ffc0cb", "أزرق فاتح": "#add8e6", "زهري": "#ff007f", "أزرق": "#0000ff"
+  };
+
   return (
     <Card className="group overflow-hidden border-none shadow-lg hover:shadow-2xl transition-all duration-500 rounded-[2rem] bg-white flex flex-col h-full relative">
-      {/* Best Sellers Ribbon */}
       {product.rating >= 4.8 && (
         <div className="absolute top-0 left-0 z-20 bg-yellow-400 text-black text-[10px] font-bold px-3 py-1 rounded-br-xl shadow-md">
           الأكثر مبيعاً 🔥
@@ -59,12 +78,38 @@ export function ProductCard({ product, imageURL }: ProductCardProps) {
 
       {/* Image Section */}
       <div className="relative aspect-[4/5] overflow-hidden bg-muted/30">
-        {imageURL ? (
-          <img 
-            src={imageURL} 
-            alt={product.name} 
-            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-          />
+        {images.primary ? (
+          <>
+            <img 
+              src={images.primary} 
+              alt={product.name} 
+              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+              data-ai-hint={product.name.split('-')[0].trim()}
+            />
+            {/* Gallery Trigger */}
+            <Dialog>
+              <DialogTrigger asChild>
+                <button className="absolute bottom-4 left-4 bg-white/80 backdrop-blur-sm p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity shadow-md hover:bg-white">
+                  <Maximize2 className="w-4 h-4 text-primary" />
+                </button>
+              </DialogTrigger>
+              <DialogContent className="max-w-4xl p-0 overflow-hidden bg-transparent border-none">
+                <Carousel className="w-full max-w-3xl mx-auto">
+                  <CarouselContent>
+                    {allImages.map((img, index) => (
+                      <CarouselItem key={index}>
+                        <div className="relative aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl">
+                          <img src={img} alt={`${product.name} - view ${index + 1}`} className="w-full h-full object-cover" />
+                        </div>
+                      </CarouselItem>
+                    ))}
+                  </CarouselContent>
+                  <CarouselPrevious className="right-4" />
+                  <CarouselNext className="left-4" />
+                </Carousel>
+              </DialogContent>
+            </Dialog>
+          </>
         ) : (
           <div className="w-full h-full flex flex-col items-center justify-center p-6 text-center text-muted-foreground gap-3">
             <span className="text-4xl">⚠️</span>
@@ -107,7 +152,6 @@ export function ProductCard({ product, imageURL }: ProductCardProps) {
           </div>
         </div>
 
-        {/* Color Swatches */}
         <div className="space-y-2 mb-4">
           <p className="text-[10px] font-bold opacity-60">اللون:</p>
           <div className="flex flex-row-reverse gap-2">
@@ -119,13 +163,12 @@ export function ProductCard({ product, imageURL }: ProductCardProps) {
                   selectedColor === color ? 'border-primary scale-110' : 'border-transparent'
                 }`}
                 title={color}
-                style={{ backgroundColor: color === "أبيض" ? "#ffffff" : color === "أسود" ? "#000000" : color === "رمادي" ? "#808080" : color === "بيج" ? "#f5f5dc" : color === "كحلي" ? "#000080" : color === "أزرق داكن" ? "#00008b" : color === "خاكي" ? "#c3b091" : color === "زيتوني" ? "#808000" : color === "وردي" ? "#ffc0cb" : color === "أزرق فاتح" ? "#add8e6" : color === "زهري" ? "#ff007f" : color === "أزرق" ? "#0000ff" : "#ccc" }}
+                style={{ backgroundColor: colorMapping[color] || "#ccc" }}
               />
             ))}
           </div>
         </div>
 
-        {/* Size Selector */}
         <div className="space-y-2 mb-6">
           <p className="text-[10px] font-bold opacity-60">المقاس:</p>
           <div className="flex flex-row-reverse flex-wrap gap-2">
