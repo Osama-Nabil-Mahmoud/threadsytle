@@ -1,5 +1,4 @@
-
-# متجر THREAD - النسخة النهائية
+# متجر THREAD - thread-ecommerce
 
 ## المميزات الحالية
 - ✅ واجهة عربية (RTL) احترافية.
@@ -13,14 +12,14 @@
 ## كيفية الرفع على GitHub
 لحفظ مشروعك، اتبع هذه الخطوات من الـ Terminal في مجلد المشروع:
 
-1. أنشئ مستودعاً جديداً على [GitHub](https://github.com/new).
+1. أنشئ مستودعاً جديداً على [GitHub](https://github.com/new) باسم `thread-ecommerce`.
 2. نفذ الأوامر التالية:
    ```bash
    git init
    git add .
    git commit -m "الإطلاق الأول لمتجر THREAD"
    git branch -M main
-   git remote add origin [رابط_مستودعك_هنا]
+   git remote add origin https://github.com/[اسم_حسابك]/thread-ecommerce.git
    git push -u origin main
    ```
 
