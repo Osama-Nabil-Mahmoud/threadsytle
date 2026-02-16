@@ -1,13 +1,13 @@
 
 {
   "placeholderImages": [
-    { "id": "m1-hoodie", "description": "Black Oversized Hoodie", "imageUrl": "https://picsum.photos/seed/hoodie-black-1/800/1000", "imageHint": "black hoodie" },
-    { "id": "m2-tshirt", "description": "Essential T-Shirt Pack", "imageUrl": "https://picsum.photos/seed/tshirt-pack-1/800/1000", "imageHint": "t-shirt pack" },
-    { "id": "m3-jeans", "description": "Slim Fit Blue Jeans", "imageUrl": "https://picsum.photos/seed/jeans-blue-1/800/1000", "imageHint": "blue jeans" },
-    { "id": "m4-cargo", "description": "Khaki Cargo Pants", "imageUrl": "https://picsum.photos/seed/pants-khaki-1/800/1000", "imageHint": "cargo pants" },
-    { "id": "w7-sweater", "description": "Beige Oversized Sweater", "imageUrl": "https://picsum.photos/seed/sweater-beige-1/800/1000", "imageHint": "beige sweater" },
-    { "id": "w8-momjeans", "description": "High-Waist Mom Jeans", "imageUrl": "https://picsum.photos/seed/jeans-mom-1/800/1000", "imageHint": "mom jeans" },
-    { "id": "w9-crophoodie", "description": "Pink Cropped Hoodie", "imageUrl": "https://picsum.photos/seed/hoodie-pink-1/800/1000", "imageHint": "pink hoodie" },
-    { "id": "w10-floral", "description": "Maxi Floral Dress", "imageUrl": "https://picsum.photos/seed/dress-floral-1/800/1000", "imageHint": "floral dress" }
+    { "id": "m1-hoodie", "description": "Black Oversized Hoodie", "imageUrl": "https://images.unsplash.com/photo-1556821840-3a63f95609a7?q=80&w=800&auto=format&fit=crop", "imageHint": "black hoodie" },
+    { "id": "m2-tshirt", "description": "Essential T-Shirt Pack", "imageUrl": "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=800&auto=format&fit=crop", "imageHint": "t-shirt stack" },
+    { "id": "m3-jeans", "description": "Slim Fit Blue Jeans", "imageUrl": "https://images.unsplash.com/photo-1542272604-787c3835535d?q=80&w=800&auto=format&fit=crop", "imageHint": "blue jeans" },
+    { "id": "m4-cargo", "description": "Khaki Cargo Pants", "imageUrl": "https://images.unsplash.com/photo-1624241212332-19c713f31fade?q=80&w=800&auto=format&fit=crop", "imageHint": "cargo pants" },
+    { "id": "w7-sweater", "description": "Beige Oversized Sweater", "imageUrl": "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?q=80&w=800&auto=format&fit=crop", "imageHint": "beige sweater" },
+    { "id": "w8-momjeans", "description": "High-Waist Mom Jeans", "imageUrl": "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?q=80&w=800&auto=format&fit=crop", "imageHint": "mom jeans" },
+    { "id": "w9-crophoodie", "description": "Pink Cropped Hoodie", "imageUrl": "https://images.unsplash.com/photo-1620799139507-2a76f79a2f4d?q=80&w=800&auto=format&fit=crop", "imageHint": "pink sweater" },
+    { "id": "w10-floral", "description": "Maxi Floral Dress", "imageUrl": "https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?q=80&w=800&auto=format&fit=crop", "imageHint": "floral dress" }
   ]
 }

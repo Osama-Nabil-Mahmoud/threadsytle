@@ -33,41 +33,22 @@ import {
   AccordionTrigger 
 } from "@/components/ui/accordion";
 import { NewsletterForm } from '@/components/newsletter-form';
+import placeholderData from '@/app/lib/placeholder-images.json';
 
-// PRODUCT IMAGE MAPPING
+// Helper to get image URL from local JSON
+const getPlaceholder = (id: string) => {
+  return placeholderData.placeholderImages.find(img => img.id === id)?.imageUrl || "";
+};
+
 const PRODUCT_IMAGES: Record<string, { primary: string; gallery: string[] }> = {
-  "m1": { 
-    primary: "https://picsum.photos/seed/hoodie-black-1/800/1000", 
-    gallery: ["https://picsum.photos/seed/hoodie-black-2/800/1000", "https://picsum.photos/seed/hoodie-black-3/800/1000"] 
-  },
-  "m2": { 
-    primary: "https://picsum.photos/seed/tshirt-pack-1/800/1000", 
-    gallery: ["https://picsum.photos/seed/tshirt-pack-2/800/1000"] 
-  },
-  "m3": { 
-    primary: "https://picsum.photos/seed/jeans-blue-1/800/1000", 
-    gallery: [] 
-  },
-  "m4": { 
-    primary: "https://picsum.photos/seed/pants-khaki-1/800/1000", 
-    gallery: [] 
-  },
-  "w7": { 
-    primary: "https://picsum.photos/seed/sweater-beige-1/800/1000", 
-    gallery: [] 
-  },
-  "w8": { 
-    primary: "https://picsum.photos/seed/jeans-mom-1/800/1000", 
-    gallery: [] 
-  },
-  "w9": { 
-    primary: "https://picsum.photos/seed/hoodie-pink-1/800/1000", 
-    gallery: [] 
-  },
-  "w10": { 
-    primary: "https://picsum.photos/seed/dress-floral-1/800/1000", 
-    gallery: [] 
-  },
+  "m1": { primary: getPlaceholder("m1-hoodie"), gallery: [] },
+  "m2": { primary: getPlaceholder("m2-tshirt"), gallery: [] },
+  "m3": { primary: getPlaceholder("m3-jeans"), gallery: [] },
+  "m4": { primary: getPlaceholder("m4-cargo"), gallery: [] },
+  "w7": { primary: getPlaceholder("w7-sweater"), gallery: [] },
+  "w8": { primary: getPlaceholder("w8-momjeans"), gallery: [] },
+  "w9": { primary: getPlaceholder("w9-crophoodie"), gallery: [] },
+  "w10": { primary: getPlaceholder("w10-floral"), gallery: [] },
 };
 
 const PRODUCTS = [
@@ -206,7 +187,7 @@ export default function Home() {
       <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden bg-[#F1F0F4]">
         <div className="absolute inset-0 z-0">
           <img 
-            src="https://picsum.photos/seed/thread-hero-lifestyle/1920/1080" 
+            src="https://images.unsplash.com/photo-1558769132-cb1aea458c5e?q=80&w=1920&auto=format&fit=crop" 
             alt="Hero" 
             className="w-full h-full object-cover opacity-20 grayscale"
             data-ai-hint="lifestyle fashion"
