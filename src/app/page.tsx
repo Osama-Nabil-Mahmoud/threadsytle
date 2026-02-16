@@ -18,7 +18,8 @@ import {
   HelpCircle,
   Instagram,
   Facebook,
-  Twitter
+  Twitter,
+  ShieldCheck
 } from 'lucide-react';
 import { 
   DropdownMenu, 
@@ -32,16 +33,47 @@ import {
   AccordionItem, 
   AccordionTrigger 
 } from "@/components/ui/accordion";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
 
 const PRODUCT_IMAGES: Record<string, { primary: string; gallery: string[] }> = {
-  "m1": { primary: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?q=80&w=800&auto=format&fit=crop", gallery: [] },
-  "m2": { primary: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=800&auto=format&fit=crop", gallery: [] },
-  "m3": { primary: "https://images.unsplash.com/photo-1542272604-787c3835535d?q=80&w=800&auto=format&fit=crop", gallery: [] },
-  "m4": { primary: "https://images.unsplash.com/photo-1624241212332-19c713f31fade?q=80&w=800&auto=format&fit=crop", gallery: [] },
-  "w7": { primary: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?q=80&w=800&auto=format&fit=crop", gallery: [] },
-  "w8": { primary: "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?q=80&w=800&auto=format&fit=crop", gallery: [] },
-  "w9": { primary: "https://images.unsplash.com/photo-1620799139507-2a76f79a2f4d?q=80&w=800&auto=format&fit=crop", gallery: [] },
-  "w10": { primary: "https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?q=80&w=800&auto=format&fit=crop", gallery: [] },
+  "m1": { 
+    primary: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?q=80&w=800&auto=format&fit=crop", 
+    gallery: ["https://images.unsplash.com/photo-1556821921-256f195d893c?q=80&w=800&auto=format&fit=crop"] 
+  },
+  "m2": { 
+    primary: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=800&auto=format&fit=crop", 
+    gallery: ["https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?q=80&w=800&auto=format&fit=crop"] 
+  },
+  "m3": { 
+    primary: "https://images.unsplash.com/photo-1542272604-787c3835535d?q=80&w=800&auto=format&fit=crop", 
+    gallery: ["https://images.unsplash.com/photo-1541099649105-f69ad21f3246?q=80&w=800&auto=format&fit=crop"] 
+  },
+  "m4": { 
+    primary: "https://images.unsplash.com/photo-1624241212332-19c713f31fade?q=80&w=800&auto=format&fit=crop", 
+    gallery: ["https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?q=80&w=800&auto=format&fit=crop"] 
+  },
+  "w7": { 
+    primary: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?q=80&w=800&auto=format&fit=crop", 
+    gallery: ["https://images.unsplash.com/photo-1620799140188-3b2a02fd9a55?q=80&w=800&auto=format&fit=crop"] 
+  },
+  "w8": { 
+    primary: "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?q=80&w=800&auto=format&fit=crop", 
+    gallery: ["https://images.unsplash.com/photo-1542272454315-4c01d7afdf16?q=80&w=800&auto=format&fit=crop"] 
+  },
+  "w9": { 
+    primary: "https://images.unsplash.com/photo-1620799139507-2a76f79a2f4d?q=80&w=800&auto=format&fit=crop", 
+    gallery: ["https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?q=80&w=800&auto=format&fit=crop"] 
+  },
+  "w10": { 
+    primary: "https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?q=80&w=800&auto=format&fit=crop", 
+    gallery: ["https://images.unsplash.com/photo-1496747611176-843222e1e57c?q=80&w=800&auto=format&fit=crop"] 
+  },
 };
 
 const PRODUCTS = [
@@ -76,6 +108,7 @@ export default function Home() {
   const [activeFilter, setActiveFilter] = useState('all');
   const [sortBy, setSortBy] = useState('best-selling');
   const [searchQuery, setSearchQuery] = useState('');
+  const [isReturnPolicyOpen, setIsReturnPolicyOpen] = useState(false);
 
   useEffect(() => {
     const cat = searchParams.get('cat');
@@ -100,7 +133,7 @@ export default function Home() {
     if (activeTab === 'men') result = result.filter(p => p.genderCategory === 'men');
     if (activeTab === 'women') result = result.filter(p => p.genderCategory === 'women');
     
-    if (activeFilter === 'new') result = result.filter(p => p.badge === 'New' || p.badge === 'New Arrival' || p.badge === 'New');
+    if (activeFilter === 'new') result = result.filter(p => p.badge === 'New' || p.badge === 'New Arrival');
     if (activeFilter === 'sale') result = result.filter(p => p.compareAtPrice || (p.badge && p.badge.includes('خصم')));
 
     if (searchQuery) {
@@ -284,7 +317,7 @@ export default function Home() {
             <div className="space-y-4">
               <h4 className="font-black text-lg">مساعدة</h4>
               <ul className="space-y-2 text-muted-foreground font-bold">
-                <li><a href="#" className="hover:text-primary">سياسة الإرجاع</a></li>
+                <li><button onClick={() => setIsReturnPolicyOpen(true)} className="hover:text-primary">سياسة الإرجاع</button></li>
                 <li><button onClick={() => document.querySelector('section.py-24.bg-card.border-y')?.scrollIntoView({ behavior: 'smooth' })} className="hover:text-primary">دليل المقاسات</button></li>
               </ul>
             </div>
@@ -306,6 +339,49 @@ export default function Home() {
           </div>
         </div>
       </footer>
+
+      {/* Return Policy Dialog */}
+      <Dialog open={isReturnPolicyOpen} onOpenChange={setIsReturnPolicyOpen}>
+        <DialogContent className="sm:max-w-lg rounded-[2.5rem] p-10 text-right" dir="rtl">
+          <DialogHeader>
+            <div className="flex justify-center mb-4">
+              <div className="bg-primary/10 p-4 rounded-full">
+                <ShieldCheck className="w-12 h-12 text-primary" />
+              </div>
+            </div>
+            <DialogTitle className="text-3xl font-black text-center mb-2">سياسة الإرجاع والاستبدال</DialogTitle>
+            <DialogDescription className="text-lg text-center font-medium leading-relaxed">
+              في THREAD، رضاكم هو أولويتنا. إحنا بنسهلك عملية الإرجاع عشان تتسوق وأنت مرتاح.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-6 mt-6">
+            <div className="bg-muted/30 p-6 rounded-3xl border-2 border-dashed border-muted">
+              <h4 className="font-black text-xl mb-3 flex items-center gap-2">
+                <RefreshCcw className="w-5 h-5 text-accent" />
+                شروط الإرجاع:
+              </h4>
+              <ul className="list-disc list-inside space-y-2 text-muted-foreground font-bold pr-4">
+                <li>عندك 14 يوم من تاريخ الاستلام للتبديل أو الترجيع.</li>
+                <li>لازم المنتج يكون في حالته الأصلية (ملبوسش برة، مغسولش).</li>
+                <li>كل التاجز (Tags) والملصقات الأصلية لازم تكون موجودة.</li>
+                <li>الإرجاع مجاني تماماً لو فيه عيب صناعة أو المقاس مش مظبوط.</li>
+              </ul>
+            </div>
+            <div className="space-y-3">
+              <h4 className="font-black text-xl">ازاي أطلب إرجاع؟</h4>
+              <p className="text-muted-foreground font-bold leading-relaxed">
+                تقدر تكلمنا مباشرة على WhatsApp أو تطلب الإرجاع من خلال حسابك على الموقع. هنبعتلك المندوب لحد باب البيت ياخد الشحنة ويرجعلك فلوسك أو يستبدلها بالمقاس/اللون اللي تحبه.
+              </p>
+            </div>
+            <Button 
+              className="w-full h-14 rounded-2xl text-xl font-black bg-primary"
+              onClick={() => setIsReturnPolicyOpen(false)}
+            >
+              فهمت، شكراً!
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
