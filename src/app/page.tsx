@@ -47,7 +47,7 @@ const PRODUCT_IMAGES: Record<string, { primary: string; gallery: string[] }> = {
 const PRODUCTS = [
   { productId: "m1", genderCategory: "men", name: "Oversized Hoodie - Black", price: 399, compareAtPrice: 499, colors: ["أسود","رمادي","بيج","كحلي"], sizes: ["S","M","L","XL","XXL"], rating: 4.7, ratingCount: 234, description: "هودي oversized قطن 100%، تصميم عصري، مريح للاستخدام اليومي", badge: "خصم 20%" },
   { productId: "m2", genderCategory: "men", name: "Essential T-Shirt Pack (3 قطع)", price: 299, colors: ["أسود","أبيض","رمادي"], sizes: ["S","M","L","XL","XXL"], rating: 4.9, ratingCount: 567, badge: "Best Seller" },
-  { productId: "m3", genderCategory: "men", name: "Slim Fit Jeans - Dark Blue", price: 449, compareAtPrice: 549, colors: ["أزرق داكن"], sizes: ["28","30","32","34","36","38"], rating: 4.6, ratingCount: 189 },
+  { productId: "m3", genderCategory: "men", name: "Slim Fit Jeans - Dark Blue", price: 449, compareAtPrice: 549, colors: ["أزرق داكن"], sizes: ["28","30","32","34","36","38"], rating: 4.6, ratingCount: 189, description: "جينز slim fit، قماش دنيم عالي الجودة، مرن ومريح" },
   { productId: "m4", genderCategory: "men", name: "Cargo Pants - Khaki", price: 379, colors: ["خاكي","أسود","زيتوني"], sizes: ["S","M","L","XL","XXL"], rating: 4.5, ratingCount: 145, badge: "New" },
   { productId: "w7", genderCategory: "women", name: "Oversized Sweater - Beige", price: 349, colors: ["بيج","وردي","رمادي"], sizes: ["S","M","L","XL"], rating: 4.8, ratingCount: 412, badge: "Trending" },
   { productId: "w8", genderCategory: "women", name: "High-Waist Mom Jeans", price: 429, colors: ["أزرق فاتح","أزرق داكن"], sizes: ["26","28","30","32","34"], rating: 4.7, ratingCount: 298 },
@@ -88,6 +88,10 @@ export default function Home() {
     if (filter === 'new') setActiveFilter('new');
     else if (filter === 'sale') setActiveFilter('sale');
     else setActiveFilter('all');
+
+    if (cat || filter) {
+      document.getElementById('shop')?.scrollIntoView({ behavior: 'smooth' });
+    }
   }, [searchParams]);
 
   const filteredProducts = useMemo(() => {
@@ -96,7 +100,7 @@ export default function Home() {
     if (activeTab === 'men') result = result.filter(p => p.genderCategory === 'men');
     if (activeTab === 'women') result = result.filter(p => p.genderCategory === 'women');
     
-    if (activeFilter === 'new') result = result.filter(p => p.badge === 'New' || p.badge === 'New Arrival');
+    if (activeFilter === 'new') result = result.filter(p => p.badge === 'New' || p.badge === 'New Arrival' || p.badge === 'New');
     if (activeFilter === 'sale') result = result.filter(p => p.compareAtPrice || (p.badge && p.badge.includes('خصم')));
 
     if (searchQuery) {
@@ -280,7 +284,6 @@ export default function Home() {
             <div className="space-y-4">
               <h4 className="font-black text-lg">مساعدة</h4>
               <ul className="space-y-2 text-muted-foreground font-bold">
-                <li><a href="#" className="hover:text-primary">تتبع طلبك</a></li>
                 <li><a href="#" className="hover:text-primary">سياسة الإرجاع</a></li>
                 <li><button onClick={() => document.querySelector('section.py-24.bg-card.border-y')?.scrollIntoView({ behavior: 'smooth' })} className="hover:text-primary">دليل المقاسات</button></li>
               </ul>
