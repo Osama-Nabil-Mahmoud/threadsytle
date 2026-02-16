@@ -15,30 +15,58 @@ export function CheckoutModal({ open, onOpenChange }: { open: boolean; onOpenCha
   const [step, setStep] = useState<'form' | 'success'>('form');
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
-    // محاكاة عملية الإرسال
+
+    const formData = new FormData(e.currentTarget);
+    const name = formData.get('name') as string;
+    const phone = formData.get('phone') as string;
+    const city = formData.get('city') as string;
+    const address = formData.get('address') as string;
+    const notes = formData.get('notes') as string;
+
+    // بناء نص المنتجات
+    const itemsText = cart.map(item => 
+      `- ${item.name} (${item.size} / ${item.color}) x${item.quantity} = ${item.price * item.quantity} ج.م`
+    ).join('%0A');
+
+    const finalTotal = subtotal + (subtotal >= 500 ? 0 : 50);
+
+    // بناء رسالة الواتساب
+    const message = `*طلب جديد من THREAD* 🛍️%0A%0A` +
+      `*👤 العميل:* ${name}%0A` +
+      `*📞 الهاتف:* ${phone}%0A` +
+      `*📍 العنوان:* ${city}، ${address}%0A` +
+      `${notes ? `*📝 ملاحظات:* ${notes}%0A` : ''}%0A` +
+      `*📦 المنتجات:*%0A${itemsText}%0A%0A` +
+      `*💰 الإجمالي النهائي:* ${finalTotal} ج.م%0A` +
+      `*طريقة الدفع:* كاش عند الاستلام`;
+
+    const whatsappUrl = `https://wa.me/201271002000?text=${message}`;
+
+    // محاكاة الإرسال وفتح الواتساب
     setTimeout(() => {
+      window.open(whatsappUrl, '_blank');
       setLoading(false);
       setStep('success');
       clearCart();
-    }, 1500);
+    }, 1200);
   };
 
   if (step === 'success') {
     return (
       <Dialog open={open} onOpenChange={onOpenChange}>
-        <DialogContent className="sm:max-w-md text-center p-10">
+        <DialogContent className="sm:max-w-md text-center p-10 rounded-[2.5rem]">
           <div className="flex flex-col items-center gap-4">
-            <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center">
+            <div className="w-20 h-20 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center">
               <CheckCircle2 className="w-12 h-12 text-green-600" />
             </div>
-            <DialogTitle className="text-2xl font-bold">تم استلام طلبك بنجاح!</DialogTitle>
-            <DialogDescription className="text-lg">
-              شكراً لثقتك في THREAD. سنتواصل معك قريباً لتأكيد تفاصيل الشحن.
+            <DialogTitle className="text-2xl font-black">تم توجيه طلبك للواتساب!</DialogTitle>
+            <DialogDescription className="text-lg font-bold">
+              شكراً لثقتك في THREAD. يرجى إرسال الرسالة التي ظهرت لك في واتساب لتأكيد الطلب.
             </DialogDescription>
-            <Button className="w-full h-12 rounded-xl mt-4" onClick={() => {
+            <Button className="w-full h-14 rounded-2xl mt-4 font-black text-lg bg-primary" onClick={() => {
               onOpenChange(false);
               setStep('form');
             }}>
@@ -52,59 +80,62 @@ export function CheckoutModal({ open, onOpenChange }: { open: boolean; onOpenCha
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-lg max-h-[90vh] overflow-y-auto">
+      <DialogContent className="sm:max-w-lg max-h-[90vh] overflow-y-auto rounded-[2.5rem] p-8" dir="rtl">
         <DialogHeader className="text-right mb-6">
-          <DialogTitle className="text-2xl font-bold">بيانات الشحن</DialogTitle>
-          <DialogDescription>يرجى إدخال بياناتك بدقة لضمان وصول المنتج في أسرع وقت</DialogDescription>
+          <DialogTitle className="text-3xl font-black">بيانات الشحن</DialogTitle>
+          <DialogDescription className="text-lg font-bold">يرجى إدخال بياناتك بدقة لضمان وصول المنتج في أسرع وقت</DialogDescription>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit} className="space-y-5 text-right">
+        <form onSubmit={handleSubmit} className="space-y-6 text-right">
           <div className="space-y-2">
-            <Label>الاسم بالكامل</Label>
-            <Input required placeholder="محمد علي..." className="text-right h-12 rounded-xl" />
+            <Label className="font-black text-md">الاسم بالكامل</Label>
+            <Input name="name" required placeholder="محمد علي..." className="text-right h-14 rounded-2xl border-2" />
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label>رقم الهاتف</Label>
-              <Input required type="tel" placeholder="01xxxxxxxxx" className="text-right h-12 rounded-xl" />
+              <Label className="font-black text-md">رقم الهاتف</Label>
+              <Input name="phone" required type="tel" placeholder="01xxxxxxxxx" className="text-right h-14 rounded-2xl border-2" />
             </div>
             <div className="space-y-2">
-              <Label>المدينة</Label>
-              <Input required placeholder="القاهرة، الإسكندرية..." className="text-right h-12 rounded-xl" />
+              <Label className="font-black text-md">المدينة</Label>
+              <Input name="city" required placeholder="القاهرة، الإسكندرية..." className="text-right h-14 rounded-2xl border-2" />
             </div>
           </div>
           <div className="space-y-2">
-            <Label>العنوان بالتفصيل</Label>
-            <Input required placeholder="اسم الشارع، رقم العمارة، الشقة..." className="text-right h-12 rounded-xl" />
+            <Label className="font-black text-md">العنوان بالتفصيل</Label>
+            <Input name="address" required placeholder="اسم الشارع، رقم العمارة، الشقة..." className="text-right h-14 rounded-2xl border-2" />
           </div>
           <div className="space-y-2">
-            <Label>ملاحظات إضافية (اختياري)</Label>
-            <Textarea placeholder="أي تفاصيل أخرى تود إضافتها..." className="text-right rounded-xl min-h-[80px]" />
+            <Label className="font-black text-md">ملاحظات إضافية (اختياري)</Label>
+            <Textarea name="notes" placeholder="أي تفاصيل أخرى تود إضافتها..." className="text-right rounded-2xl min-h-[100px] border-2" />
           </div>
 
-          <div className="p-4 bg-muted/30 rounded-2xl space-y-2">
-            <div className="flex justify-between font-bold">
+          <div className="p-6 bg-muted/30 dark:bg-muted/10 rounded-[2rem] space-y-3 border-2 border-dashed">
+            <div className="flex justify-between font-bold text-lg">
               <span>{subtotal} ج.م</span>
               <span>قيمة المشتريات</span>
             </div>
-            <div className="flex justify-between text-sm text-muted-foreground">
-              <span>{subtotal >= 500 ? "مجاني" : "50 ج.م"}</span>
+            <div className="flex justify-between text-muted-foreground font-bold">
+              <span>{subtotal >= 500 ? "مجاني 🎉" : "50 ج.م"}</span>
               <span>مصاريف الشحن</span>
             </div>
-            <div className="flex justify-between text-xl font-bold pt-2 border-t mt-2 text-primary">
+            <div className="flex justify-between text-2xl font-black pt-4 border-t mt-2 text-primary">
               <span>{subtotal + (subtotal >= 500 ? 0 : 50)} ج.م</span>
               <span>الإجمالي النهائي</span>
             </div>
           </div>
 
-          <Button type="submit" disabled={loading} className="w-full h-14 text-lg font-bold rounded-xl gap-3">
-            {loading ? <Loader2 className="w-6 h-6 animate-spin" /> : (
+          <Button type="submit" disabled={loading} className="w-full h-16 text-xl font-black rounded-2xl gap-4 bg-primary hover:scale-[1.02] transition-transform shadow-2xl shadow-primary/20">
+            {loading ? <Loader2 className="w-8 h-8 animate-spin" /> : (
               <>
-                تأكيد الطلب (الدفع عند الاستلام)
-                <Send className="w-5 h-5" />
+                إتمام الطلب عبر واتساب
+                <Send className="w-6 h-6" />
               </>
             )}
           </Button>
+          <p className="text-center text-xs font-bold text-muted-foreground opacity-60">
+            بضغطك على إتمام الطلب، سيفتح تطبيق واتساب لإرسال تفاصيل طلبك إلينا.
+          </p>
         </form>
       </DialogContent>
     </Dialog>
