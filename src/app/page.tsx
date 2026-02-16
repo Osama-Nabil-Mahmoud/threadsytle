@@ -35,7 +35,6 @@ import {
 import { NewsletterForm } from '@/components/newsletter-form';
 import placeholderData from '@/app/lib/placeholder-images.json';
 
-// Helper to get image URL from local JSON
 const getPlaceholder = (id: string) => {
   return placeholderData.placeholderImages.find(img => img.id === id)?.imageUrl || "";
 };
@@ -52,95 +51,14 @@ const PRODUCT_IMAGES: Record<string, { primary: string; gallery: string[] }> = {
 };
 
 const PRODUCTS = [
-  { 
-    productId: "m1", 
-    genderCategory: "men", 
-    name: "Oversized Hoodie - Black", 
-    price: 399, 
-    compareAtPrice: 499, 
-    colors: ["أسود","رمادي","بيج","كحلي"], 
-    sizes: ["S","M","L","XL","XXL"], 
-    rating: 4.7, 
-    ratingCount: 234, 
-    description: "هودي oversized قطن 100%، تصميم عصري، مريح للاستخدام اليومي", 
-    badge: "خصم 20%" 
-  },
-  { 
-    productId: "m2", 
-    genderCategory: "men", 
-    name: "Essential T-Shirt Pack (3 قطع)", 
-    price: 299, 
-    colors: ["أسود","أبيض","رمادي"], 
-    sizes: ["S","M","L","XL","XXL"], 
-    rating: 4.9, 
-    ratingCount: 567, 
-    badge: "Best Seller" 
-  },
-  { 
-    productId: "m3", 
-    genderCategory: "men", 
-    name: "Slim Fit Jeans - Dark Blue", 
-    price: 449, 
-    compareAtPrice: 549, 
-    colors: ["أزرق داكن"], 
-    sizes: ["28","30","32","34","36","38"], 
-    rating: 4.6, 
-    ratingCount: 189, 
-    description: "جينز slim fit، قماش دنيم عالي الجودة، مرن ومريح" 
-  },
-  { 
-    productId: "m4", 
-    genderCategory: "men", 
-    name: "Cargo Pants - Khaki", 
-    price: 379, 
-    colors: ["خاكي","أسود","زيتوني"], 
-    sizes: ["S","M","L","XL","XXL"], 
-    rating: 4.5, 
-    ratingCount: 145, 
-    badge: "New" 
-  },
-  { 
-    productId: "w7", 
-    genderCategory: "women", 
-    name: "Oversized Sweater - Beige", 
-    price: 349, 
-    colors: ["بيج","وردي","رمادي"], 
-    sizes: ["S","M","L","XL"], 
-    rating: 4.8, 
-    ratingCount: 412, 
-    badge: "Trending" 
-  },
-  { 
-    productId: "w8", 
-    genderCategory: "women", 
-    name: "High-Waist Mom Jeans", 
-    price: 429, 
-    colors: ["أزرق فاتح","أزرق داكن"], 
-    sizes: ["26","28","30","32","34"], 
-    rating: 4.7, 
-    ratingCount: 298 
-  },
-  { 
-    productId: "w9", 
-    genderCategory: "women", 
-    name: "Cropped Hoodie - Pink", 
-    price: 329, 
-    colors: ["وردي","أبيض","أسود"], 
-    sizes: ["XS","S","M","L"], 
-    rating: 4.6, 
-    ratingCount: 187 
-  },
-  { 
-    productId: "w10", 
-    genderCategory: "women", 
-    name: "Maxi Dress - Floral", 
-    price: 499, 
-    colors: ["زهري","أزرق"], 
-    sizes: ["S","M","L","XL"], 
-    rating: 4.9, 
-    ratingCount: 156, 
-    badge: "New Arrival" 
-  },
+  { productId: "m1", genderCategory: "men", name: "Oversized Hoodie - Black", price: 399, compareAtPrice: 499, colors: ["أسود","رمادي","بيج","كحلي"], sizes: ["S","M","L","XL","XXL"], rating: 4.7, ratingCount: 234, description: "هودي oversized قطن 100%، تصميم عصري، مريح للاستخدام اليومي", badge: "خصم 20%" },
+  { productId: "m2", genderCategory: "men", name: "Essential T-Shirt Pack (3 قطع)", price: 299, colors: ["أسود","أبيض","رمادي"], sizes: ["S","M","L","XL","XXL"], rating: 4.9, ratingCount: 567, badge: "Best Seller" },
+  { productId: "m3", genderCategory: "men", name: "Slim Fit Jeans - Dark Blue", price: 449, compareAtPrice: 549, colors: ["أزرق داكن"], sizes: ["28","30","32","34","36","38"], rating: 4.6, ratingCount: 189 },
+  { productId: "m4", genderCategory: "men", name: "Cargo Pants - Khaki", price: 379, colors: ["خاكي","أسود","زيتوني"], sizes: ["S","M","L","XL","XXL"], rating: 4.5, ratingCount: 145, badge: "New" },
+  { productId: "w7", genderCategory: "women", name: "Oversized Sweater - Beige", price: 349, colors: ["بيج","وردي","رمادي"], sizes: ["S","M","L","XL"], rating: 4.8, ratingCount: 412, badge: "Trending" },
+  { productId: "w8", genderCategory: "women", name: "High-Waist Mom Jeans", price: 429, colors: ["أزرق فاتح","أزرق داكن"], sizes: ["26","28","30","32","34"], rating: 4.7, ratingCount: 298 },
+  { productId: "w9", genderCategory: "women", name: "Cropped Hoodie - Pink", price: 329, colors: ["وردي","أبيض","أسود"], sizes: ["XS","S","M","L"], rating: 4.6, ratingCount: 187 },
+  { productId: "w10", genderCategory: "women", name: "Maxi Dress - Floral", price: 499, colors: ["زهري","أزرق"], sizes: ["S","M","L","XL"], rating: 4.9, ratingCount: 156, badge: "New Arrival" },
 ];
 
 const FAQS = [
@@ -190,7 +108,6 @@ export default function Home() {
             src="https://images.unsplash.com/photo-1558769132-cb1aea458c5e?q=80&w=1920&auto=format&fit=crop" 
             alt="Hero" 
             className="w-full h-full object-cover opacity-20 grayscale"
-            data-ai-hint="lifestyle fashion"
           />
         </div>
         <div className="container mx-auto px-4 text-center z-10 space-y-8">
@@ -205,21 +122,8 @@ export default function Home() {
             تصاميم يونيك، مش هتلاقيها غير هنا.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Button 
-              size="lg" 
-              className="h-16 px-12 rounded-full text-xl font-bold bg-primary shadow-2xl hover:scale-105 transition-transform" 
-              onClick={() => { setActiveTab('men'); scrollToShop(); }}
-            >
-              تسوق الرجالي
-            </Button>
-            <Button 
-              size="lg" 
-              variant="outline" 
-              className="h-16 px-12 rounded-full text-xl font-bold border-2 border-primary text-primary hover:bg-primary hover:text-white transition-all" 
-              onClick={() => { setActiveTab('women'); scrollToShop(); }}
-            >
-              تسوق النسائي
-            </Button>
+            <Button size="lg" className="h-16 px-12 rounded-full text-xl font-bold bg-primary shadow-2xl hover:scale-105 transition-transform" onClick={() => { setActiveTab('men'); scrollToShop(); }}>تسوق الرجالي</Button>
+            <Button size="lg" variant="outline" className="h-16 px-12 rounded-full text-xl font-bold border-2 border-primary text-primary hover:bg-primary hover:text-white transition-all" onClick={() => { setActiveTab('women'); scrollToShop(); }}>تسوق النسائي</Button>
           </div>
         </div>
       </section>
@@ -277,47 +181,20 @@ export default function Home() {
               </DropdownMenu>
               <div className="relative flex-1 md:w-64">
                 <Search className="absolute right-3 top-3.5 w-5 h-5 text-muted-foreground" />
-                <Input 
-                  placeholder="ابحث عن قطعة..." 
-                  className="pr-10 h-12 rounded-xl text-right font-bold" 
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                />
+                <Input placeholder="ابحث عن قطعة..." className="pr-10 h-12 rounded-xl text-right font-bold" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
               </div>
             </div>
 
             <div className="flex bg-muted/50 p-1.5 rounded-2xl w-full md:w-auto">
-              <Button 
-                variant={activeTab === 'all' ? 'default' : 'ghost'} 
-                className={`flex-1 md:px-8 h-11 rounded-xl font-bold transition-all ${activeTab === 'all' ? 'shadow-lg' : ''}`}
-                onClick={() => setActiveTab('all')}
-              >
-                الكل
-              </Button>
-              <Button 
-                variant={activeTab === 'men' ? 'default' : 'ghost'} 
-                className={`flex-1 md:px-8 h-11 rounded-xl font-bold transition-all ${activeTab === 'men' ? 'shadow-lg' : ''}`}
-                onClick={() => setActiveTab('men')}
-              >
-                رجالي
-              </Button>
-              <Button 
-                variant={activeTab === 'women' ? 'default' : 'ghost'} 
-                className={`flex-1 md:px-8 h-11 rounded-xl font-bold transition-all ${activeTab === 'women' ? 'shadow-lg' : ''}`}
-                onClick={() => setActiveTab('women')}
-              >
-                نسائي
-              </Button>
+              <Button variant={activeTab === 'all' ? 'default' : 'ghost'} className={`flex-1 md:px-8 h-11 rounded-xl font-bold ${activeTab === 'all' ? 'shadow-lg' : ''}`} onClick={() => setActiveTab('all')}>الكل</Button>
+              <Button variant={activeTab === 'men' ? 'default' : 'ghost'} className={`flex-1 md:px-8 h-11 rounded-xl font-bold ${activeTab === 'men' ? 'shadow-lg' : ''}`} onClick={() => setActiveTab('men')}>رجالي</Button>
+              <Button variant={activeTab === 'women' ? 'default' : 'ghost'} className={`flex-1 md:px-8 h-11 rounded-xl font-bold ${activeTab === 'women' ? 'shadow-lg' : ''}`} onClick={() => setActiveTab('women')}>نسائي</Button>
             </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {filteredProducts.map((product) => (
-              <ProductCard 
-                key={product.productId} 
-                product={product as any} 
-                images={PRODUCT_IMAGES[product.productId]}
-              />
+            {filteredProducts.map((p) => (
+              <ProductCard key={p.productId} product={p as any} images={PRODUCT_IMAGES[p.productId]} />
             ))}
           </div>
         </div>
@@ -329,19 +206,10 @@ export default function Home() {
           <div className="space-y-4">
             <div className="flex justify-center"><Ruler className="w-16 h-16 text-accent" /></div>
             <h2 className="text-4xl font-black font-headline">دليل المقاسات 📏</h2>
-            <p className="text-xl text-muted-foreground">"مش متأكد من المقاس؟ شوف الجدول ده أو كلم خدمة العملاء"</p>
           </div>
-
           <div className="bg-background rounded-[2rem] p-8 shadow-xl overflow-x-auto">
             <table className="w-full text-center">
-              <thead>
-                <tr className="border-b-2">
-                  <th className="py-4 font-black">المقاس</th>
-                  <th className="py-4 font-black">الصدر (سم)</th>
-                  <th className="py-4 font-black">الطول (سم)</th>
-                  <th className="py-4 font-black">الوزن (كجم)</th>
-                </tr>
-              </thead>
+              <thead><tr className="border-b-2"><th className="py-4 font-black">المقاس</th><th className="py-4 font-black">الصدر (سم)</th><th className="py-4 font-black">الطول (سم)</th><th className="py-4 font-black">الوزن (كجم)</th></tr></thead>
               <tbody className="divide-y">
                 <tr><td className="py-4 font-bold">S</td><td className="py-4">90-95</td><td className="py-4">165-170</td><td className="py-4">50-60</td></tr>
                 <tr><td className="py-4 font-bold">M</td><td className="py-4">96-101</td><td className="py-4">171-175</td><td className="py-4">61-70</td></tr>
@@ -350,9 +218,6 @@ export default function Home() {
                 <tr><td className="py-4 font-bold">XXL</td><td className="py-4">114-119</td><td className="py-4">186-190</td><td className="py-4">91-100</td></tr>
               </tbody>
             </table>
-          </div>
-          <div className="p-6 bg-accent/5 rounded-2xl border-2 border-dashed border-accent/20">
-            <p className="text-lg font-bold text-accent">💡 Tip: لو بين مقاسين، اختار المقاس الأكبر لراحة أكتر.</p>
           </div>
         </div>
       </section>
@@ -363,75 +228,61 @@ export default function Home() {
           <div className="text-center space-y-4">
             <HelpCircle className="w-12 h-12 text-primary mx-auto" />
             <h2 className="text-4xl font-black font-headline">عندك سؤال؟</h2>
-            <p className="text-muted-foreground">كل اللي محتاج تعرفه عن الطلب والتوصيل في THREAD</p>
           </div>
-
           <Accordion type="single" collapsible className="w-full space-y-4">
             {FAQS.map((faq, idx) => (
               <AccordionItem key={idx} value={`item-${idx}`} className="border rounded-2xl px-6 bg-white shadow-sm">
                 <AccordionTrigger className="text-right font-bold text-lg hover:no-underline">{faq.q}</AccordionTrigger>
-                <AccordionContent className="text-right text-muted-foreground text-lg leading-relaxed">
-                  {faq.a}
-                </AccordionContent>
+                <AccordionContent className="text-right text-muted-foreground text-lg leading-relaxed">{faq.a}</AccordionContent>
               </AccordionItem>
             ))}
           </Accordion>
         </div>
       </section>
 
-      {/* Newsletter Section */}
-      <section className="py-24 bg-primary text-primary-foreground">
-        <div className="container mx-auto px-4 text-center space-y-8">
-          <Smartphone className="w-16 h-16 mx-auto opacity-50" />
-          <h2 className="text-4xl md:text-6xl font-black font-headline">خليك أول واحد يعرف!</h2>
-          <p className="text-xl opacity-80 max-w-xl mx-auto">
-            اشترك في النشرة البريدية وخد خصم 10% على طلبك الجاي، وكمان هتوصلك أحدث الكوليكشنات قبل أي حد.
-          </p>
-          <NewsletterForm />
-        </div>
-      </section>
-
       {/* Footer */}
       <footer className="bg-card py-20 border-t">
-        <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-12 text-right">
-          <div className="space-y-6">
-            <h3 className="text-3xl font-black text-primary">THREAD</h3>
-            <p className="text-muted-foreground font-medium">Your Style, Your Story.</p>
-            <div className="flex justify-end gap-4">
-              <a href="#" className="p-3 bg-muted rounded-full hover:bg-primary hover:text-white transition-all"><Instagram className="w-5 h-5" /></a>
-              <a href="#" className="p-3 bg-muted rounded-full hover:bg-primary hover:text-white transition-all"><Facebook className="w-5 h-5" /></a>
-              <a href="#" className="p-3 bg-muted rounded-full hover:bg-primary hover:text-white transition-all"><Twitter className="w-5 h-5" /></a>
+        <div className="container mx-auto px-4 text-right">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
+            <div className="space-y-6">
+              <h3 className="text-3xl font-black text-primary">THREAD</h3>
+              <p className="text-muted-foreground font-medium">Your Style, Your Story.</p>
+              <div className="flex justify-start md:justify-end gap-4">
+                <a href="#" className="p-3 bg-muted rounded-full hover:bg-primary hover:text-white transition-all"><Instagram className="w-5 h-5" /></a>
+                <a href="#" className="p-3 bg-muted rounded-full hover:bg-primary hover:text-white transition-all"><Facebook className="w-5 h-5" /></a>
+                <a href="#" className="p-3 bg-muted rounded-full hover:bg-primary hover:text-white transition-all"><Twitter className="w-5 h-5" /></a>
+              </div>
+            </div>
+            <div className="space-y-4">
+              <h4 className="font-black text-lg">تسوق</h4>
+              <ul className="space-y-2 text-muted-foreground font-bold">
+                <li><button onClick={() => {setActiveTab('men'); scrollToShop();}} className="hover:text-primary">الرجالي</button></li>
+                <li><button onClick={() => {setActiveTab('women'); scrollToShop();}} className="hover:text-primary">النسائي</button></li>
+                <li><a href="#shop" className="hover:text-primary">وصل حديثاً</a></li>
+                <li><a href="#shop" className="hover:text-primary">الأكثر مبيعاً</a></li>
+              </ul>
+            </div>
+            <div className="space-y-4">
+              <h4 className="font-black text-lg">مساعدة</h4>
+              <ul className="space-y-2 text-muted-foreground font-bold">
+                <li><a href="#" className="hover:text-primary">تتبع طلبك</a></li>
+                <li><a href="#" className="hover:text-primary">سياسة الإرجاع</a></li>
+                <li><a href="#" className="hover:text-primary">دليل المقاسات</a></li>
+                <li><a href="#" className="hover:text-primary">اتصل بنا</a></li>
+              </ul>
+            </div>
+            <div className="space-y-4">
+              <h4 className="font-black text-lg">التطبيق</h4>
+              <p className="text-sm text-muted-foreground">حمل تطبيق THREAD وخد خصومات حصرية!</p>
+              <div className="flex flex-col gap-3">
+                <Button variant="outline" className="rounded-xl border-2 font-bold h-12">App Store 🍎</Button>
+                <Button variant="outline" className="rounded-xl border-2 font-bold h-12">Google Play 🤖</Button>
+              </div>
             </div>
           </div>
-          <div className="space-y-4">
-            <h4 className="font-black text-lg">تسوق</h4>
-            <ul className="space-y-2 text-muted-foreground font-bold">
-              <li><button onClick={() => setActiveTab('men')} className="hover:text-primary">الرجالي</button></li>
-              <li><button onClick={() => setActiveTab('women')} className="hover:text-primary">النسائي</button></li>
-              <li><a href="#" className="hover:text-primary">وصل حديثاً</a></li>
-              <li><a href="#" className="hover:text-primary">الأكثر مبيعاً</a></li>
-            </ul>
+          <div className="mt-20 pt-8 border-t text-center text-muted-foreground font-bold">
+            <p>© {new Date().getFullYear()} THREAD. جميع الحقوق محفوظة.</p>
           </div>
-          <div className="space-y-4">
-            <h4 className="font-black text-lg">مساعدة</h4>
-            <ul className="space-y-2 text-muted-foreground font-bold">
-              <li><a href="#" className="hover:text-primary">تتبع طلبك</a></li>
-              <li><a href="#" className="hover:text-primary">سياسة الإرجاع</a></li>
-              <li><a href="#" className="hover:text-primary">دليل المقاسات</a></li>
-              <li><a href="#" className="hover:text-primary">اتصل بنا</a></li>
-            </ul>
-          </div>
-          <div className="space-y-4">
-            <h4 className="font-black text-lg">التطبيق</h4>
-            <p className="text-sm text-muted-foreground">حمل تطبيق THREAD وخد خصومات حصرية!</p>
-            <div className="flex flex-col gap-3">
-              <Button variant="outline" className="rounded-xl border-2 font-bold h-12">App Store 🍎</Button>
-              <Button variant="outline" className="rounded-xl border-2 font-bold h-12">Google Play 🤖</Button>
-            </div>
-          </div>
-        </div>
-        <div className="container mx-auto px-4 mt-20 pt-8 border-t text-center text-muted-foreground font-bold">
-          <p>© {new Date().getFullYear()} THREAD. جميع الحقوق محفوظة. ستايلك، قصتك.</p>
         </div>
       </footer>
     </div>
