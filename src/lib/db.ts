@@ -1,3 +1,4 @@
+
 import { 
   collection, 
   getDocs, 
@@ -9,9 +10,9 @@ import {
   query, 
   where,
   orderBy,
-  Timestamp 
+  Timestamp,
+  Firestore
 } from 'firebase/firestore';
-import { db } from './firebase';
 
 export interface Product {
   id?: string;
@@ -36,13 +37,13 @@ export interface Order {
   createdAt: Timestamp;
 }
 
-export async function getProducts(): Promise<Product[]> {
+export async function getProducts(db: Firestore): Promise<Product[]> {
   const q = query(collection(db, 'products'), orderBy('createdAt', 'desc'));
   const querySnapshot = await getDocs(q);
   return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Product));
 }
 
-export async function getProduct(productId: string): Promise<Product | null> {
+export async function getProduct(db: Firestore, productId: string): Promise<Product | null> {
   const docRef = doc(db, 'products', productId);
   const docSnap = await getDoc(docRef);
   if (docSnap.exists()) {
@@ -51,7 +52,7 @@ export async function getProduct(productId: string): Promise<Product | null> {
   return null;
 }
 
-export async function saveProduct(productData: Partial<Product>, id?: string) {
+export async function saveProduct(db: Firestore, productData: Partial<Product>, id?: string) {
   if (id) {
     const docRef = doc(db, 'products', id);
     await setDoc(docRef, { ...productData }, { merge: true });
@@ -65,11 +66,11 @@ export async function saveProduct(productData: Partial<Product>, id?: string) {
   }
 }
 
-export async function deleteProduct(productId: string) {
+export async function deleteProduct(db: Firestore, productId: string) {
   await deleteDoc(doc(db, 'products', productId));
 }
 
-export async function createOrder(orderData: Omit<Order, 'id' | 'createdAt' | 'status'>) {
+export async function createOrder(db: Firestore, orderData: Omit<Order, 'id' | 'createdAt' | 'status'>) {
   return await addDoc(collection(db, 'orders'), {
     ...orderData,
     status: 'pending',
@@ -77,14 +78,14 @@ export async function createOrder(orderData: Omit<Order, 'id' | 'createdAt' | 's
   });
 }
 
-export async function subscribeNewsletter(email: string) {
+export async function subscribeNewsletter(db: Firestore, email: string) {
   return await addDoc(collection(db, 'newsletter'), {
     email,
     subscribedAt: Timestamp.now(),
   });
 }
 
-export async function checkAdminStatus(uid: string): Promise<boolean> {
+export async function checkAdminStatus(db: Firestore, uid: string): Promise<boolean> {
   const docRef = doc(db, 'admins', uid);
   const docSnap = await getDoc(docRef);
   return docSnap.exists() && docSnap.data()?.role === 'admin';

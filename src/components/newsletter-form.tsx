@@ -1,6 +1,8 @@
+
 "use client"
 
 import { useState } from 'react';
+import { useFirestore } from '@/firebase';
 import { subscribeNewsletter } from '@/lib/db';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -8,6 +10,7 @@ import { useToast } from '@/hooks/use-toast';
 import { Loader2, Send } from 'lucide-react';
 
 export function NewsletterForm() {
+  const db = useFirestore();
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
@@ -18,7 +21,7 @@ export function NewsletterForm() {
 
     setLoading(true);
     try {
-      await subscribeNewsletter(email);
+      await subscribeNewsletter(db, email);
       toast({
         title: "تم الاشتراك بنجاح!",
         description: "شكراً لانضمامك إلينا. سنبقيك على اطلاع دائم.",

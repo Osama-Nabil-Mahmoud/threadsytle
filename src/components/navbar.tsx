@@ -1,11 +1,12 @@
+
 "use client"
 
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { onAuthStateChanged, signOut, User } from 'firebase/auth';
-import { auth } from '@/lib/firebase';
+import { signOut } from 'firebase/auth';
+import { useAuth, useFirestore, useUser } from '@/firebase';
 import { checkAdminStatus } from '@/lib/db';
-import { ShoppingBag, User as UserIcon, LogOut, LayoutDashboard, Menu } from 'lucide-react';
+import { ShoppingBag, User as UserIcon, LogOut, LayoutDashboard } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -16,21 +17,22 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 export function Navbar() {
-  const [user, setUser] = useState<User | null>(null);
+  const auth = useAuth();
+  const db = useFirestore();
+  const { user } = useUser();
   const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      setUser(user);
+    async function check() {
       if (user) {
-        const adminStatus = await checkAdminStatus(user.uid);
+        const adminStatus = await checkAdminStatus(db, user.uid);
         setIsAdmin(adminStatus);
       } else {
         setIsAdmin(false);
       }
-    });
-    return () => unsubscribe();
-  }, []);
+    }
+    check();
+  }, [user, db]);
 
   const handleSignOut = async () => {
     await signOut(auth);

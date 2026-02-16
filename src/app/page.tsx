@@ -1,6 +1,8 @@
+
 "use client"
 
 import { useEffect, useState } from 'react';
+import { useFirestore } from '@/firebase';
 import { getProducts, Product } from '@/lib/db';
 import { ProductCard } from '@/components/product-card';
 import { NewsletterForm } from '@/components/newsletter-form';
@@ -10,13 +12,14 @@ import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 
 export default function Home() {
+  const db = useFirestore();
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function load() {
       try {
-        const data = await getProducts();
+        const data = await getProducts(db);
         setProducts(data);
       } catch (e) {
         console.error("Failed to load products", e);
@@ -25,7 +28,7 @@ export default function Home() {
       }
     }
     load();
-  }, []);
+  }, [db]);
 
   return (
     <div className="flex flex-col gap-16 pb-20">

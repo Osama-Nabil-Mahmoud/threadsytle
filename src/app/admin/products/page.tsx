@@ -1,8 +1,8 @@
+
 "use client"
 
 import { useEffect, useState } from 'react';
-import { onAuthStateChanged } from 'firebase/auth';
-import { auth } from '@/lib/firebase';
+import { useAuth, useFirestore, useUser, useStorage } from '@/firebase';
 import { getProducts, saveProduct, deleteProduct, checkAdminStatus, Product } from '@/lib/db';
 import { uploadProductImage } from '@/lib/storage';
 import { useRouter } from 'next/navigation';
@@ -27,9 +27,12 @@ import {
   DialogTrigger
 } from '@/components/ui/dialog';
 import { useToast } from '@/hooks/use-toast';
-import { Plus, Edit, Trash2, Loader2, Upload, ExternalLink } from 'lucide-react';
+import { Plus, Edit, Trash2, Loader2, Upload } from 'lucide-react';
 
 export default function AdminProductsPage() {
+  const db = useFirestore();
+  const storage = useStorage();
+  const { user, loading: authLoading } = useUser();
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
@@ -50,9 +53,11 @@ export default function AdminProductsPage() {
   const { toast } = useToast();
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+    if (authLoading) return;
+    
+    async function check() {
       if (user) {
-        const admin = await checkAdminStatus(user.uid);
+        const admin = await checkAdminStatus(db, user.uid);
         if (admin) {
           setIsAdmin(true);
           fetchProducts();
@@ -62,13 +67,13 @@ export default function AdminProductsPage() {
       } else {
         router.push('/login');
       }
-    });
-    return () => unsubscribe();
-  }, [router]);
+    }
+    check();
+  }, [user, authLoading, db, router]);
 
   async function fetchProducts() {
     setLoading(true);
-    const data = await getProducts();
+    const data = await getProducts(db);
     setProducts(data);
     setLoading(false);
   }
@@ -80,7 +85,7 @@ export default function AdminProductsPage() {
     setUploading(true);
     try {
       const tempId = editingProduct?.id || Math.random().toString(36).substring(7);
-      const url = await uploadProductImage(tempId, file);
+      const url = await uploadProductImage(storage, tempId, file);
       setFormData(prev => ({ ...prev, imageURL: url }));
       toast({ title: "تم رفع الصورة بنجاح" });
     } catch (error) {
@@ -104,7 +109,7 @@ export default function AdminProductsPage() {
         sizes: editingProduct?.sizes || ['S', 'M', 'L', 'XL'],
       };
 
-      await saveProduct(payload, editingProduct?.id);
+      await saveProduct(db, payload, editingProduct?.id);
       toast({ title: "تم حفظ المنتج بنجاح" });
       setIsDialogOpen(false);
       resetForm();
@@ -130,7 +135,7 @@ export default function AdminProductsPage() {
   const handleDelete = async (id: string) => {
     if (!confirm('هل أنت متأكد من حذف هذا المنتج؟')) return;
     try {
-      await deleteProduct(id);
+      await deleteProduct(db, id);
       toast({ title: "تم حذف المنتج" });
       fetchProducts();
     } catch (error) {
@@ -150,7 +155,7 @@ export default function AdminProductsPage() {
     });
   };
 
-  if (!isAdmin) return null;
+  if (authLoading || !isAdmin) return null;
 
   return (
     <div className="container mx-auto px-4 py-12">
