@@ -26,14 +26,12 @@ export function CheckoutModal({ open, onOpenChange }: { open: boolean; onOpenCha
     const address = formData.get('address') as string;
     const notes = formData.get('notes') as string;
 
-    // بناء نص المنتجات
     const itemsText = cart.map(item => 
       `- ${item.name} (${item.size} / ${item.color}) x${item.quantity} = ${item.price * item.quantity} ج.م`
     ).join('%0A');
 
     const finalTotal = subtotal + (subtotal >= 500 ? 0 : 50);
 
-    // بناء رسالة الواتساب
     const message = `*طلب جديد من THREAD* 🛍️%0A%0A` +
       `*👤 العميل:* ${name}%0A` +
       `*📞 الهاتف:* ${phone}%0A` +
@@ -45,7 +43,6 @@ export function CheckoutModal({ open, onOpenChange }: { open: boolean; onOpenCha
 
     const whatsappUrl = `https://wa.me/201271002000?text=${message}`;
 
-    // محاكاة الإرسال وفتح الواتساب
     setTimeout(() => {
       window.open(whatsappUrl, '_blank');
       setLoading(false);
@@ -57,7 +54,7 @@ export function CheckoutModal({ open, onOpenChange }: { open: boolean; onOpenCha
   if (step === 'success') {
     return (
       <Dialog open={open} onOpenChange={onOpenChange}>
-        <DialogContent className="sm:max-w-md text-center p-10 rounded-[2.5rem]">
+        <DialogContent className="sm:max-w-md text-center p-10 rounded-[2.5rem] bg-card">
           <div className="flex flex-col items-center gap-4">
             <div className="w-20 h-20 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center">
               <CheckCircle2 className="w-12 h-12 text-green-600" />
@@ -80,7 +77,7 @@ export function CheckoutModal({ open, onOpenChange }: { open: boolean; onOpenCha
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-lg max-h-[90vh] overflow-y-auto rounded-[2.5rem] p-8" dir="rtl">
+      <DialogContent className="sm:max-w-lg max-h-[90vh] overflow-y-auto rounded-[2.5rem] p-8 bg-card" dir="rtl">
         <DialogHeader className="text-right mb-6">
           <DialogTitle className="text-3xl font-black">بيانات الشحن</DialogTitle>
           <DialogDescription className="text-lg font-bold">يرجى إدخال بياناتك بدقة لضمان وصول المنتج في أسرع وقت</DialogDescription>
@@ -89,25 +86,25 @@ export function CheckoutModal({ open, onOpenChange }: { open: boolean; onOpenCha
         <form onSubmit={handleSubmit} className="space-y-6 text-right">
           <div className="space-y-2">
             <Label className="font-black text-md">الاسم بالكامل</Label>
-            <Input name="name" required placeholder="محمد علي..." className="text-right h-14 rounded-2xl border-2" />
+            <Input name="name" required placeholder="محمد علي..." className="text-right h-14 rounded-2xl border-2 bg-background" />
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label className="font-black text-md">رقم الهاتف</Label>
-              <Input name="phone" required type="tel" placeholder="01xxxxxxxxx" className="text-right h-14 rounded-2xl border-2" />
+              <Input name="phone" required type="tel" placeholder="01xxxxxxxxx" className="text-right h-14 rounded-2xl border-2 bg-background" />
             </div>
             <div className="space-y-2">
               <Label className="font-black text-md">المدينة</Label>
-              <Input name="city" required placeholder="القاهرة، الإسكندرية..." className="text-right h-14 rounded-2xl border-2" />
+              <Input name="city" required placeholder="القاهرة، الإسكندرية..." className="text-right h-14 rounded-2xl border-2 bg-background" />
             </div>
           </div>
           <div className="space-y-2">
             <Label className="font-black text-md">العنوان بالتفصيل</Label>
-            <Input name="address" required placeholder="اسم الشارع، رقم العمارة، الشقة..." className="text-right h-14 rounded-2xl border-2" />
+            <Input name="address" required placeholder="اسم الشارع، رقم العمارة، الشقة..." className="text-right h-14 rounded-2xl border-2 bg-background" />
           </div>
           <div className="space-y-2">
             <Label className="font-black text-md">ملاحظات إضافية (اختياري)</Label>
-            <Textarea name="notes" placeholder="أي تفاصيل أخرى تود إضافتها..." className="text-right rounded-2xl min-h-[100px] border-2" />
+            <Textarea name="notes" placeholder="أي تفاصيل أخرى تود إضافتها..." className="text-right rounded-2xl min-h-[100px] border-2 bg-background" />
           </div>
 
           <div className="p-6 bg-muted/30 dark:bg-muted/10 rounded-[2rem] space-y-3 border-2 border-dashed">
@@ -133,9 +130,6 @@ export function CheckoutModal({ open, onOpenChange }: { open: boolean; onOpenCha
               </>
             )}
           </Button>
-          <p className="text-center text-xs font-bold text-muted-foreground opacity-60">
-            بضغطك على إتمام الطلب، سيفتح تطبيق واتساب لإرسال تفاصيل طلبك إلينا.
-          </p>
         </form>
       </DialogContent>
     </Dialog>

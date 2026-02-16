@@ -43,7 +43,7 @@ export function Navbar() {
                 <Menu className="w-6 h-6" />
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-72 text-right p-10 flex flex-col">
+            <SheetContent side="right" className="w-72 text-right p-10 flex flex-col bg-card">
               <Link href="/" className="font-headline text-3xl font-bold tracking-tighter text-primary mb-10 block">
                 THREAD
               </Link>

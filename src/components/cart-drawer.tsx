@@ -57,7 +57,7 @@ export function CartDrawer() {
                         <Button
                           variant="ghost"
                           size="icon"
-                          className="h-10 w-10"
+                          className="h-10 w-10 hover:bg-primary/10"
                           onClick={() => updateQuantity(item.productId, item.color, item.size, item.quantity + 1)}
                         >
                           <Plus className="w-4 h-4" />
@@ -66,7 +66,7 @@ export function CartDrawer() {
                         <Button
                           variant="ghost"
                           size="icon"
-                          className="h-10 w-10"
+                          className="h-10 w-10 hover:bg-primary/10"
                           onClick={() => updateQuantity(item.productId, item.color, item.size, item.quantity - 1)}
                         >
                           <Minus className="w-4 h-4" />
