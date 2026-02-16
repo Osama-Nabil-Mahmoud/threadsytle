@@ -78,7 +78,7 @@ export function ProductCard({ product, images }: ProductCardProps) {
   };
 
   return (
-    <Card className="group overflow-hidden border-none shadow-lg hover:shadow-2xl transition-all duration-500 rounded-[2rem] bg-white flex flex-col h-full relative">
+    <Card className="group overflow-hidden border-none shadow-lg hover:shadow-2xl transition-all duration-500 rounded-[2rem] bg-card flex flex-col h-full relative">
       {product.rating >= 4.8 && (
         <div className="absolute top-0 left-0 z-20 bg-yellow-400 text-black text-[10px] font-black px-4 py-1.5 rounded-br-2xl shadow-md">
           الأكثر مبيعاً 🔥
@@ -97,7 +97,7 @@ export function ProductCard({ product, images }: ProductCardProps) {
             />
             <Dialog>
               <DialogTrigger asChild>
-                <button className="absolute bottom-4 left-4 bg-white/80 backdrop-blur-sm p-3 rounded-full opacity-0 group-hover:opacity-100 transition-opacity shadow-xl hover:bg-white">
+                <button className="absolute bottom-4 left-4 bg-white/80 dark:bg-black/80 backdrop-blur-sm p-3 rounded-full opacity-0 group-hover:opacity-100 transition-opacity shadow-xl hover:bg-white dark:hover:bg-zinc-800">
                   <Maximize2 className="w-5 h-5 text-primary" />
                 </button>
               </DialogTrigger>
@@ -139,7 +139,7 @@ export function ProductCard({ product, images }: ProductCardProps) {
 
       <CardContent className="p-6 text-right flex-1 flex flex-col">
         <div className="flex items-center justify-between mb-3">
-          <div className="flex items-center gap-1 text-yellow-500 bg-yellow-50 px-2.5 py-1 rounded-full">
+          <div className="flex items-center gap-1 text-yellow-500 bg-yellow-50 dark:bg-yellow-950/30 px-2.5 py-1 rounded-full">
             <span className="text-xs font-black">{product.rating}</span>
             <Star className="w-3 h-3 fill-current" />
             <span className="text-[10px] text-muted-foreground mr-1">({product.ratingCount})</span>

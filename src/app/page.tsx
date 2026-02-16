@@ -154,7 +154,7 @@ export default function Home() {
   return (
     <div className="flex flex-col gap-0 pb-0">
       {/* Hero Section */}
-      <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden bg-[#F1F0F4]">
+      <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden bg-muted/20 dark:bg-muted/10">
         <div className="absolute inset-0 z-0">
           <img 
             src="https://images.unsplash.com/photo-1558769132-cb1aea458c5e?q=80&w=1920&auto=format&fit=crop" 
@@ -180,7 +180,7 @@ export default function Home() {
       </section>
 
       {/* Trust Bar */}
-      <section className="bg-white border-y py-10">
+      <section className="bg-card border-y py-10">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             <div className="flex flex-col items-center text-center space-y-2">
@@ -260,7 +260,7 @@ export default function Home() {
             <div className="flex justify-center"><Ruler className="w-16 h-16 text-accent" /></div>
             <h2 className="text-4xl font-black font-headline">دليل المقاسات 📏</h2>
           </div>
-          <div className="bg-background rounded-[2rem] p-8 shadow-xl overflow-x-auto">
+          <div className="bg-background rounded-[2rem] p-8 shadow-xl overflow-x-auto border">
             <table className="w-full text-center">
               <thead><tr className="border-b-2"><th className="py-4 font-black">المقاس</th><th className="py-4 font-black">الصدر (سم)</th><th className="py-4 font-black">الطول (سم)</th><th className="py-4 font-black">الوزن (كجم)</th></tr></thead>
               <tbody className="divide-y text-lg">
@@ -284,7 +284,7 @@ export default function Home() {
           </div>
           <Accordion type="single" collapsible className="w-full space-y-4">
             {FAQS.map((faq, idx) => (
-              <AccordionItem key={idx} value={`item-${idx}`} className="border rounded-2xl px-6 bg-white shadow-sm">
+              <AccordionItem key={idx} value={`item-${idx}`} className="border rounded-2xl px-6 bg-card shadow-sm">
                 <AccordionTrigger className="text-right font-bold text-lg hover:no-underline">{faq.q}</AccordionTrigger>
                 <AccordionContent className="text-right text-muted-foreground text-lg leading-relaxed">{faq.a}</AccordionContent>
               </AccordionItem>
