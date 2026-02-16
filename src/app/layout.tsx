@@ -1,3 +1,4 @@
+
 import type {Metadata} from 'next';
 import './globals.css';
 import { Navbar } from '@/components/navbar';
@@ -29,11 +30,6 @@ export default function RootLayout({
             <main>
               {children}
             </main>
-            <footer className="bg-card py-12 border-t mt-20">
-              <div className="container mx-auto px-4 text-center">
-                <p className="text-muted-foreground">© {new Date().getFullYear()} THREAD. جميع الحقوق محفوظة.</p>
-              </div>
-            </footer>
             <Toaster />
           </CartProvider>
         </FirebaseClientProvider>

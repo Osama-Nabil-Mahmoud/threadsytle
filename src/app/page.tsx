@@ -15,7 +15,6 @@ import {
   CreditCard,
   Ruler,
   HelpCircle,
-  Smartphone,
   Instagram,
   Facebook,
   Twitter
@@ -32,22 +31,16 @@ import {
   AccordionItem, 
   AccordionTrigger 
 } from "@/components/ui/accordion";
-import { NewsletterForm } from '@/components/newsletter-form';
-import placeholderData from '@/app/lib/placeholder-images.json';
-
-const getPlaceholder = (id: string) => {
-  return placeholderData.placeholderImages.find(img => img.id === id)?.imageUrl || "";
-};
 
 const PRODUCT_IMAGES: Record<string, { primary: string; gallery: string[] }> = {
-  "m1": { primary: getPlaceholder("m1-hoodie"), gallery: [] },
-  "m2": { primary: getPlaceholder("m2-tshirt"), gallery: [] },
-  "m3": { primary: getPlaceholder("m3-jeans"), gallery: [] },
-  "m4": { primary: getPlaceholder("m4-cargo"), gallery: [] },
-  "w7": { primary: getPlaceholder("w7-sweater"), gallery: [] },
-  "w8": { primary: getPlaceholder("w8-momjeans"), gallery: [] },
-  "w9": { primary: getPlaceholder("w9-crophoodie"), gallery: [] },
-  "w10": { primary: getPlaceholder("w10-floral"), gallery: [] },
+  "m1": { primary: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?q=80&w=800&auto=format&fit=crop", gallery: [] },
+  "m2": { primary: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=800&auto=format&fit=crop", gallery: [] },
+  "m3": { primary: "https://images.unsplash.com/photo-1542272604-787c3835535d?q=80&w=800&auto=format&fit=crop", gallery: [] },
+  "m4": { primary: "https://images.unsplash.com/photo-1624241212332-19c713f31fade?q=80&w=800&auto=format&fit=crop", gallery: [] },
+  "w7": { primary: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?q=80&w=800&auto=format&fit=crop", gallery: [] },
+  "w8": { primary: "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?q=80&w=800&auto=format&fit=crop", gallery: [] },
+  "w9": { primary: "https://images.unsplash.com/photo-1620799139507-2a76f79a2f4d?q=80&w=800&auto=format&fit=crop", gallery: [] },
+  "w10": { primary: "https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?q=80&w=800&auto=format&fit=crop", gallery: [] },
 };
 
 const PRODUCTS = [
@@ -64,16 +57,10 @@ const PRODUCTS = [
 const FAQS = [
   { q: "ازاي أطلب من THREAD؟", a: "اختار المنتج اللي عاجبك، اختار المقاس واللون، اضغط \"أضف للسلة\"، أكمل بياناتك وعنوانك، اختار طريقة الدفع، وخلاص! هنوصلك طلبك في أقرب وقت." },
   { q: "ايه طرق الدفع المتاحة؟", a: "عندنا: كاش عند الاستلام (COD)، فيزا/ماستركارد، فوري، تقسيط (فالو، تمارا، سهل)، ومحافظ إلكترونية (فودافون كاش، اتصالات كاش)." },
-  { q: "التوصيل بياخد كام يوم؟", a: "القاهرة والجيزة: 2-3 أيام عمل. الإسكندرية: 3-4 أيام. باقي المحافظات: 4-5 أيام. وعندنا توصيل express في نفس اليوم للقاهرة." },
-  { q: "كام رسوم التوصيل؟", a: "طلبات فوق 500 ج: توصيل مجاني 🎉. طلبات أقل من 500 ج: 50 ج. الـ Express بـ 100 ج." },
-  { q: "ازاي أعرف المقاس المناسب؟", a: "شوف \"دليل المقاسات\" في صفحة كل منتج. فيه جدول تفصيلي بالقياسات وصور على موديلز بمقاسات مختلفة. ولو لسه مش متأكد، كلمنا." },
-  { q: "لو المقاس مش مظبوط؟", a: "لا تقلق! عندك 14 يوم ترجع أو تستبدل المنتج مجاناً، بشرط يكون في حالته الأصلية والتاج موجود." },
-  { q: "ازاي أرجع أو أستبدل منتج؟", a: "كلمنا على خدمة العملاء أو اطلب إرجاع من حسابك، هنبعتلك مندوب ياخد المنتج ويرجعلك فلوسك أو يبدله." },
-  { q: "الألوان زي الصور بالضبط؟", a: "بنحاول نخلي الصور دقيقة جداً، بس ممكن يكون فيه اختلاف بسيط بسبب إضاءة الشاشة. لو مش عاجبك، ارجعه!" },
-  { q: "المنتجات أصلية؟", a: "كل منتجاتنا أصلية 100%، يا تصاميمنا الخاصة يا براندات معتمدة وبأعلى جودة خامات." },
-  { q: "في برنامج ولاء أو نقاط؟", a: "أيوة! كل ما تشتري تاخد نقاط تقدر تحولها لخصومات على طلباتك الجاية وعروض حصرية." },
-  { q: "أقدر أتابع طلبي؟", a: "طبعاً! بعد ما تطلب هتوصلك رسالة فيها رقم التتبع وتقدر تتابع حالة الطلب من حسابك لحظة بلحظة." },
-  { q: "خدمة العملاء متاحة امتى؟", a: "متاحين واتساب 24/7، تليفون يومياً من 10 ص لـ 10 م، وبنرد على الإيميل خلال 24 ساعة." },
+  { q: "التوصيل بياخد كام يوم؟", a: "القاهرة والجيزة: 2-3 أيام عمل. الإسكندرية: 3-4 أيام. باقي المحافظات: 4-5 أيام." },
+  { q: "كام رسوم التوصيل؟", a: "طلبات فوق 500 ج: توصيل مجاني 🎉. طلبات أقل من 500 ج: 50 ج." },
+  { q: "ازاي أعرف المقاس المناسب؟", a: "شوف \"دليل المقاسات\" في صفحة كل منتج. فيه جدول تفصيلي بالقياسات وصور على موديلز بمقاسات مختلفة." },
+  { q: "لو المقاس مش مظبوط؟", a: "لا تقلق! عندك 14 يوم ترجع أو تستبدل المنتج مجاناً، بشرط يكون في حالته الأصلية." },
 ];
 
 export default function Home() {
@@ -118,8 +105,7 @@ export default function Home() {
             ستايلك، <br /> <span className="text-accent underline decoration-primary/20">قصتك</span>
           </h1>
           <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto font-medium">
-            THREAD بوصلك لأرقى خطوط الموضة المصرية بجودة عالمية. <br/>
-            تصاميم يونيك، مش هتلاقيها غير هنا.
+            THREAD بوصلك لأرقى خطوط الموضة المصرية بجودة عالمية.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Button size="lg" className="h-16 px-12 rounded-full text-xl font-bold bg-primary shadow-2xl hover:scale-105 transition-transform" onClick={() => { setActiveTab('men'); scrollToShop(); }}>تسوق الرجالي</Button>
@@ -200,7 +186,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Size Guide Section */}
+      {/* Size Guide */}
       <section className="py-24 bg-card border-y">
         <div className="container mx-auto px-4 max-w-4xl text-center space-y-12">
           <div className="space-y-4">
@@ -210,7 +196,7 @@ export default function Home() {
           <div className="bg-background rounded-[2rem] p-8 shadow-xl overflow-x-auto">
             <table className="w-full text-center">
               <thead><tr className="border-b-2"><th className="py-4 font-black">المقاس</th><th className="py-4 font-black">الصدر (سم)</th><th className="py-4 font-black">الطول (سم)</th><th className="py-4 font-black">الوزن (كجم)</th></tr></thead>
-              <tbody className="divide-y">
+              <tbody className="divide-y text-lg">
                 <tr><td className="py-4 font-bold">S</td><td className="py-4">90-95</td><td className="py-4">165-170</td><td className="py-4">50-60</td></tr>
                 <tr><td className="py-4 font-bold">M</td><td className="py-4">96-101</td><td className="py-4">171-175</td><td className="py-4">61-70</td></tr>
                 <tr><td className="py-4 font-bold">L</td><td className="py-4">102-107</td><td className="py-4">176-180</td><td className="py-4">71-80</td></tr>
@@ -222,7 +208,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* FAQ Section */}
+      {/* FAQ */}
       <section className="py-24 bg-background">
         <div className="container mx-auto px-4 max-w-3xl space-y-12">
           <div className="text-center space-y-4">
@@ -248,9 +234,9 @@ export default function Home() {
               <h3 className="text-3xl font-black text-primary">THREAD</h3>
               <p className="text-muted-foreground font-medium">Your Style, Your Story.</p>
               <div className="flex justify-start md:justify-end gap-4">
-                <a href="#" className="p-3 bg-muted rounded-full hover:bg-primary hover:text-white transition-all"><Instagram className="w-5 h-5" /></a>
-                <a href="#" className="p-3 bg-muted rounded-full hover:bg-primary hover:text-white transition-all"><Facebook className="w-5 h-5" /></a>
-                <a href="#" className="p-3 bg-muted rounded-full hover:bg-primary hover:text-white transition-all"><Twitter className="w-5 h-5" /></a>
+                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="p-3 bg-muted rounded-full hover:bg-primary hover:text-white transition-all"><Instagram className="w-5 h-5" /></a>
+                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="p-3 bg-muted rounded-full hover:bg-primary hover:text-white transition-all"><Facebook className="w-5 h-5" /></a>
+                <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="p-3 bg-muted rounded-full hover:bg-primary hover:text-white transition-all"><Twitter className="w-5 h-5" /></a>
               </div>
             </div>
             <div className="space-y-4">
@@ -259,7 +245,6 @@ export default function Home() {
                 <li><button onClick={() => {setActiveTab('men'); scrollToShop();}} className="hover:text-primary">الرجالي</button></li>
                 <li><button onClick={() => {setActiveTab('women'); scrollToShop();}} className="hover:text-primary">النسائي</button></li>
                 <li><a href="#shop" className="hover:text-primary">وصل حديثاً</a></li>
-                <li><a href="#shop" className="hover:text-primary">الأكثر مبيعاً</a></li>
               </ul>
             </div>
             <div className="space-y-4">
@@ -268,7 +253,6 @@ export default function Home() {
                 <li><a href="#" className="hover:text-primary">تتبع طلبك</a></li>
                 <li><a href="#" className="hover:text-primary">سياسة الإرجاع</a></li>
                 <li><a href="#" className="hover:text-primary">دليل المقاسات</a></li>
-                <li><a href="#" className="hover:text-primary">اتصل بنا</a></li>
               </ul>
             </div>
             <div className="space-y-4">
