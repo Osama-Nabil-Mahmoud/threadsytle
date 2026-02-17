@@ -1,7 +1,7 @@
 
 "use client"
 
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { ProductCard } from '@/components/product-card';
 import { Button } from '@/components/ui/button';
@@ -19,7 +19,8 @@ import {
   Instagram,
   Facebook,
   Twitter,
-  ShieldCheck
+  ShieldCheck,
+  Loader2
 } from 'lucide-react';
 import { 
   DropdownMenu, 
@@ -102,7 +103,7 @@ const FAQS = [
   { q: "خدمة العملاء متاحة امتى؟", a: "إحنا موجودين: WhatsApp 24/7، تليفون يومياً 10 ص - 10 م، Email بنرد خلال 24 ساعة." },
 ];
 
-export default function Home() {
+function HomeContent() {
   const searchParams = useSearchParams();
   const [activeTab, setActiveTab] = useState('all');
   const [activeFilter, setActiveFilter] = useState('all');
@@ -383,5 +384,20 @@ export default function Home() {
         </DialogContent>
       </Dialog>
     </div>
+  );
+}
+
+export default function Home() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center bg-background">
+        <div className="flex flex-col items-center gap-4">
+          <Loader2 className="w-12 h-12 animate-spin text-primary" />
+          <p className="text-xl font-bold font-headline">جاري تحميل THREAD...</p>
+        </div>
+      </div>
+    }>
+      <HomeContent />
+    </Suspense>
   );
 }
