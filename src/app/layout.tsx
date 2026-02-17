@@ -5,6 +5,7 @@ import { Toaster } from '@/components/ui/toaster';
 import { FirebaseClientProvider } from '@/firebase/client-provider';
 import { CartProvider } from '@/context/cart-context';
 import { CurrencyProvider } from '@/context/currency-context';
+import { FashionAiChat } from '@/components/fashion-ai-chat';
 
 export const metadata: Metadata = {
   title: 'THREAD | Modern Fashion & Tech',
@@ -47,6 +48,7 @@ export default function RootLayout({
               <main>
                 {children}
               </main>
+              <FashionAiChat />
               <Toaster />
             </CartProvider>
           </CurrencyProvider>
