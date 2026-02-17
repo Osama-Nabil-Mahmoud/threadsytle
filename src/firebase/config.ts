@@ -1,5 +1,4 @@
-
-// إعدادات Firebase تدعم الآن متغيرات البيئة للنشر وتعمل تلقائياً في بيئة التطوير
+// إعدادات Firebase تدعم متغيرات البيئة للنشر وتوفر قيماً افتراضية لبيئة التطوير
 export const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY || "AIzaSyAs-DEMO-ONLY-REPLACE-WITH-REAL-KEY",
   authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN || "thread-ecommerce.firebaseapp.com",
