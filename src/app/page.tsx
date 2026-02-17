@@ -20,7 +20,10 @@ import {
   Facebook,
   Twitter,
   ShieldCheck,
-  Loader2
+  Loader2,
+  Phone,
+  Mail,
+  MapPin
 } from 'lucide-react';
 import { 
   DropdownMenu, 
@@ -95,12 +98,6 @@ const FAQS = [
   { q: "كام رسوم التوصيل؟", a: "طلبات فوق 500 ج: توصيل مجاني 🎉. طلبات أقل من 500 ج: 50 ج." },
   { q: "ازاي أعرف المقاس المناسب؟", a: "شوف \"دليل المقاسات\" في صفحة كل منتج. فيه جدول تفصيلي بالقياسات وصور على موديلز بمقاسات مختلفة." },
   { q: "لو المقاس مش مظبوط؟", a: "لا تقلق! عندك 14 يوم ترجع أو تستبدل المنتج مجاناً، بشرط يكون في حالته الأصلية." },
-  { q: "ازاي أرجع أو أستبدل منتج؟", a: "كلمنا على خدمة العملاء أو اطلب إرجاع من حسابك، هنبعتلك مندوب ياخد المنتج ويرجعلك فلوسك أو يجيبلك المقاس/اللون الجديد." },
-  { q: "الألوان زي الصور بالضبط؟", a: "بنحاول نخلي الصور دقيقة قد ما نقدر، بس أحياناً ممكن يكون فيه اختلاف بسيط بسبب إضاءة شاشتك. لو مش عاجبك، ارجعه!" },
-  { q: "المنتجات أصلية؟", a: "كل منتجاتنا أصلية 100%، يا تصاميمنا الخاصة يا براندات معتمدة. ولو لقيت أي مشكلة في الجودة، هنستبدلها فوراً." },
-  { q: "في برنامج ولاء أو نقاط؟", a: "أيوة! كل ما تشتري تاخد نقاط، والنقاط دي تقدر تحولها لخصومات على طلباتك الجاية. كمان عندنا عروض حصرية للأعضاء." },
-  { q: "أقدر أتابع طلبي؟", a: "طبعاً! بعد ما تطلب هتوصلك رسالة فيها tracking number. تقدر تتابع الطلب من حسابك أو من رابط التتبع." },
-  { q: "خدمة العملاء متاحة امتى؟", a: "إحنا موجودين: WhatsApp 24/7، تليفون يومياً 10 ص - 10 م، Email بنرد خلال 24 ساعة." },
 ];
 
 function HomeContent() {
@@ -297,7 +294,7 @@ function HomeContent() {
       {/* Footer */}
       <footer className="bg-card py-20 border-t">
         <div className="container mx-auto px-4 text-right">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-12">
             <div className="space-y-6">
               <h3 className="text-3xl font-black text-primary">THREAD</h3>
               <p className="text-muted-foreground font-medium">Your Style, Your Story.</p>
@@ -307,6 +304,7 @@ function HomeContent() {
                 <a href="https://twitter.com/thread" target="_blank" rel="noopener noreferrer" className="p-3 bg-muted rounded-full hover:bg-primary hover:text-white transition-all"><Twitter className="w-5 h-5" /></a>
               </div>
             </div>
+            
             <div className="space-y-4">
               <h4 className="font-black text-lg">تسوق</h4>
               <ul className="space-y-2 text-muted-foreground font-bold">
@@ -315,6 +313,7 @@ function HomeContent() {
                 <li><button onClick={() => {setActiveTab('all'); setActiveFilter('new'); scrollToShop();}} className="hover:text-primary">وصل حديثاً</button></li>
               </ul>
             </div>
+
             <div className="space-y-4">
               <h4 className="font-black text-lg">مساعدة</h4>
               <ul className="space-y-2 text-muted-foreground font-bold">
@@ -322,6 +321,29 @@ function HomeContent() {
                 <li><button onClick={() => document.querySelector('section.py-24.bg-card.border-y')?.scrollIntoView({ behavior: 'smooth' })} className="hover:text-primary">دليل المقاسات</button></li>
               </ul>
             </div>
+
+            <div className="space-y-4">
+              <h4 className="font-black text-lg">تواصل معنا</h4>
+              <ul className="space-y-3 text-muted-foreground font-bold">
+                <li className="flex items-center justify-end gap-2 hover:text-primary transition-colors">
+                  <a href="tel:+201271002000" className="flex items-center gap-2">
+                    <span>01271002000</span>
+                    <Phone className="w-4 h-4 text-accent" />
+                  </a>
+                </li>
+                <li className="flex items-center justify-end gap-2 hover:text-primary transition-colors">
+                  <a href="mailto:hello@thread.eg" className="flex items-center gap-2">
+                    <span>hello@thread.eg</span>
+                    <Mail className="w-4 h-4 text-accent" />
+                  </a>
+                </li>
+                <li className="flex items-center justify-end gap-2">
+                  <span>القاهرة، مصر</span>
+                  <MapPin className="w-4 h-4 text-accent" />
+                </li>
+              </ul>
+            </div>
+
             <div className="space-y-4">
               <h4 className="font-black text-lg">التطبيق</h4>
               <p className="text-sm text-muted-foreground">حمل تطبيق THREAD وخد خصومات حصرية!</p>
@@ -367,12 +389,6 @@ function HomeContent() {
                 <li>كل التاجز (Tags) والملصقات الأصلية لازم تكون موجودة.</li>
                 <li>الإرجاع مجاني تماماً لو فيه عيب صناعة أو المقاس مش مظبوط.</li>
               </ul>
-            </div>
-            <div className="space-y-3">
-              <h4 className="font-black text-xl">ازاي أطلب إرجاع؟</h4>
-              <p className="text-muted-foreground font-bold leading-relaxed">
-                تقدر تكلمنا مباشرة على WhatsApp أو تطلب الإرجاع من خلال حسابك على الموقع. هنبعتلك المندوب لحد باب البيت ياخد الشحنة ويرجعلك فلوسك أو يستبدلها بالمقاس/اللون اللي تحبه.
-              </p>
             </div>
             <Button 
               className="w-full h-14 rounded-2xl text-xl font-black bg-primary"
