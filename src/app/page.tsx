@@ -23,7 +23,8 @@ import {
   Loader2,
   Phone,
   Mail,
-  MapPin
+  MapPin,
+  Watch
 } from 'lucide-react';
 import { 
   DropdownMenu, 
@@ -56,7 +57,7 @@ const PRODUCT_IMAGES: Record<string, { primary: string; gallery: string[] }> = {
   },
   "m3": { 
     primary: "https://images.unsplash.com/photo-1542272604-787c3835535d?q=80&w=800&auto=format&fit=crop", 
-    gallery: ["https://images.unsplash.com/photo-1541099649105-f69ad21f3246?q=80&w=800&auto=format&fit=crop"] 
+    gallery: ["https://images.unsplash.com/photo-1542272454315-4c01d7afdf16?q=80&w=800&auto=format&fit=crop"] 
   },
   "m4": { 
     primary: "https://images.unsplash.com/photo-1624241212332-19c713f31fade?q=80&w=800&auto=format&fit=crop", 
@@ -78,6 +79,22 @@ const PRODUCT_IMAGES: Record<string, { primary: string; gallery: string[] }> = {
     primary: "https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?q=80&w=800&auto=format&fit=crop", 
     gallery: ["https://images.unsplash.com/photo-1496747611176-843222e1e57c?q=80&w=800&auto=format&fit=crop"] 
   },
+  "acc1": {
+    primary: "https://images.unsplash.com/photo-1524592094714-0f0654e20314?q=80&w=800&auto=format&fit=crop",
+    gallery: ["https://images.unsplash.com/photo-1522337360788-8b13df772ce1?q=80&w=800&auto=format&fit=crop"]
+  },
+  "acc2": {
+    primary: "https://images.unsplash.com/photo-1627123424574-724758594e93?q=80&w=800&auto=format&fit=crop",
+    gallery: ["https://images.unsplash.com/photo-1621605815971-fbc98d665033?q=80&w=800&auto=format&fit=crop"]
+  },
+  "acc3": {
+    primary: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?q=80&w=800&auto=format&fit=crop",
+    gallery: ["https://images.unsplash.com/photo-1590874103328-eac38a683ce7?q=80&w=800&auto=format&fit=crop"]
+  },
+  "acc4": {
+    primary: "https://images.unsplash.com/photo-1572635196237-14b3f281503f?q=80&w=800&auto=format&fit=crop",
+    gallery: ["https://images.unsplash.com/photo-1511499767390-90342f568952?q=80&w=800&auto=format&fit=crop"]
+  }
 };
 
 const PRODUCTS = [
@@ -89,6 +106,10 @@ const PRODUCTS = [
   { productId: "w8", genderCategory: "women", name: "High-Waist Mom Jeans", price: 429, colors: ["أزرق فاتح","أزرق داكن"], sizes: ["26","28","30","32","34"], rating: 4.7, ratingCount: 298 },
   { productId: "w9", genderCategory: "women", name: "Cropped Hoodie - Pink", price: 329, colors: ["وردي","أبيض","أسود"], sizes: ["XS","S","M","L"], rating: 4.6, ratingCount: 187 },
   { productId: "w10", genderCategory: "women", name: "Maxi Dress - Floral", price: 499, colors: ["زهري","أزرق"], sizes: ["S","M","L","XL"], rating: 4.9, ratingCount: 156, badge: "New Arrival" },
+  { productId: "acc1", genderCategory: "accessories", name: "Classic Silver Watch", price: 899, colors: ["فضي","أسود"], sizes: ["OS"], rating: 4.9, ratingCount: 89, badge: "Premium" },
+  { productId: "acc2", genderCategory: "accessories", name: "Leather Wallet - Brown", price: 199, colors: ["بني","أسود"], sizes: ["OS"], rating: 4.7, ratingCount: 156 },
+  { productId: "acc3", genderCategory: "accessories", name: "Elegant Handbag - Women", price: 549, colors: ["أسود","بيج"], sizes: ["OS"], rating: 4.8, ratingCount: 74, badge: "Luxury" },
+  { productId: "acc4", genderCategory: "accessories", name: "Modern Sunglasses", price: 299, colors: ["أسود","بني"], sizes: ["OS"], rating: 4.6, ratingCount: 210 }
 ];
 
 const FAQS = [
@@ -114,6 +135,7 @@ function HomeContent() {
     
     if (cat === 'men') setActiveTab('men');
     else if (cat === 'women') setActiveTab('women');
+    else if (cat === 'accessories') setActiveTab('accessories');
     else setActiveTab('all');
 
     if (filter === 'new') setActiveFilter('new');
@@ -130,6 +152,7 @@ function HomeContent() {
     
     if (activeTab === 'men') result = result.filter(p => p.genderCategory === 'men');
     if (activeTab === 'women') result = result.filter(p => p.genderCategory === 'women');
+    if (activeTab === 'accessories') result = result.filter(p => p.genderCategory === 'accessories');
     
     if (activeFilter === 'new') result = result.filter(p => p.badge === 'New' || p.badge === 'New Arrival');
     if (activeFilter === 'sale') result = result.filter(p => p.compareAtPrice || (p.badge && p.badge.includes('خصم')));
@@ -173,6 +196,10 @@ function HomeContent() {
           <div className="flex flex-wrap justify-center gap-4">
             <Button size="lg" className="h-16 px-12 rounded-full text-xl font-bold bg-primary shadow-2xl hover:scale-105 transition-transform" onClick={() => { setActiveTab('men'); setActiveFilter('all'); scrollToShop(); }}>تسوق الرجالي</Button>
             <Button size="lg" variant="outline" className="h-16 px-12 rounded-full text-xl font-bold border-2 border-primary text-primary hover:bg-primary hover:text-white transition-all" onClick={() => { setActiveTab('women'); setActiveFilter('all'); scrollToShop(); }}>تسوق النسائي</Button>
+            <Button size="lg" variant="secondary" className="h-16 px-12 rounded-full text-xl font-bold gap-2 shadow-xl hover:scale-105 transition-transform" onClick={() => { setActiveTab('accessories'); setActiveFilter('all'); scrollToShop(); }}>
+              <Watch className="w-6 h-6" />
+              الإكسسوارات
+            </Button>
           </div>
         </div>
       </section>
@@ -238,6 +265,7 @@ function HomeContent() {
               <Button variant={activeTab === 'all' && activeFilter === 'all' ? 'default' : 'ghost'} className={`px-6 h-11 rounded-xl font-bold transition-all`} onClick={() => { setActiveTab('all'); setActiveFilter('all'); }}>الكل</Button>
               <Button variant={activeTab === 'men' ? 'default' : 'ghost'} className={`px-6 h-11 rounded-xl font-bold transition-all`} onClick={() => { setActiveTab('men'); setActiveFilter('all'); }}>رجالي</Button>
               <Button variant={activeTab === 'women' ? 'default' : 'ghost'} className={`px-6 h-11 rounded-xl font-bold transition-all`} onClick={() => { setActiveTab('women'); setActiveFilter('all'); }}>نسائي</Button>
+              <Button variant={activeTab === 'accessories' ? 'default' : 'ghost'} className={`px-6 h-11 rounded-xl font-bold transition-all`} onClick={() => { setActiveTab('accessories'); setActiveFilter('all'); }}>إكسسوارات</Button>
               <Button variant={activeFilter === 'new' ? 'default' : 'ghost'} className={`px-6 h-11 rounded-xl font-bold transition-all`} onClick={() => { setActiveTab('all'); setActiveFilter('new'); }}>جديد</Button>
               <Button variant={activeFilter === 'sale' ? 'default' : 'ghost'} className={`px-6 h-11 rounded-xl font-bold transition-all`} onClick={() => { setActiveTab('all'); setActiveFilter('sale'); }}>عروض</Button>
             </div>
@@ -310,6 +338,7 @@ function HomeContent() {
               <ul className="space-y-2 text-muted-foreground font-bold">
                 <li><button onClick={() => {setActiveTab('men'); setActiveFilter('all'); scrollToShop();}} className="hover:text-primary">الرجالي</button></li>
                 <li><button onClick={() => {setActiveTab('women'); setActiveFilter('all'); scrollToShop();}} className="hover:text-primary">النسائي</button></li>
+                <li><button onClick={() => {setActiveTab('accessories'); setActiveFilter('all'); scrollToShop();}} className="hover:text-primary">إكسسوارات</button></li>
                 <li><button onClick={() => {setActiveTab('all'); setActiveFilter('new'); scrollToShop();}} className="hover:text-primary">وصل حديثاً</button></li>
               </ul>
             </div>

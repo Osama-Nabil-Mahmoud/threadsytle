@@ -1,7 +1,8 @@
+
 "use client"
 
 import Link from 'next/link';
-import { Menu, Globe } from 'lucide-react';
+import { Menu, Globe, Watch } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { CartDrawer } from './cart-drawer';
 import { ThemeToggle } from './theme-toggle';
@@ -19,6 +20,7 @@ export function Navbar() {
   const MENU_ITEMS = [
     { title: "رجالي", href: "/?cat=men#shop" },
     { title: "نسائي", href: "/?cat=women#shop" },
+    { title: "إكسسوارات", href: "/?cat=accessories#shop" },
     { title: "جديد", href: "/?filter=new#shop" },
     { title: "عروض", href: "/?filter=sale#shop" }
   ];
@@ -34,6 +36,7 @@ export function Navbar() {
             {MENU_ITEMS.map((menu) => (
               <Button key={menu.title} variant="ghost" asChild className="font-black text-md h-10 rounded-full hover:bg-primary/5 px-6">
                 <Link href={menu.href}>
+                  {menu.title === "إكسسوارات" && <Watch className="w-4 h-4 ml-2" />}
                   {menu.title}
                 </Link>
               </Button>
