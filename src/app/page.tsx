@@ -97,18 +97,18 @@ const PRODUCT_IMAGES: Record<string, { primary: string; gallery: string[] }> = {
 };
 
 const PRODUCTS = [
-  { productId: "m1", genderCategory: "men", name: "Oversized Hoodie - Black", price: 399, compareAtPrice: 499, colors: ["أسود","رمادي","بيج","كحلي"], sizes: ["S","M","L","XL","XXL"], rating: 4.7, ratingCount: 234, description: "هودي oversized قطن 100%، تصميم عصري، مريح للاستخدام اليومي", badge: "خصم 20%" },
-  { productId: "m2", genderCategory: "men", name: "Essential T-Shirt Pack (3 قطع)", price: 299, colors: ["أسود","أبيض","رمادي"], sizes: ["S","M","L","XL","XXL"], rating: 4.9, ratingCount: 567, badge: "Best Seller" },
-  { productId: "m3", genderCategory: "men", name: "Slim Fit Jeans - Dark Blue", price: 449, compareAtPrice: 549, colors: ["أزرق داكن"], sizes: ["28","30","32","34","36","38"], rating: 4.6, ratingCount: 189, description: "جينز slim fit، قماش دنيم عالي الجودة، مرن ومريح" },
-  { productId: "m4", genderCategory: "men", name: "Cargo Pants - Khaki", price: 379, colors: ["خاكي","أسود","زيتوني"], sizes: ["S","M","L","XL","XXL"], rating: 4.5, ratingCount: 145, badge: "New" },
-  { productId: "w7", genderCategory: "women", name: "Oversized Sweater - Beige", price: 349, colors: ["بيج","وردي","رمادي"], sizes: ["S","M","L","XL"], rating: 4.8, ratingCount: 412, badge: "Trending" },
-  { productId: "w8", genderCategory: "women", name: "High-Waist Mom Jeans", price: 429, colors: ["أزرق فاتح","أزرق داكن"], sizes: ["26","28","30","32","34"], rating: 4.7, ratingCount: 298 },
-  { productId: "w9", genderCategory: "women", name: "Cropped Hoodie - Pink", price: 329, colors: ["وردي","أبيض","أسود"], sizes: ["XS","S","M","L"], rating: 4.6, ratingCount: 187 },
-  { productId: "w10", genderCategory: "women", name: "Maxi Dress - Floral", price: 499, colors: ["زهري","أزرق"], sizes: ["S","M","L","XL"], rating: 4.9, ratingCount: 156, badge: "New Arrival" },
-  { productId: "acc1", genderCategory: "accessories", name: "Classic Silver Watch", price: 899, colors: ["فضي","أسود"], sizes: ["OS"], rating: 4.9, ratingCount: 89, badge: "Premium" },
-  { productId: "acc2", genderCategory: "accessories", name: "Leather Wallet - Brown", price: 199, colors: ["بني","أسود"], sizes: ["OS"], rating: 4.7, ratingCount: 156 },
-  { productId: "acc3", genderCategory: "accessories", name: "Elegant Handbag - Women", price: 549, colors: ["أسود","بيج"], sizes: ["OS"], rating: 4.8, ratingCount: 74, badge: "Luxury" },
-  { productId: "acc4", genderCategory: "accessories", name: "Modern Sunglasses", price: 299, colors: ["أسود","بني"], sizes: ["OS"], rating: 4.6, ratingCount: 210 }
+  { productId: "m1", genderCategory: "men", name: "Oversized Hoodie - Black", price: 399, compareAtPrice: 499, colors: ["أسود","رمادي","بيج","كحلي"], sizes: ["S","M","L","XL","XXL"], rating: 4.7, ratingCount: 234, description: "هودي oversized قطن 100%، تصميم عصري، مريح للاستخدام اليومي", badge: "خصم 20%", subType: "clothing" },
+  { productId: "m2", genderCategory: "men", name: "Essential T-Shirt Pack (3 قطع)", price: 299, colors: ["أسود","أبيض","رمادي"], sizes: ["S","M","L","XL","XXL"], rating: 4.9, ratingCount: 567, badge: "Best Seller", subType: "clothing" },
+  { productId: "m3", genderCategory: "men", name: "Slim Fit Jeans - Dark Blue", price: 449, compareAtPrice: 549, colors: ["أزرق داكن"], sizes: ["28","30","32","34","36","38"], rating: 4.6, ratingCount: 189, description: "جينز slim fit، قماش دنيم عالي الجودة، مرن ومريح", subType: "clothing" },
+  { productId: "m4", genderCategory: "men", name: "Cargo Pants - Khaki", price: 379, colors: ["خاكي","أسود","زيتوني"], sizes: ["S","M","L","XL","XXL"], rating: 4.5, ratingCount: 145, badge: "New", subType: "clothing" },
+  { productId: "w7", genderCategory: "women", name: "Oversized Sweater - Beige", price: 349, colors: ["بيج","وردي","رمادي"], sizes: ["S","M","L","XL"], rating: 4.8, ratingCount: 412, badge: "Trending", subType: "clothing" },
+  { productId: "w8", genderCategory: "women", name: "High-Waist Mom Jeans", price: 429, colors: ["أزرق فاتح","أزرق داكن"], sizes: ["26","28","30","32","34"], rating: 4.7, ratingCount: 298, subType: "clothing" },
+  { productId: "w9", genderCategory: "women", name: "Cropped Hoodie - Pink", price: 329, colors: ["وردي","أبيض","أسود"], sizes: ["XS","S","M","L"], rating: 4.6, ratingCount: 187, subType: "clothing" },
+  { productId: "w10", genderCategory: "women", name: "Maxi Dress - Floral", price: 499, colors: ["زهري","أزرق"], sizes: ["S","M","L","XL"], rating: 4.9, ratingCount: 156, badge: "New Arrival", subType: "clothing" },
+  { productId: "acc1", genderCategory: "accessories", name: "Classic Silver Watch", price: 899, colors: ["فضي","أسود"], sizes: ["OS"], rating: 4.9, ratingCount: 89, badge: "Premium", subType: "men" },
+  { productId: "acc2", genderCategory: "accessories", name: "Leather Wallet - Brown", price: 199, colors: ["بني","أسود"], sizes: ["OS"], rating: 4.7, ratingCount: 156, subType: "men" },
+  { productId: "acc3", genderCategory: "accessories", name: "Elegant Handbag - Women", price: 549, colors: ["أسود","بيج"], sizes: ["OS"], rating: 4.8, ratingCount: 74, badge: "Luxury", subType: "women" },
+  { productId: "acc4", genderCategory: "accessories", name: "Modern Sunglasses", price: 299, colors: ["أسود","بني"], sizes: ["OS"], rating: 4.6, ratingCount: 210, subType: "unisex" }
 ];
 
 const FAQS = [
@@ -124,6 +124,7 @@ function HomeContent() {
   const searchParams = useSearchParams();
   const [activeTab, setActiveTab] = useState('all');
   const [activeFilter, setActiveFilter] = useState('all');
+  const [accessoryGender, setAccessoryGender] = useState('all'); // 'all', 'men', 'women'
   const [sortBy, setSortBy] = useState('best-selling');
   const [searchQuery, setSearchQuery] = useState('');
   const [isReturnPolicyOpen, setIsReturnPolicyOpen] = useState(false);
@@ -149,23 +150,35 @@ function HomeContent() {
   const filteredProducts = useMemo(() => {
     let result = [...PRODUCTS];
     
+    // Primary Category Filtering
     if (activeTab === 'men') result = result.filter(p => p.genderCategory === 'men');
     if (activeTab === 'women') result = result.filter(p => p.genderCategory === 'women');
-    if (activeTab === 'accessories') result = result.filter(p => p.genderCategory === 'accessories');
+    if (activeTab === 'accessories') {
+      result = result.filter(p => p.genderCategory === 'accessories');
+      // Sub-filtering for Accessories
+      if (accessoryGender === 'men') {
+        result = result.filter(p => p.subType === 'men' || p.subType === 'unisex');
+      } else if (accessoryGender === 'women') {
+        result = result.filter(p => p.subType === 'women' || p.subType === 'unisex');
+      }
+    }
     
+    // Status Filtering
     if (activeFilter === 'new') result = result.filter(p => p.badge === 'New' || p.badge === 'New Arrival');
     if (activeFilter === 'sale') result = result.filter(p => p.compareAtPrice || (p.badge && p.badge.includes('خصم')));
 
+    // Search
     if (searchQuery) {
       result = result.filter(p => p.name.toLowerCase().includes(searchQuery.toLowerCase()));
     }
 
+    // Sorting
     if (sortBy === 'price-low') result.sort((a, b) => a.price - b.price);
     if (sortBy === 'rating-high') result.sort((a, b) => b.rating - a.rating);
     if (sortBy === 'best-selling') result.sort((a, b) => b.ratingCount - a.ratingCount);
     
     return result;
-  }, [activeTab, activeFilter, sortBy, searchQuery]);
+  }, [activeTab, activeFilter, accessoryGender, sortBy, searchQuery]);
 
   const scrollToShop = () => {
     document.getElementById('shop')?.scrollIntoView({ behavior: 'smooth' });
@@ -270,11 +283,44 @@ function HomeContent() {
             </div>
           </div>
 
+          {/* Sub-filtering for Accessories */}
+          {activeTab === 'accessories' && (
+            <div className="flex justify-center gap-4 animate-in fade-in slide-in-from-top-2">
+              <Button 
+                variant={accessoryGender === 'all' ? 'secondary' : 'outline'} 
+                className="rounded-full px-8 font-bold border-2"
+                onClick={() => setAccessoryGender('all')}
+              >
+                كل الإكسسوارات
+              </Button>
+              <Button 
+                variant={accessoryGender === 'men' ? 'secondary' : 'outline'} 
+                className="rounded-full px-8 font-bold border-2"
+                onClick={() => setAccessoryGender('men')}
+              >
+                إكسسوارات رجالي
+              </Button>
+              <Button 
+                variant={accessoryGender === 'women' ? 'secondary' : 'outline'} 
+                className="rounded-full px-8 font-bold border-2"
+                onClick={() => setAccessoryGender('women')}
+              >
+                إكسسوارات نسائي
+              </Button>
+            </div>
+          )}
+
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {filteredProducts.map((p) => (
               <ProductCard key={p.productId} product={p as any} images={PRODUCT_IMAGES[p.productId]} />
             ))}
           </div>
+
+          {filteredProducts.length === 0 && (
+            <div className="text-center py-20 bg-muted/20 rounded-[3rem] border-2 border-dashed">
+              <p className="text-2xl font-black opacity-40">مفيش نتائج حالياً، جرب فلتر تاني! 🔍</p>
+            </div>
+          )}
         </div>
       </section>
 
