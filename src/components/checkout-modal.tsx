@@ -1,4 +1,3 @@
-
 "use client"
 
 import { useState } from "react";
@@ -9,9 +8,11 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { CheckCircle2, Loader2, Send } from "lucide-react";
 import { useCart } from "@/context/cart-context";
+import { useCurrency } from "@/context/currency-context";
 
 export function CheckoutModal({ open, onOpenChange }: { open: boolean; onOpenChange: (o: boolean) => void }) {
   const { cart, clearCart, subtotal } = useCart();
+  const { formatPrice } = useCurrency();
   const [step, setStep] = useState<'form' | 'success'>('form');
   const [loading, setLoading] = useState(false);
 
@@ -27,7 +28,7 @@ export function CheckoutModal({ open, onOpenChange }: { open: boolean; onOpenCha
     const notes = formData.get('notes') as string;
 
     const itemsText = cart.map(item => 
-      `- ${item.name} (${item.size} / ${item.color}) x${item.quantity} = ${item.price * item.quantity} ج.م`
+      `- ${item.name} (${item.size} / ${item.color}) x${item.quantity} = ${formatPrice(item.price * item.quantity)}`
     ).join('%0A');
 
     const finalTotal = subtotal + (subtotal >= 500 ? 0 : 50);
@@ -38,7 +39,7 @@ export function CheckoutModal({ open, onOpenChange }: { open: boolean; onOpenCha
       `*📍 العنوان:* ${city}، ${address}%0A` +
       `${notes ? `*📝 ملاحظات:* ${notes}%0A` : ''}%0A` +
       `*📦 المنتجات:*%0A${itemsText}%0A%0A` +
-      `*💰 الإجمالي النهائي:* ${finalTotal} ج.م%0A` +
+      `*💰 الإجمالي النهائي:* ${formatPrice(finalTotal)}%0A` +
       `*طريقة الدفع:* كاش عند الاستلام`;
 
     const whatsappUrl = `https://wa.me/201271002000?text=${message}`;
@@ -109,15 +110,15 @@ export function CheckoutModal({ open, onOpenChange }: { open: boolean; onOpenCha
 
           <div className="p-6 bg-muted/30 dark:bg-muted/10 rounded-[2rem] space-y-3 border-2 border-dashed">
             <div className="flex justify-between font-bold text-lg">
-              <span>{subtotal} ج.م</span>
+              <span>{formatPrice(subtotal)}</span>
               <span>قيمة المشتريات</span>
             </div>
             <div className="flex justify-between text-muted-foreground font-bold">
-              <span>{subtotal >= 500 ? "مجاني 🎉" : "50 ج.م"}</span>
+              <span>{subtotal >= 500 ? "مجاني 🎉" : formatPrice(50)}</span>
               <span>مصاريف الشحن</span>
             </div>
             <div className="flex justify-between text-2xl font-black pt-4 border-t mt-2 text-primary">
-              <span>{subtotal + (subtotal >= 500 ? 0 : 50)} ج.م</span>
+              <span>{formatPrice(subtotal + (subtotal >= 500 ? 0 : 50))}</span>
               <span>الإجمالي النهائي</span>
             </div>
           </div>

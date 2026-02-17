@@ -1,4 +1,3 @@
-
 "use client"
 
 import { useState } from 'react';
@@ -7,6 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { ShoppingCart, Star, Plus, Minus, Maximize2 } from 'lucide-react';
 import { useCart } from '@/context/cart-context';
+import { useCurrency } from '@/context/currency-context';
 import { useToast } from '@/hooks/use-toast';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { 
@@ -39,6 +39,7 @@ interface ProductCardProps {
 
 export function ProductCard({ product, images }: ProductCardProps) {
   const { addToCart } = useCart();
+  const { formatPrice } = useCurrency();
   const { toast } = useToast();
   const [selectedColor, setSelectedColor] = useState(product.colors[0]);
   const [selectedSize, setSelectedSize] = useState(product.sizes[0]);
@@ -151,11 +152,11 @@ export function ProductCard({ product, images }: ProductCardProps) {
           <div className="flex items-baseline justify-end gap-3">
             {product.compareAtPrice && (
               <span className="text-sm text-muted-foreground line-through opacity-60 font-bold">
-                {product.compareAtPrice} ج.م
+                {formatPrice(product.compareAtPrice)}
               </span>
             )}
             <div className="font-headline text-2xl font-black text-primary">
-              {product.price} <span className="text-sm">ج.م</span>
+              {formatPrice(product.price)}
             </div>
           </div>
         </div>

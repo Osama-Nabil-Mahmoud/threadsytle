@@ -1,7 +1,7 @@
-
 "use client"
 
 import { useCart } from "@/context/cart-context";
+import { useCurrency } from "@/context/currency-context";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger, SheetFooter } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { ShoppingBag, Trash2, Plus, Minus, CreditCard } from "lucide-react";
@@ -11,6 +11,7 @@ import { useState } from "react";
 
 export function CartDrawer() {
   const { cart, removeFromCart, updateQuantity, subtotal } = useCart();
+  const { formatPrice } = useCurrency();
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
 
   return (
@@ -73,8 +74,8 @@ export function CartDrawer() {
                         </Button>
                       </div>
                       <div className="flex flex-col items-end min-w-[80px]">
-                        <span className="font-black text-primary text-xl">{item.price * item.quantity} ج.م</span>
-                        {item.quantity > 1 && <span className="text-[10px] text-muted-foreground">({item.price} ج.م للقطعة)</span>}
+                        <span className="font-black text-primary text-xl">{formatPrice(item.price * item.quantity)}</span>
+                        {item.quantity > 1 && <span className="text-[10px] text-muted-foreground">({formatPrice(item.price)} للقطعة)</span>}
                       </div>
                       <Button
                         variant="ghost"
@@ -100,12 +101,12 @@ export function CartDrawer() {
             <div className="w-full space-y-6">
               <div className="space-y-2">
                 <div className="flex justify-between items-center text-2xl font-black">
-                  <span className="text-primary">{subtotal} ج.م</span>
+                  <span className="text-primary">{formatPrice(subtotal)}</span>
                   <span>إجمالي المشتريات</span>
                 </div>
                 <div className="p-4 bg-green-50 dark:bg-green-950/20 rounded-2xl border-2 border-dashed border-green-200 dark:border-green-900">
                   <p className="text-sm font-black text-green-700 dark:text-green-400 text-center">
-                    {subtotal >= 500 ? "🎉 مبروك! طلبك شحنه مجاني" : `باقي ${500 - subtotal} ج.م على الشحن المجاني`}
+                    {subtotal >= 500 ? "🎉 مبروك! طلبك شحنه مجاني" : `باقي ${formatPrice(500 - subtotal)} على الشحن المجاني`}
                   </p>
                 </div>
               </div>

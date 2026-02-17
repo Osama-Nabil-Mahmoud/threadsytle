@@ -1,10 +1,10 @@
-
 import type {Metadata} from 'next';
 import './globals.css';
 import { Navbar } from '@/components/navbar';
 import { Toaster } from '@/components/ui/toaster';
 import { FirebaseClientProvider } from '@/firebase/client-provider';
 import { CartProvider } from '@/context/cart-context';
+import { CurrencyProvider } from '@/context/currency-context';
 
 export const metadata: Metadata = {
   title: 'THREAD | Modern Fashion & Tech',
@@ -41,13 +41,15 @@ export default function RootLayout({
       </head>
       <body className="font-body antialiased min-h-screen bg-background text-foreground transition-colors duration-300">
         <FirebaseClientProvider>
-          <CartProvider>
-            <Navbar />
-            <main>
-              {children}
-            </main>
-            <Toaster />
-          </CartProvider>
+          <CurrencyProvider>
+            <CartProvider>
+              <Navbar />
+              <main>
+                {children}
+              </main>
+              <Toaster />
+            </CartProvider>
+          </CurrencyProvider>
         </FirebaseClientProvider>
       </body>
     </html>

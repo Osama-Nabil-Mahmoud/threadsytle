@@ -1,4 +1,3 @@
-
 "use client"
 
 import { useEffect, useState, use } from 'react';
@@ -7,11 +6,13 @@ import { getProduct, Product } from '@/lib/db';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
+import { useCurrency } from '@/context/currency-context';
 import { MessageSquare, Star, ShieldCheck, Truck, RefreshCcw } from 'lucide-react';
 
 export default function ProductDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
   const db = useFirestore();
+  const { formatPrice } = useCurrency();
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
   const [selectedSize, setSelectedSize] = useState('');
@@ -35,8 +36,8 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
   }, [db, id]);
 
   const handleWhatsAppOrder = () => {
-    const message = `مرحباً، أود طلب منتج: ${product?.name}%0Aالسعر: ${product?.price} ج.م%0Aالمقاس: ${selectedSize}%0Aاللون: ${selectedColor}`;
-    window.open(`https://wa.me/201234567890?text=${message}`, '_blank');
+    const message = `مرحباً، أود طلب منتج: ${product?.name}%0Aالسعر: ${formatPrice(product?.price || 0)}%0Aالمقاس: ${selectedSize}%0Aاللون: ${selectedColor}`;
+    window.open(`https://wa.me/201271002000?text=${message}`, '_blank');
   };
 
   if (loading) {
@@ -93,7 +94,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
             </div>
             <h1 className="text-5xl font-bold font-headline leading-tight">{product.name}</h1>
             <p className="text-4xl font-bold text-primary font-headline">
-              {product.price} <span className="text-2xl">ج.م</span>
+              {formatPrice(product.price)}
             </p>
           </div>
 
