@@ -12,8 +12,8 @@ type CurrencyContextType = {
 
 const CurrencyContext = createContext<CurrencyContextType | undefined>(undefined);
 
-// سعر صرف تقريبي للمثال (1 ريال سعودي = 13 جنيه مصري تقريباً)
-const EGP_TO_SAR_RATE = 0.077; 
+// سعر صرف تقريبي للمثال (1 ريال سعودي = 13.5 جنيه مصري تقريباً)
+const EGP_TO_SAR_RATE = 0.074; 
 
 export function CurrencyProvider({ children }: { children: React.ReactNode }) {
   const [currency, setCurrency] = useState<Currency>('EGP');
